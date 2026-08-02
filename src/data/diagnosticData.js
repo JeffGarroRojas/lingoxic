@@ -2,15 +2,6 @@ export const CEFR_LEVELS = ["A1", "A2", "B1", "B2"];
 
 export const SKILLS = ["grammar", "vocabulary", "reading", "listening", "writing", "speaking"];
 
-export const DIAGNOSTIC_SKILLS = [
-  { id: "grammar", label: "Gramática", icon: "BookOpen", desc: "Estructura y uso correcto de tiempos y reglas" },
-  { id: "vocabulary", label: "Vocabulario", icon: "Library", desc: "Palabras y expresiones por nivel" },
-  { id: "reading", label: "Lectura", icon: "FileText", desc: "Comprensión de textos" },
-  { id: "listening", label: "Escucha", icon: "Headphones", desc: "Comprensión auditiva" },
-  { id: "writing", label: "Escritura", icon: "PenLine", desc: "Producción escrita" },
-  { id: "speaking", label: "Habla", icon: "Mic", desc: "Producción oral y fluidez" },
-];
-
 export const DIAGNOSTIC_QUESTIONS = {
   grammar: [
     { level: "A1", prompt: `She ___ a teacher.`, options: [`am`, `is`, `are`, `be`], correctAnswer: `is`, skillArea: `grammar` },
@@ -56,33 +47,6 @@ export const DIAGNOSTIC_QUESTIONS = {
     { level: "B1", prompt: `Someone asks: "Could you tell me about a book you've enjoyed?" Choose the best answer:`, options: [`I recently read a mystery novel. It was gripping because the plot had unexpected twists.`, `I like books.`, `Books are good.`, `I read a book once.`], correctAnswer: `I recently read a mystery novel. It was gripping because the plot had unexpected twists.`, skillArea: `speaking` },
     { level: "B2", prompt: `You must disagree politely in a meeting. Choose the best response:`, options: [`While I understand your point, I believe there are other factors we should consider.`, `You're wrong.`, `No, that's bad.`, `I don't agree with anything.`], correctAnswer: `While I understand your point, I believe there are other factors we should consider.`, skillArea: `speaking` },
   ],
-};
-
-export const CEFR_DESCRIPTORS = {
-  A1: {
-    label: "Principiante",
-    description: "Puedes entender y usar expresiones cotidianas y frases muy básicas.",
-    requirements: "Dominas lo esencial para presentarte, pedir cosas y entender frases simples.",
-    next: "Enfócate en vocabulario básico, presente simple y conversaciones cortas.",
-  },
-  A2: {
-    label: "Básico",
-    description: "Puedes comunicarte en tareas simples y rutinarias.",
-    requirements: "Manejas pasado simple, presente continuo y situaciones cotidianas.",
-    next: "Practica pasado simple, futuro con 'going to' y vocabulario de viajes.",
-  },
-  B1: {
-    label: "Intermedio",
-    description: "Puedes desenvolverte en la mayoría de situaciones de viaje y expresar opiniones.",
-    requirements: "Usas condicionales, present perfect y textos más complejos.",
-    next: "Trabaja condicionales, present perfect y vocabulario idiomático.",
-  },
-  B2: {
-    label: "Intermedio alto",
-    description: "Puedes interactuar con hablantes nativos con fluidez y espontaneidad.",
-    requirements: "Dominas pasivas, subjuntivo/wish, conectores avanzados y temas complejos.",
-    next: "Pulir matices: phrasal verbs, pasivas, discurso indirecto y registro formal.",
-  },
 };
 
 export function levelRank(level) {

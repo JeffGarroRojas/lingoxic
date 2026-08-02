@@ -8,7 +8,7 @@ import { Card, Button, ProgressBar } from "../components/ui.jsx";
 import { useUser } from "../hooks/useUser.jsx";
 import { useActivityGuard } from "../hooks/useActivityGuard.jsx";
 import {
-  SKILLS, DIAGNOSTIC_QUESTIONS, CEFR_DESCRIPTORS,
+  SKILLS, DIAGNOSTIC_QUESTIONS,
   scoreToLevel, levelRank,
 } from "../data/diagnosticData.js";
 
