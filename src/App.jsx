@@ -19,6 +19,7 @@ import {
 } from "./data/practiceData.js";
 
 const Dashboard = lazy(() => import("./pages/Dashboard.jsx"));
+const Diagnostic = lazy(() => import("./pages/Diagnostic.jsx"));
 const Learn = lazy(() => import("./pages/Learn.jsx"));
 const UnitDetail = lazy(() => import("./pages/UnitDetail.jsx"));
 const LessonDetail = lazy(() => import("./pages/LessonDetail.jsx"));
@@ -183,6 +184,14 @@ function AnimatedRoutes() {
               element={
                 <PageTransition>
                   <Dashboard />
+                </PageTransition>
+              }
+            />
+            <Route
+              path="/diagnostic"
+              element={
+                <PageTransition>
+                  <Diagnostic />
                 </PageTransition>
               }
             />

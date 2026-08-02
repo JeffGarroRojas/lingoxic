@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Flame, Zap, TrendingUp, BookOpen, ArrowRight } from "lucide-react";
+import { Flame, Zap, TrendingUp, BookOpen, ArrowRight, ClipboardCheck, Target } from "lucide-react";
 import { useUser } from "../hooks/useUser.jsx";
 import { Card, Badge, Button, SkillBadge, LevelBadge, ProgressBar } from "../components/ui.jsx";
 import unitsData from "../data/unitsData.js";
@@ -180,6 +180,24 @@ export default function Dashboard() {
           </div>
         </Card>
       </div>
+
+      <Card>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="font-semibold flex items-center gap-2">
+            <ClipboardCheck size={18} className="text-purple-500" />
+            Diagnóstico CEFR
+          </h2>
+          <Badge variant="info">{user.diagnostic ? user.diagnostic.overallLevel : "Sin evaluar"}</Badge>
+        </div>
+        <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+          {user.diagnostic
+            ? `Tu nivel general actual es ${user.diagnostic.overallLevel}. Repite el diagnóstico para verificar tu avance real.`
+            : "Evalúa tus 6 habilidades y conoce tu nivel CEFR real (A1–B2) en cada una."}
+        </p>
+        <Button className="w-full" onClick={() => navigate("/diagnostic")}>
+          {user.diagnostic ? "Repetir diagnóstico" : "Hacer diagnóstico"} <Target size={16} />
+        </Button>
+      </Card>
     </div>
   );
 }

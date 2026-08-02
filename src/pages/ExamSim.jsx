@@ -19,11 +19,11 @@ export default function ExamSim() {
   let pool = [];
   unitsData.forEach((u) => u.quizzes.forEach((q) => pool.push(...q.questions)));
   grammarData.forEach((t) => pool.push(...t.exercises));
-  const all = pool.slice(0, 100);
-  const listening = all.filter((q) => q.skillArea === `listening`).slice(0, 50);
-  const reading = all.filter((q) => q.skillArea === `reading`).slice(0, 25);
-  const grammar = all.filter((q) => q.skillArea === `grammar`).slice(0, 25);
-  const exam = [...listening, ...reading, ...grammar].slice(0, 100);
+  const all = pool.filter((q) => q.correctAnswer);
+  const SKILLS = [`grammar`, `vocabulary`, `reading`, `listening`, `writing`, `speaking`];
+  const SKILL_MAX = { grammar: 20, vocabulary: 20, reading: 18, listening: 18, writing: 12, speaking: 12 };
+  const exam = SKILLS.flatMap((sk) => all.filter((q) => q.skillArea === sk).slice(0, SKILL_MAX[sk]));
+  const maxScore = exam.length;
 
   const timerRef = useRef(undefined);
 
@@ -48,12 +48,17 @@ export default function ExamSim() {
     const readingScore = exam.filter(
       (q) => q.skillArea === `reading` && answers[q.id] === q.correctAnswer
     ).length;
-    await saveExamResult({
+    await     saveExamResult({
       date: Date.now(),
       score: correct,
       total: exam.length,
+      level,
       listeningScore,
       readingScore,
+      grammarScore,
+      vocabularyScore,
+      writingScore,
+      speakingScore,
       timeSpent: 3600 - secondsLeft,
     });
     await addXP(200);
@@ -115,10 +120,27 @@ export default function ExamSim() {
     const grammarScore = exam.filter(
       (q) => q.skillArea === `grammar` && answers[q.id] === q.correctAnswer
     ).length;
+    const vocabularyScore = exam.filter(
+      (q) => q.skillArea === `vocabulary` && answers[q.id] === q.correctAnswer
+    ).length;
+    const writingScore = exam.filter(
+      (q) => q.skillArea === `writing` && answers[q.id] === q.correctAnswer
+    ).length;
+    const speakingScore = exam.filter(
+      (q) => q.skillArea === `speaking` && answers[q.id] === q.correctAnswer
+    ).length;
     let level = `A1`;
     if (pct >= 85) level = `B2`;
     else if (pct >= 65) level = `B1`;
     else if (pct >= 40) level = `A2`;
+    const skillScores = [
+      { name: `Gramática`, value: `${grammarScore}/${SKILL_MAX.grammar}` },
+      { name: `Vocabulario`, value: `${vocabularyScore}/${SKILL_MAX.vocabulary}` },
+      { name: `Lectura`, value: `${readingScore}/${SKILL_MAX.reading}` },
+      { name: `Escucha`, value: `${listeningScore}/${SKILL_MAX.listening}` },
+      { name: `Escritura`, value: `${writingScore}/${SKILL_MAX.writing}` },
+      { name: `Habla`, value: `${speakingScore}/${SKILL_MAX.speaking}` },
+    ];
 
     return (
       <div className="max-w-lg mx-auto space-y-6">
@@ -130,19 +152,13 @@ export default function ExamSim() {
           </p>
           <p className="text-green-600">+200 XP ganados</p>
         </div>
-        <div className="grid grid-cols-3 gap-3 text-center">
-          <Card>
-            <p className="text-sm text-gray-500">Listening</p>
-            <p className="text-xl font-bold">{listeningScore}/50</p>
-          </Card>
-          <Card>
-            <p className="text-sm text-gray-500">Reading</p>
-            <p className="text-xl font-bold">{readingScore}/25</p>
-          </Card>
-          <Card>
-            <p className="text-sm text-gray-500">Grammar</p>
-            <p className="text-xl font-bold">{grammarScore}/25</p>
-          </Card>
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-center">
+          {skillScores.map((s) => (
+            <Card key={s.name}>
+              <p className="text-sm text-gray-500">{s.name}</p>
+              <p className="text-xl font-bold">{s.value}</p>
+            </Card>
+          ))}
         </div>
         <p className="text-sm text-gray-500 text-center">
           {correct} de {exam.length} correctas

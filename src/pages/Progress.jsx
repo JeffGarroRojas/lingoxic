@@ -94,6 +94,12 @@ export default function ProgressPage() {
           </span>
         </div>
         <ProgressBar value={user.xp} max={threshold} color="primary" />
+        {user.diagnostic && (
+          <p className="text-sm text-gray-500 mt-2">
+            Nivel CEFR real (diagnóstico):{" "}
+            <span className="font-semibold text-purple-600">{user.diagnostic.overallLevel}</span>
+          </p>
+        )}
       </Card>
 
       <Card>

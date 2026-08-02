@@ -1,6 +1,10 @@
 import { createContext, useContext, useState, useCallback } from "react";
 import { getUser, saveUser, updateUser } from "../services/db.js";
 import { syncUserToFirestore } from "../services/firebase.js";
+import {
+  SKILLS as SKILL_ORDER, DIAGNOSTIC_QUESTIONS,
+  scoreToLevel, levelRank,
+} from "../data/diagnosticData.js";
 import { genId } from "../utils/level.js";
 
 const UserContext = createContext(null);
@@ -30,6 +34,7 @@ export function UserProvider({ children }) {
       completedQuizzes: [],
       weakAreas: [],
       examSimulations: [],
+      diagnostic: null,
     };
     await saveUser(newUser);
     await syncUserToFirestore(newUser);
@@ -50,7 +55,9 @@ export function UserProvider({ children }) {
     if (!current) return;
     const xp = current.xp + amount;
     let level = current.level;
-    if (xp >= 5000 || (xp >= 2500 && current.level === "B1")) level = "B2";
+    const diag = current.diagnostic;
+    const diagReady = diag && diag.overallLevel === "B2";
+    if (diagReady && (xp >= 5000 || (xp >= 2500 && current.level === "B1"))) level = "B2";
     else if (xp >= 2500 || (xp >= 1000 && current.level === "A2")) level = "B1";
     else if (xp >= 1000) level = "A2";
     else level = "A1";
@@ -110,6 +117,29 @@ export function UserProvider({ children }) {
     setUser(reset);
   }, [user]);
 
+  const saveDiagnostic = useCallback(
+    async (answers) => {
+      let current = user;
+      if (!current) return;
+      const bySkill = {};
+      SKILL_ORDER.forEach((sk) => {
+        const qs = DIAGNOSTIC_QUESTIONS[sk];
+        let correct = 0;
+        qs.forEach((q) => { if (answers[q.prompt] === q.correctAnswer) correct++; });
+        bySkill[sk] = { level: scoreToLevel(correct, qs.length), correct, total: qs.length };
+      });
+      const overallLevel = ["A1", "A2", "B1", "B2"][
+        Math.round(SKILL_ORDER.reduce((a, sk) => a + levelRank(bySkill[sk].level), 0) / SKILL_ORDER.length)
+      ];
+      const diagnostic = { bySkill, overallLevel, date: Date.now() };
+      const merged = { ...current, diagnostic };
+      await saveUser(merged);
+      await syncUserToFirestore(merged);
+      setUser(merged);
+    },
+    [user]
+  );
+
   return (
     <UserContext.Provider
       value={{
@@ -123,6 +153,7 @@ export function UserProvider({ children }) {
         completeQuiz,
         updateStreak,
         resetProgress,
+        saveDiagnostic,
       }}
     >
       {children}

@@ -51,36 +51,54 @@ export async function getRemainingRequests() {
 }
 
 export async function correctWriting(text, level) {
-  const result = await callGemini(
-    `Eres un tutor de inglés para un estudiante de nivel ${level} en Costa Rica preparándose para el examen MEP.
+ const result = await callGemini(
+ `Eres un evaluador oficial CEFR (niveles A1-A2-B1-B2). Un estudiante en Costa Rica te presenta un texto escrito. Tu objetivo es determinar si su escritura demuestra dominio REAL del nivel ${level} del Marco Común Europeo.
 
 Corrige el siguiente texto en inglés. Señala los errores y da sugerencias de mejora. Responde EN ESPAÑOL.
 
 Texto del estudiante:
 "${text}"
 
-Formato de respuesta (máximo 200 palabras):
+Criterios CEFR ${level} que debes verificar:
+- Rango y control gramatical (variedad de estructuras y tiempos)
+- Riqueza de vocabulario (colocaciones, precisión léxica)
+- Coherencia y cohesión (conectores, organización en párrafos)
+- Precisión: errores que impiden la comprensión
+
+Formato de respuesta (máximo 250 palabras):
 ✅ Correcciones:
 - [error] → [corrección] : [explicación breve]
 
 💡 Consejos:
 - [2-3 consejos para mejorar]
 
+📊 Evaluación CEFR:
+Nivel demostrado: [A1|A2|B1|B2]
+¿Cumple el nivel ${level}? [SÍ/NO]
 Puntuación estimada: [X/10]`
-  );
+ );
   return ERROR_MESSAGES[result] || result;
 }
 
 export async function evaluateSpeaking(text, topic, level) {
-  const result = await callGemini(
-    `Evalúa la siguiente respuesta oral en INGLÉS de un estudiante nivel ${level}.
+ const result = await callGemini(
+ `Eres un evaluador oficial CEFR (niveles A1-A2-B1-B2). Un estudiante en Costa Rica responde oralmente a una tarea. Tu objetivo es determinar si su respuesta demuestra dominio REAL del nivel ${level} del Marco Común Europeo.
 Tema: ${topic}
 
 Respuesta del estudiante: "${text}"
 
-Evalúa: 1) Gramática 2) Vocabulario 3) Fluidez 4) Contenido
-Da una puntuación /10 y 2-3 consejos en español. Máximo 150 palabras.`
-  );
+Criterios CEFR ${level} que debes verificar:
+1) Alcance y precisión gramatical
+2) Control y amplitud de vocabulario
+3) Fluidez y pronunciación
+4) Interacción, coherencia y adecuación al tema
+
+Responde EN ESPAÑOL, máximo 180 palabras:
+- Puntuación /10
+- Nivel demostrado: [A1|A2|B1|B2]
+- ¿Cumple el nivel ${level}? [SÍ/NO]
+- 2-3 consejos específicos para alcanzar el nivel ${level}`
+ );
   return ERROR_MESSAGES[result] || result;
 }
 

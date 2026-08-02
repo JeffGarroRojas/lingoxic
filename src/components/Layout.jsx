@@ -27,6 +27,7 @@ import { streakEmoji } from "../utils/level.js";
 
 const NAV_ITEMS = [
   { path: "/dashboard", label: "Inicio", icon: LayoutDashboard },
+  { path: "/diagnostic", label: "Diagnóstico", icon: ClipboardCheck },
   { path: "/learn", label: "Aprender", icon: BookOpen },
   { path: "/listening", label: "Escucha", icon: Headphones },
   { path: "/reading", label: "Lectura", icon: BookText },

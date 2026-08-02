@@ -1703,5 +1703,320 @@ const unitsData = [
       },
     ],
   },
+  {
+    id: `global-competence`,
+    title: `Global Competence`,
+    description: `Habilidades B2 para el mundo globalizado: trabajo, viajes, noticias y ciudadanía`,
+    level: `B2`,
+    order: 7,
+    lessons: [
+      {
+        id: `global-grammar-1`,
+        unitId: `global-competence`,
+        title: `Passive Voice: The News`,
+        description: `Voz pasiva para informes, noticias y procesos`,
+        type: `grammar`,
+        level: `B2`,
+        order: 1,
+        content: {
+          sections: [
+            {
+              type: `explanation`,
+              title: `La Voz Pasiva en Contexto`,
+              content: `La voz pasiva se usa cuando el foco está en la acción o en el objeto, no en quién la realiza: "The bridge was built in 2010." Se forma con to be + participio pasado. En B2 dominas: presente (is/are + V3), pasado (was/were + V3), presente perfecto (has/has been + V3) y el agente con "by" cuando es relevante. En noticias y reportes formales la pasiva es esencial.`,
+            },
+            {
+              type: `example`,
+              title: `Ejemplos en Contexto`,
+              content: `Observa cómo la pasiva cambia el foco de la frase:`,
+              examples: [
+                `The company launched a new app. → A new app was launched by the company.`,
+                `They have solved the problem. → The problem has been solved.`,
+                `People speak English in many countries. → English is spoken in many countries.`,
+              ],
+            },
+            {
+              type: `grammar`,
+              title: `Reglas Clave`,
+              content: `1. to be (en el tiempo adecuado) + participio pasado.\n2. El agente va con "by" solo si es importante: "The cake was made by Maria."\n3. Si no importa quién, se omite: "The window was broken."\n4. Con verbos modales: "must be done", "should be checked".`,
+            },
+            {
+              type: `tip`,
+              title: `Tip para el Examen MEP`,
+              content: `En el examen oficial, identifica la pasiva en titulares y artículos de noticias. Pregúntate siempre: ¿el sujeto realiza la acción o la recibe? Si la recibe, es pasiva.`,
+            },
+          ],
+        },
+      },
+      {
+        id: `global-vocabulary-1`,
+        unitId: `global-competence`,
+        title: `Phrasal Verbs for Work`,
+        description: `Phrasal verbs frecuentes en entornos profesionales`,
+        type: `vocabulary`,
+        level: `B2`,
+        order: 2,
+        content: {
+          sections: [
+            {
+              type: `explanation`,
+              title: `Phrasal Verbs en el Trabajo`,
+              content: `Los phrasal verbs (verbo + preposición/adverbio) son esenciales en inglés profesional. Aprende el significado y cómo se separan: "carry out" (realizar), "follow up" (dar seguimiento), "put off" (posponer), "look into" (investigar), "set up" (organizar), "deal with" (manejar).`,
+            },
+            {
+              type: `vocabulary`,
+              title: `Vocabulario Clave`,
+              content: `carry out → realizar una tarea\nfollow up → dar seguimiento\nput off → posponer\nlook into → investigar\nset up → organizar, establecer\ndeal with → manejar, encargarse\ncome up with → idear, proponer`,
+            },
+            {
+              type: `example`,
+              title: `En Contexto Laboral`,
+              content: `Frases típicas en reuniones y correos:`,
+              examples: [
+                `We need to carry out a market analysis.`,
+                `Let me follow up with the client tomorrow.`,
+                `The meeting was put off until Friday.`,
+                `I'll look into that issue right away.`,
+              ],
+            },
+            {
+              type: `tip`,
+              title: `Tip para el Examen MEP`,
+              content: `Distinguir phrasal verbs separables: "put the meeting off" y "put off the meeting" son ambos correctos. Pero con pronombres solo: "put it off".`,
+            },
+          ],
+        },
+      },
+      {
+        id: `global-reading-1`,
+        unitId: `global-competence`,
+        title: `Reading: Global News`,
+        description: `Lee y analiza artículos de noticias internacionales`,
+        type: `reading`,
+        level: `B2`,
+        order: 3,
+        content: {
+          sections: [
+            {
+              type: `explanation`,
+              title: `Cómo Leer Noticias Internacionales`,
+              content: `Los artículos de noticias siguen la pirámide invertida: la información más importante va al inicio. Identifica: quién (who), qué (what), dónde (where), cuándo (when) y por qué (why). En B2 debes reconocer también la opinión del autor frente a los hechos, y vocabulario como "authorities", "witnesses", "allegedly", "according to".`,
+            },
+            {
+              type: `example`,
+              title: `Artículo de Ejemplo`,
+              content: `Read the article and answer the questions:\n"Authorities in San José announced yesterday that a new recycling program will be introduced in all public schools. The initiative, which was developed with local universities, aims to reduce plastic waste by 40% within two years. According to the Ministry of Education, the program will include workshops for teachers and students. Critics, however, argue that the plan lacks sufficient funding."`,
+            },
+            {
+              type: `grammar`,
+              title: `Vocabulario del Análisis`,
+              content: `authorities → autoridades\naccording to → según\nwitnesses → testigos\nallegedly → presuntamente\ninitiative → iniciativa\nto aim to → tener como objetivo`,
+            },
+            {
+              type: `tip`,
+              title: `Tip para el Examen MEP`,
+              content: `Distingue hecho de opinión. Hecho: "The program will be introduced." Opinión: "Critics argue the plan lacks funding."`,
+            },
+          ],
+        },
+      },
+      {
+        id: `global-listening-1`,
+        unitId: `global-competence`,
+        title: `Listening: Airport Announcements`,
+        description: `Comprende anuncios y conversaciones de viaje complejas`,
+        type: `listening`,
+        level: `B2`,
+        order: 4,
+        content: {
+          sections: [
+            {
+              type: `explanation`,
+              title: `Anuncios en Aeropuertos`,
+              content: `En B2, los anuncios de aeropuerto y las conversaciones de viaje incluyen lenguaje formal y específico: "boarding gate", "delayed", "cancelled", "final call", "passengers traveling to...". El acento puede variar. Practica captar números, horas y puertas incluso con ruido de fondo.`,
+            },
+            {
+              type: `example`,
+              title: `Anuncio de Ejemplo`,
+              content: `Escucha (o lee) este anuncio y responde:\n"Attention passengers. This is the final call for flight CR-204 to Madrid. The flight will depart from gate B12 at 14:30. Passengers traveling to Madrid are requested to proceed immediately to the boarding gate. Please have your boarding pass and passport ready."`,
+            },
+            {
+              type: `vocabulary`,
+              title: `Vocabulario de Viajes`,
+              content: `final call → último llamado\nboarding gate → puerta de embarque\nboarding pass → tarjeta de abordar\nproceed → dirigirse\ndeparture → salida\nconnection → conexión`,
+            },
+            {
+              type: `tip`,
+              title: `Tip para el Examen MEP`,
+              content: `Al escuchar, anota números (hora, puerta, vuelo). Las respuestas suelen girar alrededor de esos datos exactos.`,
+            },
+          ],
+        },
+      },
+      {
+        id: `global-writing-1`,
+        unitId: `global-competence`,
+        title: `Writing: Formal Emails`,
+        description: `Redacta correos formales y profesionales`,
+        type: `writing`,
+        level: `B2`,
+        order: 5,
+        content: {
+          sections: [
+            {
+              type: `explanation`,
+              title: `El Correo Formal en B2`,
+              content: `Un correo formal requiere: saludo formal ("Dear Mr. Smith", "Dear Sir or Madam"), introducción clara del propósito ("I am writing to inquire about..."), cuerpo organizado en párrafos, cierre cortés ("I look forward to your reply") y despedida ("Yours faithfully"). Evita contracciones y lenguaje informal.`,
+            },
+            {
+              type: `example`,
+              title: `Plantilla de Ejemplo`,
+              content: `Subject: Inquiry about Course Enrollment\n\nDear Ms. Rojas,\n\nI am writing to inquire about the availability of the Business English course starting in September. I would be grateful if you could send me information about the schedule and fees.\n\nThank you for your time and consideration.\n\nYours sincerely,\nCarlos Méndez`,
+            },
+            {
+              type: `grammar`,
+              title: `Expresiones Útiles`,
+              content: `I am writing to... → Escribo para...\nI would be grateful if... → Agradecería si...\nI look forward to... → Espero con interés...\nPlease do not hesitate to... → No dude en...\nCould you kindly... → ¿Podría amablemente...`,
+            },
+            {
+              type: `tip`,
+              title: `Tip para el Examen MEP`,
+              content: `Revisa el registro: en B2, un correo informal a un amigo difiere totalmente del formal. El examen suele pedir ambos. Adapta el tono siempre.`,
+            },
+          ],
+        },
+      },
+      {
+        id: `global-speaking-1`,
+        unitId: `global-competence`,
+        title: `Speaking: Debates`,
+        description: `Expresa y defiende opiniones complejas`,
+        type: `speaking`,
+        level: `B2`,
+        order: 6,
+        content: {
+          sections: [
+            {
+              type: `explanation`,
+              title: `Debatir en B2`,
+              content: `En B2 debes expresar opiniones matizadas, estar de acuerdo o en desacuerdo educadamente y pedir clarificación. Usa conectores: "In my view...", "While I understand your point...", "I'd argue that...", "That's a fair point, but..."`,
+            },
+            {
+              type: `example`,
+              title: `Frases para el Debate`,
+              content: `Frases que demuestran dominio B2:`,
+              examples: [
+                `From my perspective, the proposal has both merits and drawbacks.`,
+                `While I agree in principle, I think we should consider the cost.`,
+                `Could you clarify what you mean by "sustainable growth"?`,
+                `I'm not entirely convinced that this is the best approach.`,
+              ],
+            },
+            {
+              type: `tip`,
+              title: `Tip para el Examen MEP`,
+              content: `Para una evaluación B2 de speaking, evita respuestas de una palabra. Da tu opinión + una razón + un ejemplo. Eso demuestra el rango CEFR B2.`,
+            },
+          ],
+        },
+      },
+      {
+        id: `global-quiz-1`,
+        unitId: `global-competence`,
+        title: `Global Competence Quiz`,
+        description: `Pon a prueba tus habilidades B2`,
+        type: `quiz`,
+        level: `B2`,
+        order: 7,
+        content: {
+          sections: [
+            {
+              type: `explanation`,
+              title: `Quiz de la Unidad`,
+              content: `Responde este quiz para completar la unidad Global Competence.`,
+            },
+          ],
+        },
+      },
+    ],
+    quizzes: [
+      {
+        id: `global-quiz-1`,
+        unitId: `global-competence`,
+        title: `Global Competence Quiz`,
+        description: `Evaluación final de la unidad B2`,
+        type: `quiz`,
+        level: `B2`,
+        timeLimit: 15,
+        requiredScore: 60,
+        questions: [
+          {
+            id: `global-q1-1`,
+            type: `multiple-choice`,
+            prompt: `"The new software ___ by our engineers last month."`,
+            options: [`was developed`, `develops`, `is developing`, `developed`],
+            correctAnswer: `was developed`,
+            explanation: `Pasiva en pasado: was/were + participio pasado. "The software was developed."`,
+            skillArea: `grammar`,
+          },
+          {
+            id: `global-q1-2`,
+            type: `multiple-choice`,
+            prompt: `Choose the correct phrasal verb: "We need to ___ the issue with the client."`,
+            options: [`deal with`, `deal on`, `deal about`, `deal up`],
+            correctAnswer: `deal with`,
+            explanation: `"Deal with" significa manejar o encargarse de algo.`,
+            skillArea: `vocabulary`,
+          },
+          {
+            id: `global-q1-3`,
+            type: `multiple-choice`,
+            prompt: `"The report ___ by the time the meeting started."`,
+            options: [`had been finished`, `has finished`, `was finishing`, `finishes`],
+            correctAnswer: `had been finished`,
+            explanation: `Pasiva en pasado perfecto: had been + participio. La acción terminó antes de otro evento en el pasado.`,
+            skillArea: `grammar`,
+          },
+          {
+            id: `global-q1-4`,
+            type: `multiple-choice`,
+            prompt: `Which sentence expresses disagreement politely?`,
+            options: [
+              `While I understand your point, I believe there are other factors to consider.`,
+              `You're completely wrong.`,
+              `No, that's a bad idea.`,
+              `I disagree with everything you said.`,
+            ],
+            correctAnswer: `While I understand your point, I believe there are other factors to consider.`,
+            explanation: `El desacuerdo educado reconoce el punto del otro antes de presentar la propia opinión.`,
+            skillArea: `speaking`,
+          },
+          {
+            id: `global-q1-5`,
+            type: `multiple-choice`,
+            prompt: `Read: "The initiative, which was developed with local universities, aims to reduce plastic waste by 40%." Who helped develop the initiative?`,
+            options: [
+              `Local universities`,
+              `The government alone`,
+              `Private companies`,
+              `International NGOs`,
+            ],
+            correctAnswer: `Local universities`,
+            explanation: `La cláusula "which was developed with local universities" indica que las universidades locales participaron.`,
+            skillArea: `reading`,
+          },
+          {
+            id: `global-q1-6`,
+            type: `multiple-choice`,
+            prompt: `"All the tickets for the concert ___ before we arrived."`,
+            options: [`had been sold`, `have sold`, `sold`, `were selling`],
+            correctAnswer: `had been sold`,
+            explanation: `Pasiva en pasado perfecto: la venta ocurrió antes de nuestra llegada.`,
+            skillArea: `grammar`,
+          },
+        ],
+      },
+    ],
+  },
 ];
 export default unitsData;

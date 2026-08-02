@@ -32,10 +32,12 @@ export default function SettingsPage() {
             <span className="text-sm text-gray-500">Nombre</span>
             <span className="font-medium">{user.name}</span>
           </div>
-          <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-500">Nivel actual</span>
-            <span className="font-medium">{user.level}</span>
-          </div>
+      <div className="flex items-center justify-between">
+        <span className="text-sm text-gray-500">Nivel actual</span>
+        <span className="font-medium">{user.level}</span> </div>
+      <div className="flex items-center justify-between">
+        <span className="text-sm text-gray-500">Nivel diagnóstico CEFR</span>
+        <span className="font-medium">{user.diagnostic ? user.diagnostic.overallLevel : "Sin evaluar"}</span> </div>
           <div className="flex items-center justify-between">
             <span className="text-sm text-gray-500">XP total</span>
             <span className="font-medium">{user.xp} XP</span>
@@ -50,6 +52,19 @@ export default function SettingsPage() {
           </div>
         </div>
       </Card>
+
+      {user.level === "B2" && !user.diagnostic && (
+        <Card>
+          <h2 className="font-semibold mb-2">Nivel B2 pendiente de validación</h2>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+            Tu XP te permite estar en B2, pero para que tu nivel sea creíble ante un examen oficial
+            (certificado CEFR), completa el diagnóstico y alcanza B2 en al menos 5 de 6 habilidades.
+          </p>
+          <Link to="/diagnostic">
+            <Button className="w-full">Hacer diagnóstico <ArrowRight size={16} /></Button>
+          </Link>
+        </Card>
+      )}
 
       <Card>
         <h2 className="font-semibold mb-4">🎨 Apariencia</h2>
