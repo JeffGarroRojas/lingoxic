@@ -7,6 +7,8 @@ import grammarData from "../data/grammarData.js";
 import { useUser } from "../hooks/useUser.jsx";
 import { saveExamResult } from "../services/db.js";
 
+import { useActivityGuard } from "../hooks/useActivityGuard.jsx";
+
 export default function ExamSim() {
   const navigate = useNavigate();
   const { user, addXP } = useUser();
@@ -15,6 +17,7 @@ export default function ExamSim() {
   const [answers, setAnswers] = useState({});
   const [finished, setFinished] = useState(false);
   const [secondsLeft, setSecondsLeft] = useState(3600);
+  useActivityGuard(started && !finished);
 
   let pool = [];
   unitsData.forEach((u) => u.quizzes.forEach((q) => pool.push(...q.questions)));

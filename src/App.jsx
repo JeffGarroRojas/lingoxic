@@ -102,6 +102,14 @@ function UpdateToast() {
     useRegisterSW();
   const dismiss = React.useCallback(() => setNeedRefresh(false), [setNeedRefresh]);
 
+  const handleUpdate = React.useCallback(() => {
+    const busy = window.__lingoxicBusy;
+    if (busy && busy.pending) {
+      if (!window.confirm("Tienes una actividad en curso (quiz, examen o diagnóstico) que se reiniciará al actualizar. ¿Quieres continuar?")) return;
+    }
+    updateServiceWorker();
+  }, [updateServiceWorker]);
+
   useEffect(() => {
     if (needRefresh) {
       const timer = setTimeout(dismiss, 30000);
@@ -126,12 +134,12 @@ function UpdateToast() {
                 Actualiza para ver los últimos cambios
               </p>
             </div>
-            <button
-              onClick={() => updateServiceWorker()}
-              className="px-4 py-2 bg-gradient-to-r from-sky-500 to-emerald-500 text-white rounded-xl text-sm font-semibold hover:shadow-lg transition-all"
-            >
-              Actualizar
-            </button>
+        <button
+          onClick={handleUpdate}
+          className="px-4 py-2 bg-gradient-to-r from-sky-500 to-emerald-500 text-white rounded-xl text-sm font-semibold hover:shadow-lg transition-all"
+        >
+          Actualizar
+        </button>
             <button
               onClick={dismiss}
               className="p-2 hover:bg-gray-700 rounded-lg transition-colors text-gray-400"

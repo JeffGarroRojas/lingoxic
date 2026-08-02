@@ -8,11 +8,17 @@ Aplicación web de aprendizaje de inglés (niveles A1-B2), orientada al currícu
 npm run dev        # dev server Vite
 npm run build      # build producción (también regenera assets del SW)
 npm run preview    # preview del build
+npm test           # vitest run (tests de datos + componentes)
 npm run deploy     # npm run build && firebase deploy --only hosting
-npm test           # vitest (si existen tests)
 ```
 
-No hay lint ni typecheck configurados. Al terminar un cambio, verifica con `npm run build` (único chequeo disponible).
+**Chequeos obligatorios al terminar un cambio**: `npm test` (vitest, validación de datos: unidades con `icon`/`color`, skills válidas, correctAnswer en opciones) y `npm run build`. No hay lint ni typecheck configurados.
+
+## Reglas de estabilidad (PWA)
+
+- **Crash de Dashboard**: toda unidad en `unitsData.js` DEBE tener `icon` (string) y `color` (gradiente `from-*`) — el Dashboard hace `u.color.split(" ")` y se cae si falta (crash real ocurrido en producción).
+- **Actualización del SW**: las páginas con temporizador/actividad en curso (ExamSim, QuizPage, Diagnostic) usan `useActivityGuard(active)` (de `src/hooks/useActivityGuard.jsx`). Al pulsar "Actualizar" en el banner PWA, `App.jsx` muestra confirmación si hay actividad en curso.
+- Los tests en `src/data/*.test.js` y `src/pages/Dashboard.test.jsx` son la red de seguridad: ejecútalos antes de cada deploy.
 
 ## Arquitectura general
 

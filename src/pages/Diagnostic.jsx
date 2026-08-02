@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import { Card, Button, ProgressBar } from "../components/ui.jsx";
 import { useUser } from "../hooks/useUser.jsx";
+import { useActivityGuard } from "../hooks/useActivityGuard.jsx";
 import {
   SKILLS, DIAGNOSTIC_QUESTIONS, CEFR_DESCRIPTORS,
   scoreToLevel, levelRank,
@@ -21,6 +22,7 @@ export default function Diagnostic() {
   const [currentSkill, setCurrentSkill] = useState(0);
   const [started, setStarted] = useState(false);
   const [finished, setFinished] = useState(false);
+  useActivityGuard(started && !finished);
 
   const skill = SKILLS[currentSkill];
   const questions = DIAGNOSTIC_QUESTIONS[skill];

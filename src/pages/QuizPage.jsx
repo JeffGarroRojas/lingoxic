@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useActivityGuard } from "../hooks/useActivityGuard.jsx";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, Brain, CircleCheckBig, CircleX, Clock } from "lucide-react";
 import { useUser } from "../hooks/useUser.jsx";
@@ -18,6 +19,7 @@ export default function QuizPage() {
   const [finished, setFinished] = useState(false);
   const [timeLeft, setTimeLeft] = useState(quiz?.timeLimit || 300);
   const [started, setStarted] = useState(false);
+  useActivityGuard(started && !finished);
 
   useEffect(() => {
     if (!started || finished || !quiz?.timeLimit) return;

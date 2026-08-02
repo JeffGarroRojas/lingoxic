@@ -5,6 +5,7 @@ import {
   SKILLS as SKILL_ORDER, DIAGNOSTIC_QUESTIONS,
   scoreToLevel, levelRank,
 } from "../data/diagnosticData.js";
+import { levelFromXp } from "../utils/levelProgress.js";
 import { genId } from "../utils/level.js";
 
 const UserContext = createContext(null);
@@ -54,13 +55,7 @@ export function UserProvider({ children }) {
     let current = user;
     if (!current) return;
     const xp = current.xp + amount;
-    let level = current.level;
-    const diag = current.diagnostic;
-    const diagReady = diag && diag.overallLevel === "B2";
-    if (diagReady && (xp >= 5000 || (xp >= 2500 && current.level === "B1"))) level = "B2";
-    else if (xp >= 2500 || (xp >= 1000 && current.level === "A2")) level = "B1";
-    else if (xp >= 1000) level = "A2";
-    else level = "A1";
+    const level = levelFromXp(xp, current.level, current.diagnostic);
     const merged = { ...current, xp, level };
     await updateUser({ xp, level });
     await syncUserToFirestore(merged);
