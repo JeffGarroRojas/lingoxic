@@ -1708,6 +1708,8 @@ const unitsData = [
     title: `Global Competence`,
     description: `Habilidades B2 para el mundo globalizado: trabajo, viajes, noticias y ciudadanía`,
     level: `B2`,
+    icon: `Globe`,
+    color: `from-violet-500 to-purple-600`,
     order: 7,
     lessons: [
       {
