@@ -42,10 +42,10 @@ export default function Learn() {
                   <Lock size={32} className="text-gray-400" />
                 </div>
               )}
-              <div className={`h-2 rounded-t-2xl mb-4 bg-gradient-to-r ${unit.color}`} />
-              <div className="flex items-start justify-between mb-3">
-                <div className="flex items-center gap-2">
-                  <div className={`p-2 rounded-lg bg-gradient-to-br ${unit.color} text-white`}>
+            <div className={`h-2 rounded-t-2xl mb-4 bg-gradient-to-r ${unit.color || "from-sky-500 to-blue-500"}`} />
+            <div className="flex items-start justify-between mb-3">
+            <div className="flex items-center gap-2">
+            <div className={`p-2 rounded-lg bg-gradient-to-br ${unit.color || "from-sky-500 to-blue-500"} text-white`}>
                     <BookOpen size={18} />
                   </div>
                   <div>

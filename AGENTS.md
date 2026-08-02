@@ -16,7 +16,7 @@ npm run deploy     # npm run build && firebase deploy --only hosting
 
 ## Reglas de estabilidad (PWA)
 
-- **Crash de Dashboard**: toda unidad en `unitsData.js` DEBE tener `icon` (string) y `color` (gradiente `from-*`) — el Dashboard hace `u.color.split(" ")` y se cae si falta (crash real ocurrido en producción).
+- **Crash de Dashboard**: toda unidad en `unitsData.js` DEBE tener `icon` (string) y `color` (gradiente `from-*`) — el Dashboard hace `u.color.split(" ")` y se cae si falta (crash real ocurrido en producción). Además, Dashboard/Learn/UnitDetail tienen fallback `|| "from-sky-500 to-blue-500"` y el test `unitsData.test.js` bloquea el deploy si falta.
 - **Actualización del SW**: las páginas con temporizador/actividad en curso (ExamSim, QuizPage, Diagnostic) usan `useActivityGuard(active)` (de `src/hooks/useActivityGuard.jsx`). Al pulsar "Actualizar" en el banner PWA, `App.jsx` muestra confirmación si hay actividad en curso.
 - Los tests en `src/data/*.test.js` y `src/pages/Dashboard.test.jsx` son la red de seguridad: ejecútalos antes de cada deploy.
 

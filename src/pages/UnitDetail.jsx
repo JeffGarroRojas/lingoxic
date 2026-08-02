@@ -21,7 +21,7 @@ export default function UnitDetail() {
         <ArrowLeft size={16} /> Volver a unidades
       </button>
 
-      <div className={`rounded-2xl p-6 bg-gradient-to-r ${unit.color} text-white`}>
+      <div className={`rounded-2xl p-6 bg-gradient-to-r ${unit.color || "from-sky-500 to-blue-500"} text-white`}>
         <div className="flex items-center gap-3 mb-2">
           <Badge variant="default" className="bg-white/20 text-white">
             {unit.level}

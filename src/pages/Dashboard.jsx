@@ -119,14 +119,15 @@ export default function Dashboard() {
           </div>
           <div className="space-y-3">
             {units.map((u) => {
-              const color = u.color.split(` `)[0].replace(`from-`, ``).replace(/-/g, ``);
+              const from = (u.color || "from-sky-500").split(" ")[0].replace("from-", "").replace(/-/g, "");
+              const color = from || "sky";
               return (
                 <div key={u.id} className="flex items-center gap-3">
                   <div
                     className="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold"
                     style={{
                       background: `${color}20`,
-                      color: u.color.split(` `)[0].replace(`from-`, ``),
+                      color,
                     }}
                   >
                     {u.order}
