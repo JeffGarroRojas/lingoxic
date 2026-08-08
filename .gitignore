@@ -5,3 +5,6 @@ dist/
 .env
 .env.*
 .DS_Store
+.tmpcopy/
+lingoxic-promo/
+*.mp4
