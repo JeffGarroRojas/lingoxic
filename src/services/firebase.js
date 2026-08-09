@@ -2,9 +2,9 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  projectId: "aprendelingocix",
-  apiKey: "REDACTED_API_KEY",
-  authDomain: "aprendelingocix.web.app",
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
 };
 
 const app = initializeApp(firebaseConfig);
