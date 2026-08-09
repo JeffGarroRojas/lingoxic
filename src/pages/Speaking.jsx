@@ -16,10 +16,12 @@ import { Badge, Button, Card, SkillBadge } from "../components/ui.jsx";
 import unitsData from "../data/unitsData.js";
 import { getSpeakingExercise } from "../data/speakingData.js";
 import { useUser } from "../hooks/useUser.jsx";
+import useOnlineStatus from "../hooks/useOnlineStatus.js";
 import {
   chatWithTutor,
   evaluateSpeaking,
   getRemainingRequests,
+  getAILimitInfo,
 } from "../services/gemini.js";
 
 function SpeakingLesson({ lesson, quiz, isCompleted, onComplete, onAddXP }) {
@@ -211,6 +213,7 @@ function SpeakingLesson({ lesson, quiz, isCompleted, onComplete, onAddXP }) {
 
 function Conversation({ lesson, userLevel }) {
   const [messages, setMessages] = useState([]);
+  const isOnline = useOnlineStatus();
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [count, setCount] = useState(0);
@@ -322,7 +325,7 @@ function Conversation({ lesson, userLevel }) {
               disabled={loading || count >= 5}
               className="flex-1 px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none transition-all text-sm"
             />
-            <Button onClick={send} disabled={!input.trim() || loading || count >= 5}>
+            <Button onClick={send} disabled={!input.trim() || loading || !isOnline || count >= 5}>
               <Send size={16} />
             </Button>
           </div>
@@ -347,7 +350,7 @@ function Conversation({ lesson, userLevel }) {
           )}
         </div>
       ) : (
-        <Button onClick={start} disabled={loading}>
+        <Button onClick={start} disabled={loading || !isOnline}>
           <Play size={16} /> Iniciar conversación
         </Button>
       )}

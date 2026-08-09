@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import { useUser } from "../hooks/useUser.jsx";
 import { useTheme } from "../hooks/useTheme.jsx";
+import useOnlineStatus from "../hooks/useOnlineStatus.js";
 import { LevelBadge } from "./ui.jsx";
 import { streakEmoji } from "../utils/level.js";
 
@@ -46,6 +47,7 @@ function Sidebar({ onNavigate }) {
   const navigate = useNavigate();
   const { user } = useUser();
   const { darkMode, toggleDarkMode, sidebarOpen } = useTheme();
+  const isOnline = useOnlineStatus();
   const [collapsed, setCollapsed] = useState(false);
 
   const go = (path) => {
@@ -178,6 +180,12 @@ export default function Layout() {
       <div className="lg:ml-64">
         <Header onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
         <main className="p-4 md:p-6 lg:p-8 max-w-6xl mx-auto">
+          {!isOnline && (
+            <div className="mb-4 flex items-center gap-2 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm font-medium text-amber-800 dark:border-amber-700 dark:bg-amber-900/30 dark:text-amber-200">
+              <span className="h-2.5 w-2.5 rounded-full bg-amber-500" />
+              Sin conexión a internet. Las funciones que requieren IA (Writing, Speaking) no están disponibles hasta que vuelvas a conectarte.
+            </div>
+          )}
           <Outlet />
         </main>
       </div>

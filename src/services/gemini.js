@@ -3,7 +3,7 @@ import { getCachedAI, setCachedAI, getGeminiCount, setGeminiCount } from "./db.j
 
 const GEMINI_CONFIG = {
   MODEL: "gemini-flash-lite-latest",
-  MAX_REQUESTS_PER_SESSION: 30,
+  MAX_REQUESTS_PER_SESSION: 20,
 };
 
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
@@ -32,7 +32,15 @@ async function callGemini(prompt) {
   await setGeminiCount(sessionCount);
 
   try {
-    const result = await model.generateContent(prompt);
+    let result;
+    try {
+      result = await model.generateContent(prompt);
+    } catch (retryErr) {
+      sessionCount = Math.max(0, sessionCount - 1);
+      await setGeminiCount(sessionCount);
+      if (retryErr?.message?.includes("429") || retryErr?.status === 429) throw retryErr;
+      result = await model.generateContent(prompt);
+    }
     const text = result.response.text();
     await setCachedAI(prompt, text);
     return text;
@@ -48,6 +56,26 @@ async function callGemini(prompt) {
 export async function getRemainingRequests() {
   const daily = await getGeminiCount();
   return Math.max(0, GEMINI_CONFIG.MAX_REQUESTS_PER_SESSION - daily);
+}
+
+export function computeResetLabel(now = new Date()) {
+  const nextMidnight = new Date(now);
+  nextMidnight.setHours(24, 0, 0, 0);
+  return nextMidnight.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+}
+
+export async function getAILimitInfo() {
+  const daily = await getGeminiCount();
+  const remaining = Math.max(0, GEMINI_CONFIG.MAX_REQUESTS_PER_SESSION - daily);
+  const now = new Date();
+  const nextMidnight = new Date(now);
+  nextMidnight.setHours(24, 0, 0, 0);
+  return {
+    remaining,
+    resetsInMs: nextMidnight.getTime() - now.getTime(),
+    resetLabel: computeResetLabel(),
+    resetISO: nextMidnight.toISOString(),
+  };
 }
 
 export async function correctWriting(text, level) {

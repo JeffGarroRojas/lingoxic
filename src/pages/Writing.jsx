@@ -3,7 +3,8 @@ import { PenTool, Send, Sparkles } from "lucide-react";
 import { useUser } from "../hooks/useUser.jsx";
 import { Card, Button, EmptyState } from "../components/ui.jsx";
 import unitsData from "../data/unitsData.js";
-import { correctWriting, getRemainingRequests } from "../services/gemini.js";
+import { correctWriting, getRemainingRequests, getAILimitInfo } from "../services/gemini.js";
+import useOnlineStatus from "../hooks/useOnlineStatus.js";
 
 export default function Writing() {
   const { user } = useUser();
@@ -12,6 +13,8 @@ export default function Writing() {
   const [feedback, setFeedback] = useState("");
   const [loading, setLoading] = useState(false);
   const [remaining, setRemaining] = useState(15);
+ const [resetLabel, setResetLabel] = useState("");
+ const isOnline = useOnlineStatus();
 
   useEffect(() => {
     getRemainingRequests().then(setRemaining);
@@ -20,12 +23,19 @@ export default function Writing() {
   const unit = unitsData.find((u) => u.id === selectedUnit);
   if (!user) return null;
 
-  const submit = async () => {
-    if (!text.trim()) return;
-    setLoading(true);
-    setFeedback(await correctWriting(text, user.level));
-    setLoading(false);
-  };
+ const submit = async () => {
+ if (!text.trim()) return;
+ setLoading(true);
+ const result = await correctWriting(text, user.level);
+ if (result && result.startsWith("LÍMITE")) {
+   const info = await getAILimitInfo();
+   setFeedback(`Agotaste los usos de IA de hoy. Se renueva a las ${info.resetLabel}.`);
+   setResetLabel(info.resetLabel);
+ } else {
+   setFeedback(result);
+ }
+ setLoading(false);
+ };
 
   const writingLesson = unit?.lessons.find((l) => l.type === "writing");
 
@@ -82,7 +92,7 @@ export default function Writing() {
           <span className="text-xs text-gray-400 flex items-center gap-1">
             <Sparkles size={12} /> Feedback IA: {remaining} solicitudes restantes
           </span>
-          <Button onClick={submit} disabled={loading || !text.trim()}>
+          <Button onClick={submit} disabled={loading || !text.trim() || !isOnline}>
             {loading ? (
               `Analizando...`
             ) : (
