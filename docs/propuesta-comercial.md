@@ -17,7 +17,7 @@
 ### Qué incluye
 
 - Acceso completo a Lingoxic (lecciones, quizzes, listening, reading, writing, speaking, grammar, vocabulary, exam-sim).
-- Login simple por estudiante (nombre + PIN).
+- Acceso por código único: ABA recibe UN código de acceso para sus 50 estudiantes (se entrega al iniciar; el autor puede cambiarlo/desactivarlo).
 - Soporte y corrección de errores durante los 2 meses.
 - Configuración del piloto (usuarios habilitados).
 
@@ -75,12 +75,46 @@ Servicio continuo para mantener la app estable y responder dudas. El piloto solo
 
 ---
 
+## Tarifa comercial (post-piloto)
+
+Al terminar el piloto de 2 meses, se propone la tarifa comercial con descuento
+por compromiso anual. Estos son los valores de referencia que se presentan a ABA:
+
+| Opción | Precio | Detalle |
+|---|---|---|
+| Mensual | 300 CRC/usuario/mes | Flexible, sin permanencia |
+| Anual (adelantado) | 3.000 CRC/usuario/año | Pago de una vez, con prioridad de soporte |
+
+- **Ejemplo anual:** 50 usuarios x 3.000 CRC = 150.000 CRC/año.
+- **Ejemplo mensual:** 50 usuarios x 300 CRC/mes = 15.000 CRC/mes.
+- El cambio de tarifa se negocia con los datos reales del piloto (uso, costo de
+  IA, funciones solicitadas).
+- El mantenimiento y los servicios opcionales (migración, dominio, funciones
+  nuevas) se cotizan por separado y no están incluidos en la tarifa por usuario.
+
+## Siguientes pasos y compromisos
+
+| Etapa | Qué pasa | Responsable |
+|---|---|---|
+| 1. Firma del piloto | Aceptar la oferta por escrito (mensaje/contrato) | ABA + autor |
+| 2. Activación | Se entrega el código de acceso y se habilita la app | Autor |
+| 3. Uso del piloto (2 meses) | Los 50 estudiantes usan la app | ABA + estudiantes |
+| 4. Revisión a mitad (mes 1) | Reunión breve: uso, dudas, ajustes | Ambas partes |
+| 5. Evaluación final (mes 2) | Revisar datos del piloto y definir plan comercial | Ambas partes |
+
+- La oferta del piloto tiene vigencia de 15 días.
+- El piloto NO se renueva gratis: al finalizar, se firma la tarifa comercial.
+- Cualquier función nueva pedida durante el piloto se cotiza como servicio
+  opcional (no frena la estabilidad del piloto).
+
 ## Tabla resumen de precios
 
 | Concepto | Precio | Detalle |
 |---|---|---|
 | Plan piloto (50 usuarios, 2 meses) | 25.000 CRC | 250 CRC/usuario/mes |
 | Usuario adicional en el piloto | 250 CRC/usuario/mes | Precio base |
+| Tarifa comercial mensual (post-piloto) | 300 CRC/usuario/mes | Sin permanencia |
+| Tarifa comercial anual (post-piloto) | 3.000 CRC/usuario/año | Pago adelantado |
 | Migración a nube + panel profesores | Por cotizar | Proyecto de 4-6 semanas |
 | Mantenimiento mensual | Por cotizar | Opción A (cuota fija) |
 | Mantenimiento por hora | Por cotizar | Opción B (mín. 1 hora) |
