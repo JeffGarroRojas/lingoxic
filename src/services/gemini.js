@@ -2,11 +2,11 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { getCachedAI, setCachedAI, getGeminiCount, setGeminiCount } from "./db.js";
 
 const GEMINI_CONFIG = {
-  MODEL: "gemini-2.0-flash",
-  MAX_REQUESTS_PER_SESSION: 15,
+  MODEL: "gemini-flash-lite-latest",
+  MAX_REQUESTS_PER_SESSION: 30,
 };
 
-const API_KEY = "REDACTED_API_KEY";
+const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
 const genAI = new GoogleGenerativeAI(API_KEY);
 let sessionCount = 0;

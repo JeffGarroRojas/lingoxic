@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, doc, setDoc } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   projectId: "aprendelingocix",
@@ -11,25 +11,8 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 export async function syncUserToFirestore(user) {
-  try {
-    await setDoc(
-      doc(db, "users", user.id),
-      {
-        name: user.name,
-        level: user.level,
-        xp: user.xp,
-        streak: user.streak,
-        lastActive: user.lastActive,
-        completedLessons: user.completedLessons,
-        completedQuizzes: user.completedQuizzes,
-        weakAreas: user.weakAreas,
-        updatedAt: Date.now(),
-      },
-      { merge: true }
-    );
-  } catch (e) {
-    console.warn("Firestore sync failed (offline?):", e);
-  }
+  // Sincronización desactivada: el progreso es 100% local (IndexedDB)
+  // hasta implementar la base de datos central (PostgreSQL).
+  void user;
+  return;
 }
-
-export { db };

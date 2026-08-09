@@ -169,6 +169,16 @@ El modelo se congela o corta la respuesta a mitad de tarea por agotar output tok
 3. **Cortes limpios**: si calculas que vas a quedarte sin tokens, detente al final de la última función completa y avisa que continuarás en el próximo mensaje.
 4. **Cero verbosidad**: sin introducciones ni explicaciones teóricas. Solo el cambio, directo.
 
+## Regla de oro: montos monetarios (docs/ y propuestas)
+
+Los precios son CRÍTICOS para la negociación con American Business Academy. Antes de escribir cualquier número de dinero en `docs/` u otros archivos:
+
+1. **Verifica la fórmula base** (definida en `docs/propuesta-lingoxic.md`): la tarifa es **250 CRC/estudiante/mes** (anual: 3.000 CRC/usuario/año).
+   - 50 usuarios × 2 meses = 25.000 CRC (NO 100.000).
+   - 500 usuarios × 3.000 CRC/año = 1.500.000 CRC.
+2. **Recalcula en cada edición**: nunca copies un monto de memoria; recalcula la multiplicación y confirma con grep que no queden montos obsoletos.
+3. **Si tienes dudas, pregunta al usuario antes de escribir el número.**
+
 ## PWA
 
 La app es instalable (manifest + service worker vía `vite-plugin-pwa`). Tras cambios de build, `npm run build` regenera los assets del SW.
