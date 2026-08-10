@@ -99,7 +99,7 @@ export default function Practice() {
     <div className="max-w-2xl mx-auto space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-bold flex items-center gap-2">
-          <BrainCircuit className="text-purple-500" /> Práctica Rápida
+          <BrainCircuit className="text-sky-500" /> Práctica Rápida
         </h1>
         <div className="flex items-center gap-2">
           <SkillBadge skill={filter || question.skillArea} showLabel />

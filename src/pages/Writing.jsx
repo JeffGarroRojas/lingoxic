@@ -43,7 +43,7 @@ export default function Writing() {
     <div className="space-y-6 max-w-3xl mx-auto">
       <div>
         <h1 className="text-2xl font-bold flex items-center gap-2">
-          <PenTool className="text-pink-500" /> Writing Practice
+          <PenTool className="text-sky-500" /> Writing Practice
         </h1>
         <p className="text-gray-500">Escribe en inglés y recibe feedback con IA</p>
       </div>
@@ -107,7 +107,7 @@ export default function Writing() {
       {feedback && (
         <Card>
           <div className="flex items-start gap-3">
-            <Sparkles size={20} className="text-purple-500 mt-0.5 shrink-0" />
+            <Sparkles size={20} className="text-sky-500 mt-0.5 shrink-0" />
             <div className="text-sm leading-relaxed whitespace-pre-wrap">
               {feedback}
             </div>

@@ -53,7 +53,7 @@ export default function QuizPage() {
     return (
       <div className="max-w-lg mx-auto space-y-6 pt-12">
         <div className="text-center space-y-4">
-          <div className="p-4 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl w-16 h-16 flex items-center justify-center mx-auto text-white">
+          <div className="p-4 bg-gradient-to-br from-sky-500 to-sky-500 rounded-2xl w-16 h-16 flex items-center justify-center mx-auto text-white">
             <Brain size={32} />
           </div>
           <h1 className="text-2xl font-bold">{quiz.title}</h1>

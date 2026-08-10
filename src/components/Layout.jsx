@@ -143,8 +143,8 @@ function Header({ onMenuClick }) {
         {user && (
           <div className="flex items-center gap-4 ml-auto">
             <div className="flex items-center gap-1.5 text-sm">
-              <Flame size={16} className="text-orange-500" />
-              <span className="font-semibold text-orange-600 dark:text-orange-400">
+              <Flame size={16} className="text-emerald-500" />
+              <span className="font-semibold text-emerald-600 dark:text-emerald-400">
                 {user.streak}
               </span>
               <span className="text-xs text-gray-400">

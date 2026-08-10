@@ -88,7 +88,7 @@ export default function ExamSim() {
     return (
       <div className="max-w-lg mx-auto space-y-6 pt-12">
         <div className="text-center space-y-4">
-          <div className="p-4 bg-gradient-to-br from-red-500 to-orange-500 rounded-2xl w-16 h-16 flex items-center justify-center mx-auto text-white">
+          <div className="p-4 bg-gradient-to-br from-red-500 to-emerald-500 rounded-2xl w-16 h-16 flex items-center justify-center mx-auto text-white">
             <ClipboardCheck size={32} />
           </div>
           <h1 className="text-2xl font-bold">Simulacro de Examen</h1>

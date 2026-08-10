@@ -67,7 +67,7 @@ export default function Diagnostic() {
       <div className="space-y-6">
         <div>
           <h1 className="text-2xl font-bold flex items-center gap-2">
-            <Target className="text-purple-500" /> Diagnóstico de nivel
+            <Target className="text-sky-500" /> Diagnóstico de nivel
           </h1>
           <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
             Evalúa tus 6 habilidades y obtén tu nivel CEFR real (A1–B2) en cada una.
@@ -80,7 +80,7 @@ export default function Diagnostic() {
               const Icon = ICONS[sk];
               return (
                 <div key={sk} className="flex items-center gap-3 p-3 rounded-xl border border-gray-200 dark:border-gray-700">
-                  <Icon className="text-purple-500" size={22} />
+                  <Icon className="text-sky-500" size={22} />
                   <div>
                     <p className="font-medium text-sm">{SKILL_LABELS[sk]}</p>
                     <p className="text-xs text-gray-500">{DIAGNOSTIC_QUESTIONS[sk].length} preguntas</p>
@@ -90,7 +90,7 @@ export default function Diagnostic() {
             })}
           </div>
           {user.diagnostic && (
-            <div className="mt-4 p-3 rounded-xl bg-purple-50 dark:bg-purple-900/30">
+            <div className="mt-4 p-3 rounded-xl bg-sky-50 dark:bg-sky-900/30">
               <p className="text-sm">
                 <span className="font-medium">Tu último diagnóstico:</span>{" "}
                 Nivel general {user.diagnostic.overallLevel}
@@ -108,10 +108,10 @@ export default function Diagnostic() {
       <div className="space-y-6">
         <div>
           <h1 className="text-2xl font-bold flex items-center gap-2">
-            <Award className="text-purple-500" /> Tu diagnóstico
+            <Award className="text-sky-500" /> Tu diagnóstico
           </h1>
           <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
-            Nivel general: <span className="font-semibold text-purple-600">{results.overallLevel}</span>
+            Nivel general: <span className="font-semibold text-sky-600">{results.overallLevel}</span>
           </p>
         </div>
         <Card className="p-6">
@@ -125,7 +125,7 @@ export default function Diagnostic() {
                 <div key={sk} className={`p-3 rounded-xl border ${isWeakest ? "border-red-300 dark:border-red-700 bg-red-50 dark:bg-red-900/20" : isStrongest ? "border-emerald-300 dark:border-emerald-700 bg-emerald-50 dark:bg-emerald-900/20" : "border-gray-200 dark:border-gray-700"}`}>
                   <div className="flex items-center justify-between mb-1">
                     <span className="flex items-center gap-2 font-medium text-sm"><Icon size={16} /> {SKILL_LABELS[sk]}</span>
-                    <span className="text-xs font-bold text-purple-600">{r.level}</span>
+                    <span className="text-xs font-bold text-sky-600">{r.level}</span>
                   </div>
                   <ProgressBar value={r.correct} max={r.total} color="purple" />
                   <p className="text-xs text-gray-500 mt-1">{r.correct}/{r.total} correctas</p>
@@ -133,7 +133,7 @@ export default function Diagnostic() {
               );
             })}
           </div>
-          <div className="mt-5 p-4 rounded-xl bg-purple-50 dark:bg-purple-900/30">
+          <div className="mt-5 p-4 rounded-xl bg-sky-50 dark:bg-sky-900/30">
             <h3 className="font-semibold text-sm flex items-center gap-2"><CheckCircle2 size={16} /> Cómo interpretarlo</h3>
             <p className="text-sm text-gray-600 dark:text-gray-300 mt-2">
               Tu habilidad más débil es <strong>{SKILL_LABELS[results.weakest]}</strong> y la más fuerte es{" "}
@@ -155,7 +155,7 @@ export default function Diagnostic() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold flex items-center gap-2">
-          <Target className="text-purple-500" /> Diagnóstico
+          <Target className="text-sky-500" /> Diagnóstico
         </h1>
         <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
           {SKILL_LABELS[skill]} · Pregunta {step + 1} de {questions.length}
@@ -169,7 +169,7 @@ export default function Diagnostic() {
             <button
               key={option}
               onClick={() => answer(q, option)}
-              className="w-full text-left p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20 transition"
+              className="w-full text-left p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-sky-400 hover:bg-sky-50 dark:hover:bg-sky-900/20 transition"
             >
               {option}
             </button>

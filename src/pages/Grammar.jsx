@@ -70,7 +70,7 @@ export default function Grammar() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold flex items-center gap-2">
-          <GraduationCap className="text-purple-500" /> Gramática
+          <GraduationCap className="text-sky-500" /> Gramática
         </h1>
         <p className="text-gray-500">
           8 módulos gramaticales para el examen MEP
@@ -87,7 +87,7 @@ export default function Grammar() {
                   className="w-full flex items-center justify-between text-left"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 text-white">
+                    <div className="p-2 rounded-lg bg-gradient-to-br from-sky-500 to-sky-500 text-white">
                       <GraduationCap size={18} />
                     </div>
                     <div>

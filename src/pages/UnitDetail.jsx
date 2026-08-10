@@ -81,7 +81,7 @@ export default function UnitDetail() {
 
       <div className="space-y-3">
         <h2 className="font-semibold text-lg flex items-center gap-2">
-          <Brain size={18} className="text-purple-500" /> Quizzes
+          <Brain size={18} className="text-sky-500" /> Quizzes
         </h2>
         {unit.quizzes.length > 0 ? (
           unit.quizzes.map((quiz) => {
@@ -98,12 +98,12 @@ export default function UnitDetail() {
                       className={`p-2 rounded-lg ${
                         completed
                           ? `bg-green-100 dark:bg-green-900/30`
-                          : `bg-purple-100 dark:bg-purple-900/30`
+                          : `bg-sky-100 dark:bg-sky-900/30`
                       }`}
                     >
                       <Brain
                         size={18}
-                        className={completed ? `text-green-600` : `text-purple-600`}
+                        className={completed ? `text-green-600` : `text-sky-600`}
                       />
                     </div>
                     <div>

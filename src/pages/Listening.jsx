@@ -51,7 +51,7 @@ export default function Listening() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold flex items-center gap-2">
-          <Headphones className="text-orange-500" /> Listening Lab
+          <Headphones className="text-emerald-500" /> Listening Lab
         </h1>
         <p className="text-gray-500">
           Practica comprensión auditiva con textos narrados por IA
@@ -129,7 +129,7 @@ export default function Listening() {
                 {exercise && (
                   <Card>
                     <h3 className="font-semibold mb-3 flex items-center gap-2">
-                      <Headphones size={18} className="text-orange-500" />{" "}
+                      <Headphones size={18} className="text-emerald-500" />{" "}
                       Comprensión auditiva
                     </h3>
                     <p className="text-xs text-gray-400 mb-4">
@@ -157,7 +157,7 @@ export default function Listening() {
                                   ).includes(option);
                                 let borderClass = `border-gray-200 dark:border-gray-600`;
                                 if (selected && !isChecked)
-                                  borderClass = `border-orange-500`;
+                                  borderClass = `border-emerald-500`;
                                 if (isChecked && correct)
                                   borderClass = `border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20`;
                                 if (isChecked && selected && !correct)
@@ -169,7 +169,7 @@ export default function Listening() {
                                     className={`w-full text-left px-4 py-3 rounded-xl border text-sm transition-all ${borderClass} ${
                                       isChecked
                                         ? `cursor-default`
-                                        : `hover:border-orange-300 cursor-pointer`
+                                        : `hover:border-emerald-300 cursor-pointer`
                                     }`}
                                   >
                                     <div className="flex items-center gap-2">
