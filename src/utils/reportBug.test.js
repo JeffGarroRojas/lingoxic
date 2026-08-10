@@ -1,27 +1,32 @@
 import { describe, it, expect, vi } from "vitest";
-import { buildReportMailto } from "./reportBug.js";
+import { buildReportPayload, submitBugReport, FORMSPREE_ENDPOINT } from "./reportBug.js";
 
-vi.stubEnv("VITE_REPORT_EMAIL", "soportelingoxic@gmail.com");
+describe("buildReportPayload", () => {
+  it("construye el payload con los datos del reporte", () => {
+    const p = buildReportPayload({
+      page: "/quiz/unit1",
+      browser: "Chrome",
+      description: "Error al enviar",
+    });
+    expect(p.page).toBe("/quiz/unit1");
+    expect(p.browser).toBe("Chrome");
+    expect(p.description).toContain("Error");
+    expect(p.email).toBe("soportelingoxic@gmail.com");
+  });
+});
 
-describe("buildReportMailto", () => {
-  it("genera un mailto válido con asunto y cuerpo", () => {
-    const url = buildReportMailto({ page: "/quiz/unit1", browser: "Chrome" });
-    expect(url.startsWith("mailto:soportelingoxic@gmail.com?subject=")).toBe(true);
-    const decoded = decodeURIComponent(url);
-    expect(decoded).toContain("Página:");
-    expect(decoded).toContain("Chrome");
-    expect(decoded).toContain("/quiz/unit1");
+describe("submitBugReport", () => {
+  it("devuelve error si no hay endpoint configurado", async () => {
+    const r = await submitBugReport({});
+    expect(r.ok).toBe(false);
   });
 
-  it("usa el email por defecto cuando no hay env", () => {
-    vi.stubEnv("VITE_REPORT_EMAIL", undefined);
-    const url = buildReportMailto({ page: "Home" });
-    expect(url.startsWith("mailto:soportelingoxic@gmail.com")).toBe(true);
-    vi.unstubAllEnvs();
-  });
-
-  it("soporta campos vacíos", () => {
-    const url = buildReportMailto({});
-    expect(url.startsWith("mailto:")).toBe(true);
+  it("envía por POST cuando hay endpoint", async () => {
+    const mockFetch = vi.fn().mockResolvedValue({ ok: true });
+    vi.stubGlobal("fetch", mockFetch);
+    const r = await submitBugReport({ page: "/home" }, "https://formspree.io/f/test");
+    expect(mockFetch).toHaveBeenCalled();
+    expect(r.ok).toBe(true);
+    vi.unstubAllGlobals();
   });
 });

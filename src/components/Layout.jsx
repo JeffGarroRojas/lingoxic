@@ -25,7 +25,7 @@ import { useTheme } from "../hooks/useTheme.jsx";
 import useOnlineStatus from "../hooks/useOnlineStatus.js";
 import { LevelBadge } from "./ui.jsx";
 import { streakEmoji } from "../utils/level.js";
-import { buildReportMailto } from "../utils/reportBug.js";
+import { submitBugReport } from "../utils/reportBug.js";
 
 const NAV_ITEMS = [
   { path: "/dashboard", label: "Inicio", icon: LayoutDashboard },
@@ -189,19 +189,31 @@ export default function Layout() {
           )}
           <Outlet />
         </main>
-        <a
-          href={buildReportMailto({
-            page: window.location.pathname,
-            browser: navigator.userAgent,
-          })}
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          onClick={async () => {
+            const description = window.prompt(
+              "¿Qué problema encontraste? Describe brevemente lo que pasó:"
+            );
+            if (!description || !description.trim()) return;
+            const res = await submitBugReport({
+              description,
+              page: window.location.pathname,
+              browser: navigator.userAgent,
+            });
+            alert(
+              res.ok
+                ? "¡Gracias! Tu reporte fue enviado. Lo revisaremos pronto."
+                : res.error === "Sin conexión"
+                  ? "No tienes internet. Vuelve a intentar cuando estés conectado."
+                  : "Hubo un problema al enviar el reporte. Intenta de nuevo."
+            );
+          }}
           className="fixed bottom-5 right-5 z-50 flex items-center gap-2 rounded-full bg-gray-900 px-4 py-2.5 text-sm font-medium text-white shadow-lg transition hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600"
           title="Reportar un error"
         >
           <span className="text-base">⚙</span>
           Reportar error
-        </a>
+        </button>
       </div>
     </div>
   );
