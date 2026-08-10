@@ -25,6 +25,7 @@ import { useTheme } from "../hooks/useTheme.jsx";
 import useOnlineStatus from "../hooks/useOnlineStatus.js";
 import { LevelBadge } from "./ui.jsx";
 import { streakEmoji } from "../utils/level.js";
+import { buildReportMailto } from "../utils/reportBug.js";
 
 const NAV_ITEMS = [
   { path: "/dashboard", label: "Inicio", icon: LayoutDashboard },
@@ -188,6 +189,19 @@ export default function Layout() {
           )}
           <Outlet />
         </main>
+        <a
+          href={buildReportMailto({
+            page: window.location.pathname,
+            browser: navigator.userAgent,
+          })}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="fixed bottom-5 right-5 z-50 flex items-center gap-2 rounded-full bg-gray-900 px-4 py-2.5 text-sm font-medium text-white shadow-lg transition hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600"
+          title="Reportar un error"
+        >
+          <span className="text-base">⚙</span>
+          Reportar error
+        </a>
       </div>
     </div>
   );
