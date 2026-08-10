@@ -48,7 +48,6 @@ function Sidebar({ onNavigate }) {
   const navigate = useNavigate();
   const { user } = useUser();
   const { darkMode, toggleDarkMode, sidebarOpen } = useTheme();
-  const isOnline = useOnlineStatus();
   const [collapsed, setCollapsed] = useState(false);
 
   const go = (path) => {
@@ -171,6 +170,7 @@ function Header({ onMenuClick }) {
 
 export default function Layout() {
   const { sidebarOpen, setSidebarOpen } = useTheme();
+  const isOnline = useOnlineStatus();
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100">
       <Sidebar onNavigate={() => setSidebarOpen(false)} />
