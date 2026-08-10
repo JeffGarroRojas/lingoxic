@@ -17,7 +17,7 @@ describe("buildReportPayload", () => {
 
 describe("submitBugReport", () => {
   it("devuelve error si no hay endpoint configurado", async () => {
-    const r = await submitBugReport({});
+    const r = await submitBugReport({}, "");
     expect(r.ok).toBe(false);
   });
 

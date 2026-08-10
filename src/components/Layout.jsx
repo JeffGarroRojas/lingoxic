@@ -152,14 +152,16 @@ function Header({ onMenuClick }) {
                 {streakEmoji(user.streak)}
               </span>
             </div>
-            <div className="flex items-center gap-1.5 text-sm">
+            <div className="hidden md:flex items-center gap-1.5 text-sm">
               <Zap size={16} className="text-yellow-500" />
               <span className="font-semibold text-gray-700 dark:text-gray-300">
                 {user.xp}
               </span>
               <span className="text-xs text-gray-400">XP</span>
             </div>
-            <LevelBadge level={user.level} size="sm" />
+              <div className="hidden sm:block">
+                <LevelBadge level={user.level} size="sm" />
+              </div>
           </div>
         )}
       </div>
@@ -180,7 +182,7 @@ export default function Layout() {
       )}
       <div className="lg:ml-64">
         <Header onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
-        <main className="p-4 md:p-6 lg:p-8 max-w-6xl mx-auto">
+        <main className="p-4 md:p-6 lg:p-8 max-w-6xl mx-auto pb-20">
           {!isOnline && (
             <div className="mb-4 flex items-center gap-2 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm font-medium text-amber-800 dark:border-amber-700 dark:bg-amber-900/30 dark:text-amber-200">
               <span className="h-2.5 w-2.5 rounded-full bg-amber-500" />
