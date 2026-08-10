@@ -5,6 +5,7 @@ import {
   Navigate,
   useLocation,
   Outlet,
+  useNavigate,
 } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRegisterSW } from "virtual:pwa-register/react";
