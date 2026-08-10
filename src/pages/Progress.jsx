@@ -73,7 +73,7 @@ export default function ProgressPage() {
           <p className="text-xs text-gray-500">Lecciones</p>
         </Card>
         <Card className="text-center">
-          <Trophy size={24} className="text-purple-500 mx-auto mb-2" />
+          <Trophy size={24} className="text-sky-500 mx-auto mb-2" />
           <p className="text-2xl font-bold">
             {user.completedQuizzes.length}/{totalQuizzes}
           </p>
@@ -97,7 +97,7 @@ export default function ProgressPage() {
         {user.diagnostic && (
           <p className="text-sm text-gray-500 mt-2">
             Nivel CEFR real (diagnóstico):{" "}
-            <span className="font-semibold text-purple-600">{user.diagnostic.overallLevel}</span>
+            <span className="font-semibold text-sky-600">{user.diagnostic.overallLevel}</span>
           </p>
         )}
       </Card>

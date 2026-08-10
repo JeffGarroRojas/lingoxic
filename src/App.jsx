@@ -391,7 +391,7 @@ function Onboarding() {
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <span className="text-purple-500 mt-0.5">🤖</span>
+                <span className="text-sky-500 mt-0.5">🤖</span>
                 <span>
                   <strong>Tutor IA</strong> con Gemini para feedback
                   personalizado

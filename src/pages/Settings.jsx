@@ -86,7 +86,7 @@ export default function SettingsPage() {
 
       <Card>
         <h2 className="font-semibold mb-4 flex items-center gap-2">
-          <Sparkles size={18} className="text-purple-500" /> Gemini IA
+          <Sparkles size={18} className="text-sky-500" /> Gemini IA
         </h2>
         <div className="space-y-3">
           <div className="flex items-center justify-between">

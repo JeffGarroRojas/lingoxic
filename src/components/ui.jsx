@@ -132,13 +132,13 @@ const SKILL_ICONS = {
   speaking: MessageSquare,
 };
 
-const SKILL_COLORS = {
-  grammar: `text-purple-500 bg-purple-100 dark:bg-purple-900/30`,
-  vocabulary: `text-blue-500 bg-blue-100 dark:bg-blue-900/30`,
-  reading: `text-green-500 bg-green-100 dark:bg-green-900/30`,
-  listening: `text-orange-500 bg-orange-100 dark:bg-orange-900/30`,
-  writing: `text-pink-500 bg-pink-100 dark:bg-pink-900/30`,
-  speaking: `text-cyan-500 bg-cyan-100 dark:bg-cyan-900/30`,
+const   SKILL_COLORS = {
+  grammar: `text-sky-600 bg-sky-100 dark:bg-sky-900/30`,
+  vocabulary: `text-sky-500 bg-sky-100 dark:bg-sky-900/30`,
+  reading: `text-emerald-600 bg-emerald-100 dark:bg-emerald-900/30`,
+  listening: `text-emerald-500 bg-emerald-100 dark:bg-emerald-900/30`,
+  writing: `text-sky-500 bg-sky-100 dark:bg-sky-900/30`,
+  speaking: `text-emerald-500 bg-emerald-100 dark:bg-emerald-900/30`,
 };
 
 const SKILL_LABELS = {

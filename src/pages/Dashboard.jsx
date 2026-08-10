@@ -67,7 +67,7 @@ export default function Dashboard() {
         </Card>
 
         <Card className="flex items-center gap-4">
-          <div className="p-3 bg-gradient-to-br from-sky-500 to-cyan-500 rounded-xl text-white">
+          <div className="p-3 bg-gradient-to-br from-sky-500 to-emerald-500 rounded-xl text-white">
             <TrendingUp size={24} />
           </div>
           <div>
@@ -185,7 +185,7 @@ export default function Dashboard() {
       <Card>
         <div className="flex items-center justify-between mb-4">
           <h2 className="font-semibold flex items-center gap-2">
-            <ClipboardCheck size={18} className="text-purple-500" />
+            <ClipboardCheck size={18} className="text-sky-500" />
             Diagnóstico CEFR
           </h2>
           <Badge variant="info">{user.diagnostic ? user.diagnostic.overallLevel : "Sin evaluar"}</Badge>
