@@ -357,6 +357,14 @@ function Onboarding() {
   };
 
   const skipTest = async () => {
+    if (!name.trim()) {
+      setCodeError("Escribe tu nombre para continuar.");
+      return;
+    }
+    if (!isValidAccessCode(accessCode)) {
+      setCodeError("Código de acceso incorrecto. Verifícalo e intenta de nuevo.");
+      return;
+    }
     await createUser(name.trim(), "A1", "");
     navigate("/dashboard");
   };
@@ -417,45 +425,55 @@ function Onboarding() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-50 via-white to-emerald-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 p-4">
         <div className="max-w-md w-full bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-xl border border-gray-200 dark:border-gray-700 space-y-6">
-  <h2 className="text-2xl font-bold">¿Cómo te llamas?</h2>
-  <p className="text-gray-500 text-sm">
-    Usaremos tu nombre para personalizar tu experiencia
-  </p>
-  <input
-    type="text"
-    value={name}
-    onChange={(e) => setName(e.target.value)}
-    placeholder="Tu nombre..."
-    className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition-all"
-    onKeyDown={(e) => e.key === "Enter" && goToTest()}
-  />
-  <div className="space-y-2">
-    <input
-      type="password"
-      value={accessCode}
-      onChange={(e) => setAccessCode(e.target.value)}
-      placeholder="Código de acceso..."
-      className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition-all"
-      onKeyDown={(e) => e.key === "Enter" && goToTest()}
-    />
-    {codeError && (
-      <p className="text-sm text-red-500">{codeError}</p>
-    )}
-  </div>
-  <Button
-    className="w-full"
-    size="lg"
-    onClick={goToTest}
-    disabled={!name.trim()}
-  >
-    Hacer test de diagnóstico
-  </Button>
+        <h2 className="text-2xl font-bold">¿Cómo te llamas?</h2>
+        <p className="text-gray-500 dark:text-gray-400 text-sm">
+          Usaremos tu nombre para personalizar tu experiencia
+        </p>
+        <div className="space-y-2">
+          <label className="block text-xs font-medium text-gray-500 dark:text-gray-400">
+            Tu nombre
+          </label>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Escribe tu nombre..."
+            className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition-all"
+            onKeyDown={(e) => e.key === "Enter" && goToTest()}
+          />
+        </div>
+        <div className="space-y-2">
+          <label className="block text-xs font-medium text-gray-500 dark:text-gray-400">
+            Código de acceso
+          </label>
+          <input
+            type="password"
+            value={accessCode}
+            onChange={(e) => setAccessCode(e.target.value)}
+            placeholder="Ingresa tu código de acceso..."
+            className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition-all"
+            onKeyDown={(e) => e.key === "Enter" && goToTest()}
+          />
+          {codeError && (
+            <p className="text-sm text-red-500">{codeError}</p>
+          )}
+        </div>
+        <div className="space-y-3 pt-1">
+          <Button
+            className="w-full"
+            size="lg"
+            onClick={goToTest}
+            disabled={!name.trim() || !accessCode.trim()}
+          >
+            Hacer test de diagnóstico
+          </Button>
           <button
             onClick={skipTest}
             className="w-full text-sm text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
           >
             Omitir test y empezar desde cero (A1)
           </button>
+        </div>
         </div>
       </div>
     );
