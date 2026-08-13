@@ -371,50 +371,54 @@ function Onboarding() {
 
   if (step === "welcome")
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-50 via-white to-emerald-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 p-4">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-600 via-violet-600 to-indigo-700 dark:from-indigo-950 dark:via-violet-950 dark:to-indigo-950 p-4">
         <div className="max-w-lg w-full text-center space-y-8">
           <div className="space-y-4">
-            <h1 className="text-5xl font-bold bg-gradient-to-r from-sky-500 to-emerald-500 bg-clip-text text-transparent">
+            <h1 className="text-5xl font-bold text-white drop-shadow-lg">
               LinGoXiC
             </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-400 font-light">
+            <p className="text-xl text-indigo-100 font-light">
               Prepárate para las Pruebas Nacionales de Inglés del MEP con IA
             </p>
           </div>
-          <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-xl border border-gray-200 dark:border-gray-700 space-y-4 text-left">
-            <h2 className="text-lg font-semibold">🎯 ¿Qué vas a encontrar?</h2>
-            <ul className="space-y-3 text-sm text-gray-600 dark:text-gray-400">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-2xl border border-indigo-100 dark:border-gray-700 space-y-4 text-left">
+            <h2 className="text-lg font-semibold text-indigo-700 dark:text-indigo-300">🎯 ¿Qué vas a encontrar?</h2>
+            <ul className="space-y-3 text-sm text-indigo-900 dark:text-indigo-100">
               <li className="flex items-start gap-3">
-                <span className="text-sky-500 mt-0.5">📝</span>
+                <span className="text-indigo-500 mt-0.5">📝</span>
                 <span>
-                  <strong>Test de diagnóstico</strong> para conocer tu nivel
+                  <strong className="text-indigo-700 dark:text-indigo-300">Test de diagnóstico</strong> para conocer tu nivel
                   exacto (A1-B2)
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <span className="text-emerald-500 mt-0.5">📚</span>
+                <span className="text-violet-500 mt-0.5">📚</span>
                 <span>
-                  <strong>6 escenarios temáticos</strong> alineados con el
+                  <strong className="text-indigo-700 dark:text-indigo-300">6 escenarios temáticos</strong> alineados con el
                   examen MEP
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <span className="text-sky-500 mt-0.5">🤖</span>
+                <span className="text-indigo-500 mt-0.5">🤖</span>
                 <span>
-                  <strong>Tutor IA</strong> con Gemini para feedback
+                  <strong className="text-indigo-700 dark:text-indigo-300">Tutor IA</strong> con Gemini para feedback
                   personalizado
                 </span>
               </li>
               <li className="flex items-start gap-3">
-                <span className="text-orange-500 mt-0.5">📊</span>
+                <span className="text-violet-500 mt-0.5">📊</span>
                 <span>
-                  <strong>Simulacro completo</strong> de 100 preguntas tipo
+                  <strong className="text-indigo-700 dark:text-indigo-300">Simulacro completo</strong> de 100 preguntas tipo
                   examen
                 </span>
               </li>
             </ul>
           </div>
-          <Button size="lg" onClick={() => setStep("name")}>
+          <Button
+              className="w-full bg-gradient-to-r from-indigo-500 to-violet-500 hover:from-indigo-600 hover:to-violet-600"
+              size="lg"
+              onClick={() => setStep("name")}
+            >
             Comenzar ahora
           </Button>
         </div>
@@ -423,14 +427,14 @@ function Onboarding() {
 
   if (step === "name")
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-50 via-white to-emerald-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 p-4">
-        <div className="max-w-md w-full bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-xl border border-gray-200 dark:border-gray-700 space-y-6">
-        <h2 className="text-2xl font-bold">¿Cómo te llamas?</h2>
-        <p className="text-gray-500 dark:text-gray-400 text-sm">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-600 via-violet-600 to-indigo-700 dark:from-indigo-950 dark:via-violet-950 dark:to-indigo-950 p-4">
+        <div className="max-w-md w-full bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-2xl border border-indigo-100 dark:border-gray-700 space-y-6">
+        <h2 className="text-2xl font-bold text-indigo-700 dark:text-indigo-300">¿Cómo te llamas?</h2>
+        <p className="text-indigo-700 dark:text-indigo-300 text-sm">
           Usaremos tu nombre para personalizar tu experiencia
         </p>
         <div className="space-y-2">
-          <label className="block text-xs font-medium text-gray-500 dark:text-gray-400">
+          <label className="block text-xs font-medium text-indigo-700 dark:text-indigo-300">
             Tu nombre
           </label>
           <input
@@ -438,12 +442,12 @@ function Onboarding() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Escribe tu nombre..."
-            className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition-all"
+            className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
             onKeyDown={(e) => e.key === "Enter" && goToTest()}
           />
         </div>
         <div className="space-y-2">
-          <label className="block text-xs font-medium text-gray-500 dark:text-gray-400">
+          <label className="block text-xs font-medium text-indigo-700 dark:text-indigo-300">
             Código de acceso
           </label>
           <input
@@ -451,7 +455,7 @@ function Onboarding() {
             value={accessCode}
             onChange={(e) => setAccessCode(e.target.value)}
             placeholder="Ingresa tu código de acceso..."
-            className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition-all"
+            className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
             onKeyDown={(e) => e.key === "Enter" && goToTest()}
           />
           {codeError && (
@@ -460,7 +464,7 @@ function Onboarding() {
         </div>
         <div className="space-y-3 pt-1">
           <Button
-            className="w-full"
+            className="w-full bg-gradient-to-r from-indigo-500 to-violet-500 hover:from-indigo-600 hover:to-violet-600"
             size="lg"
             onClick={goToTest}
             disabled={!name.trim() || !accessCode.trim()}
@@ -480,7 +484,7 @@ function Onboarding() {
 
   const question = PLACEMENT_QUESTIONS[current];
   return (
-    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-emerald-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-600 via-violet-600 to-indigo-700 dark:from-indigo-950 dark:via-violet-950 dark:to-indigo-950 p-4">
       <div className="max-w-2xl mx-auto pt-8 space-y-8">
         <div className="text-center space-y-2">
           <h2 className="text-xl font-bold">Test de Diagnóstico</h2>

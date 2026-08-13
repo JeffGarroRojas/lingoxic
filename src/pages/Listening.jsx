@@ -3,6 +3,7 @@ import { Check, Headphones, Play, Square, X } from "lucide-react";
 import { Badge, Button, Card, SkillBadge } from "../components/ui.jsx";
 import unitsData from "../data/unitsData.js";
 import { getListeningExercise } from "../data/listeningData.js";
+import { getBestEnglishVoice } from "../utils/tts.js";
 import { useUser } from "../hooks/useUser.jsx";
 
 export default function Listening() {
@@ -21,7 +22,9 @@ export default function Listening() {
       speechSynthesis.cancel();
       setSpeakingId(id);
       const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = "en-US";
+      const bestVoice = getBestEnglishVoice();
+      utterance.lang = bestVoice ? bestVoice.lang : "en-US";
+      if (bestVoice) utterance.voice = bestVoice;
       utterance.rate = 0.9;
       utterance.onend = () => setSpeakingId(null);
       speechSynthesis.speak(utterance);
@@ -82,9 +85,11 @@ export default function Listening() {
         {unit?.lessons
           .filter((lesson) => lesson.type === "listening")
           .map((lesson) => {
-            const transcription = lesson.content.sections
-              .map((s) => s.content)
-              .join(". ");
+            const transcription =
+              exercise.script ||
+              lesson.content.sections
+                .map((s) => s.content)
+                .join(". ");
             const exercise = getListeningExercise(lesson.id);
             return (
               <div key={lesson.id} className="space-y-4">

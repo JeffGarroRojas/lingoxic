@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { getBestEnglishVoice } from "../utils/tts.js";
 import { Search, SpellCheck, Volume1, Volume2 } from "lucide-react";
 import { Card } from "../components/ui.jsx";
 import unitsData from "../data/unitsData.js";
@@ -18,7 +19,9 @@ export default function Vocabulary() {
     audio.onerror = () => {
       if ("speechSynthesis" in window) {
         let utterance = new SpeechSynthesisUtterance(word);
-        utterance.lang = "en-US";
+        const bestVoice = getBestEnglishVoice();
+        utterance.lang = bestVoice ? bestVoice.lang : "en-US";
+        if (bestVoice) utterance.voice = bestVoice;
         utterance.onend = () => setPlaying(null);
         utterance.onerror = () => setPlaying(null);
         window.speechSynthesis.speak(utterance);

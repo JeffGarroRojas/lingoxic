@@ -2,7 +2,8 @@ const listeningExercises = [
   {
     lessonId: "high-tech-shopping-listening-1",
     unitId: "high-tech-shopping",
-    questions: [
+
+    script: "Good afternoon, sir. How can I help you? - Hello. I bought this laptop yesterday, but it does not turn on. - I see. Do you have the receipt with you? - Yes, here it is. - Thank you. We can either repair it or give you a replacement. Which would you prefer? - A replacement, please. - Very good. We will have it ready tomorrow.",    questions: [
       {
         id: "l-hts-1",
         type: "multiple-choice",
@@ -67,7 +68,8 @@ const listeningExercises = [
   {
     lessonId: "healthy-choices-listening-1",
     unitId: "healthy-choices",
-    questions: [
+
+    script: "Hello, doctor. I have a headache and my throat hurts. - How long have you felt sick? - Since Monday, about three days. - Let me check your temperature. Yes, you have a slight fever. I recommend you rest and drink plenty of water. - Should I take medicine? - Yes, take this syrup twice a day. Please come back to the clinic next week if you do not feel better.",    questions: [
       {
         id: "l-hc-1",
         type: "multiple-choice",
@@ -125,7 +127,8 @@ const listeningExercises = [
   {
     lessonId: "safe-travels-listening-1",
     unitId: "safe-travels",
-    questions: [
+
+    script: "Welcome to the Sunset Hotel. How can I help you? - I would like a room for two nights, please. - Single or double room? - A double room, please. - That is sixty dollars per night. - And does the breakfast include coffee? - Yes, breakfast includes coffee, juice, eggs and toast, from seven to ten in the morning.",    questions: [
       {
         id: "l-st-1",
         type: "multiple-choice",
