@@ -85,12 +85,12 @@ export default function Listening() {
         {unit?.lessons
           .filter((lesson) => lesson.type === "listening")
           .map((lesson) => {
+            const exercise = getListeningExercise(lesson.id);
             const transcription =
-              exercise.script ||
+              (exercise && exercise.script) ||
               lesson.content.sections
                 .map((s) => s.content)
                 .join(". ");
-            const exercise = getListeningExercise(lesson.id);
             return (
               <div key={lesson.id} className="space-y-4">
                 <Card>

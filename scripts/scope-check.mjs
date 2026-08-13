@@ -233,9 +233,7 @@ for (const file of walk(SRC)) {
         else if (v && typeof v === "object") scan(v);
       }
     };
-    // (lógica la cubrimos vía declareFromScope: ya registramos todo)
-
-    for (const u of used) {
+  for (const u of used) {
       if (!declared.has(u) && !REACT_KNOWN.has(u) && !HTML_TAGS.has(u) && !GLOBALS.has(u)) {
         console.log(`❌ ${file}: componente '${fnName}' usa '${u}' no declarado`);
         errors++;
