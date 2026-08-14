@@ -48,7 +48,7 @@ const Settings = lazy(() => import("./pages/Settings.jsx"));
 function Loading({ text = "Cargando...", fullPage }) {
   const spinner = (
     <div className="flex flex-col items-center justify-center gap-3 py-16">
-      <div className="w-8 h-8 border-4 border-sky-500 border-t-transparent rounded-full animate-spin" />
+      <div className="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin" />
       <p className="text-sm text-gray-500">{text}</p>
     </div>
   );
@@ -96,7 +96,7 @@ class ErrorBoundary extends Component {
                   this.setState({ hasError: false });
                   window.location.reload();
                 }}
-                className="px-6 py-2.5 bg-gradient-to-r from-sky-500 to-emerald-500 text-white rounded-xl font-semibold hover:shadow-lg transition-all"
+                className="px-6 py-2.5 bg-gradient-to-r from-indigo-500 to-violet-500 text-white rounded-xl font-semibold hover:shadow-lg transition-all"
               >
                 Recargar página
               </button>
@@ -137,7 +137,7 @@ function UpdateToast() {
           className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[100]"
         >
           <div className="bg-gray-900 dark:bg-gray-800 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 border border-gray-700">
-            <RotateCw size={20} className="text-sky-400" />
+            <RotateCw size={20} className="text-indigo-400" />
             <div>
               <p className="text-sm font-medium">Nueva versión disponible</p>
               <p className="text-xs text-gray-400">
@@ -146,7 +146,7 @@ function UpdateToast() {
             </div>
         <button
           onClick={handleUpdate}
-          className="px-4 py-2 bg-gradient-to-r from-sky-500 to-emerald-500 text-white rounded-xl text-sm font-semibold hover:shadow-lg transition-all"
+          className="px-4 py-2 bg-gradient-to-r from-indigo-500 to-violet-500 text-white rounded-xl text-sm font-semibold hover:shadow-lg transition-all"
         >
           Actualizar
         </button>
