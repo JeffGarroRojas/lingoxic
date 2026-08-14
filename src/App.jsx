@@ -340,6 +340,7 @@ function Onboarding() {
   const [name, setName] = React.useState("");
   const [accessCode, setAccessCode] = React.useState("");
   const [codeError, setCodeError] = React.useState("");
+  const [focusedField, setFocusedField] = React.useState(null);
   const [current, setCurrent] = React.useState(0);
   const [answers, setAnswers] = React.useState({});
 
@@ -394,11 +395,14 @@ function Onboarding() {
     navigate("/dashboard");
   };
 
-  if (step === "welcome")
+  if (step === "welcome") {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-600 via-violet-600 to-indigo-700 dark:from-indigo-950 dark:via-violet-950 dark:to-indigo-950 p-4">
-        <div className="max-w-lg w-full text-center space-y-8">
-          <div className="space-y-4">
+      <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-gradient-to-br from-indigo-800 via-indigo-600 to-violet-600">
+        <div className="absolute -top-24 -left-24 w-72 h-72 rounded-full bg-violet-400/40 blur-3xl" />
+        <div className="absolute -bottom-32 -right-24 w-96 h-96 rounded-full bg-indigo-400/30 blur-3xl" />
+        <div className="absolute top-1/3 right-1/4 w-40 h-40 rounded-full bg-violet-300/20 blur-2xl" />
+        <div className="relative z-10 max-w-lg w-full text-center space-y-8">
+          <div className="space-y-3">
             <h1 className="text-5xl font-bold text-white drop-shadow-lg">
               LinGoXiC
             </h1>
@@ -406,159 +410,168 @@ function Onboarding() {
               Prepárate para las Pruebas Nacionales de Inglés del MEP con IA
             </p>
           </div>
-          <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-2xl border border-indigo-100 dark:border-gray-700 space-y-4 text-left">
-            <h2 className="text-lg font-semibold text-indigo-700 dark:text-indigo-300">🎯 ¿Qué vas a encontrar?</h2>
-            <ul className="space-y-3 text-sm text-indigo-900 dark:text-indigo-100">
-              <li className="flex items-start gap-3">
-                <span className="text-indigo-500 mt-0.5">📝</span>
-                <span>
-                  <strong className="text-indigo-700 dark:text-indigo-300">Test de diagnóstico</strong> para conocer tu nivel
-                  exacto (A1-B2)
+          <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-2xl border border-indigo-100 dark:border-gray-700 space-y-5 text-left">
+            <h2 className="text-lg font-semibold text-indigo-700 dark:text-indigo-300">
+              🎯 ¿Qué vas a encontrar?
+            </h2>
+            {[
+              {
+                icon: (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                    <line x1="16" y1="13" x2="8" y2="13" />
+                    <line x1="16" y1="17" x2="8" y2="17" />
+                  </svg>
+                ),
+                label: "Test de diagnóstico",
+                desc: "para conocer tu nivel exacto (A1-B2)",
+                color: "#0EA5E9",
+              },
+              {
+                icon: (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                  </svg>
+                ),
+                label: "6 escenarios temáticos",
+                desc: "alineados con el examen MEP",
+                color: "#10B981",
+              },
+              {
+                icon: (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="11" width="18" height="10" rx="2" />
+                    <circle cx="12" cy="16" r="2" />
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                  </svg>
+                ),
+                label: "Tutor IA con Gemini",
+                desc: "feedback personalizado",
+                color: "#0EA5E9",
+              },
+              {
+                icon: (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                  </svg>
+                ),
+                label: "Simulacro completo",
+                desc: "100 preguntas tipo examen",
+                color: "#8B5CF6",
+              },
+            ].map((f, i) => (
+              <div key={i} className="flex items-start gap-3">
+                <span
+                  className="shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
+                  style={{ backgroundColor: f.color + "1A", color: f.color }}
+                >
+                  {f.icon}
                 </span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-violet-500 mt-0.5">📚</span>
-                <span>
-                  <strong className="text-indigo-700 dark:text-indigo-300">6 escenarios temáticos</strong> alineados con el
-                  examen MEP
+                <span className="text-sm text-gray-600 dark:text-gray-300">
+                  <strong className="text-indigo-700 dark:text-indigo-300">{f.label}</strong> {f.desc}
                 </span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-indigo-500 mt-0.5">🤖</span>
-                <span>
-                  <strong className="text-indigo-700 dark:text-indigo-300">Tutor IA</strong> con Gemini para feedback
-                  personalizado
-                </span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="text-violet-500 mt-0.5">📊</span>
-                <span>
-                  <strong className="text-indigo-700 dark:text-indigo-300">Simulacro completo</strong> de 100 preguntas tipo
-                  examen
-                </span>
-              </li>
-            </ul>
-          </div>
-          <Button
-              className="w-full bg-gradient-to-r from-indigo-500 to-violet-500 hover:from-indigo-600 hover:to-violet-600"
-              size="lg"
-              onClick={() => setStep("name")}
-            >
-            Comenzar ahora
-          </Button>
-        </div>
-      </div>
-    );
-
-  if (step === "name")
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-600 via-violet-600 to-indigo-700 dark:from-indigo-950 dark:via-violet-950 dark:to-indigo-950 p-4">
-        <div className="max-w-md w-full bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-2xl border border-indigo-100 dark:border-gray-700 space-y-6">
-        <h2 className="text-2xl font-bold text-indigo-700 dark:text-indigo-300">¿Cómo te llamas?</h2>
-        <p className="text-indigo-700 dark:text-indigo-300 text-sm">
-          Usaremos tu nombre para personalizar tu experiencia
-        </p>
-        <div className="space-y-2">
-          <label className="block text-xs font-medium text-indigo-700 dark:text-indigo-300">
-            Tu nombre
-          </label>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Escribe tu nombre..."
-            className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
-            onKeyDown={(e) => e.key === "Enter" && goToTest()}
-          />
-        </div>
-        <div className="space-y-2">
-          <label className="block text-xs font-medium text-indigo-700 dark:text-indigo-300">
-            Código de acceso
-          </label>
-          <input
-            type="password"
-            value={accessCode}
-            onChange={(e) => setAccessCode(e.target.value)}
-            placeholder="Ingresa tu código de acceso..."
-            className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
-            onKeyDown={(e) => e.key === "Enter" && goToTest()}
-          />
-          {codeError && (
-            <p className="text-sm text-red-500">{codeError}</p>
-          )}
-        </div>
-        <div className="space-y-3 pt-1">
-          <Button
-            className="w-full bg-gradient-to-r from-indigo-500 to-violet-500 hover:from-indigo-600 hover:to-violet-600"
-            size="lg"
-            onClick={goToTest}
-            disabled={!name.trim() || !accessCode.trim()}
-          >
-            Hacer test de diagnóstico
-          </Button>
-          <button
-            onClick={skipTest}
-            className="w-full text-sm text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
-          >
-            Omitir test y empezar desde cero (A1)
-          </button>
-        </div>
-        </div>
-      </div>
-    );
-
-  const question = PLACEMENT_QUESTIONS[current];
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-600 via-violet-600 to-indigo-700 dark:from-indigo-950 dark:via-violet-950 dark:to-indigo-950 p-4">
-      <div className="max-w-2xl mx-auto pt-8 space-y-8">
-        <div className="text-center space-y-2">
-          <h2 className="text-xl font-bold">Test de Diagnóstico</h2>
-          <p className="text-sm text-gray-500">
-            Pregunta {current + 1} de {PLACEMENT_QUESTIONS.length}
-          </p>
-        </div>
-        <ProgressBar value={current + 1} max={PLACEMENT_QUESTIONS.length} />
-        <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-200 dark:border-gray-700 space-y-6">
-          <div className="space-y-1">
-            <p className="text-xs text-gray-400 uppercase tracking-wide font-medium">
-              {question.skillArea === "grammar"
-                ? "Gramática"
-                : question.skillArea === "vocabulary"
-                  ? "Vocabulario"
-                  : "Lectura"}
-            </p>
-            <p className="text-lg font-medium">{question.prompt}</p>
-          </div>
-          <div className="grid grid-cols-1 gap-3">
-            {question.options.map((option, idx) => (
-              <button
-                key={idx}
-                onClick={() => answer(question.id, option)}
-                className={`w-full text-left px-4 py-3.5 rounded-xl border-2 transition-all ${
-                  answers[question.id] === option
-                    ? `border-sky-500 bg-sky-50 dark:bg-sky-900/20`
-                    : `border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500`
-                }`}
-              >
-                <span className="font-medium">
-                  {String.fromCharCode(65 + idx)}.
-                </span>{" "}
-                {option}
-              </button>
+              </div>
             ))}
+            <button
+              onClick={() => setStep("name")}
+              className="w-full h-12 rounded-xl text-white font-semibold transition-all hover:opacity-90 active:scale-[0.98]"
+              style={{
+                background: "linear-gradient(90deg, #4F46E5, #8B5CF6)",
+                boxShadow: "0 4px 20px rgba(139,92,246,0.45)",
+              }}
+            >
+              Comenzar ahora →
+            </button>
+            <p className="text-center text-xs text-gray-400">
+              Gratis · Sin registro previo necesario
+            </p>
           </div>
-          {current === PLACEMENT_QUESTIONS.length - 1 && answers[question.id] && (
-            <Button className="w-full" size="lg" onClick={finishTest}>
-              Ver mi nivel
-            </Button>
-          )}
         </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
 
-function App() {
+  if (step === "name") {
+    return (
+      <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-gradient-to-br from-indigo-800 via-indigo-600 to-violet-600">
+        <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-violet-400/40 blur-3xl" />
+        <div className="absolute -bottom-32 -left-24 w-96 h-96 rounded-full bg-indigo-400/30 blur-3xl" />
+        <div className="relative z-10 w-full max-w-md">
+          <button
+            onClick={() => setStep("welcome")}
+            className="mb-6 flex items-center gap-2 text-sm text-indigo-100 hover:text-white transition-colors"
+          >
+            ← Volver
+          </button>
+          <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-2xl border border-indigo-100 dark:border-gray-700 space-y-6">
+            <h2 className="text-2xl font-bold text-indigo-700 dark:text-indigo-300">
+              ¿Cómo te llamas?
+            </h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400 -mt-4">
+              Usaremos tu nombre para personalizar tu experiencia
+            </p>
+            <div className="space-y-2">
+              <label className="block text-xs font-medium text-indigo-700 dark:text-indigo-300">
+                Tu nombre
+              </label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Escribe tu nombre..."
+                className="w-full h-12 rounded-xl px-4 text-sm font-medium text-gray-800 dark:text-gray-100 outline-none transition-all bg-gray-50 dark:bg-gray-700 border"
+                style={{ borderColor: focusedField === "name" ? "#4F46E5" : "#E5E7EB", boxShadow: focusedField === "name" ? "0 0 0 3px rgba(79,70,229,0.15)" : "none" }}
+                onFocus={() => setFocusedField("name")}
+                onBlur={() => setFocusedField(null)}
+                onKeyDown={(e) => e.key === "Enter" && goToTest()}
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="block text-xs font-medium text-indigo-700 dark:text-indigo-300">
+                Código de acceso
+              </label>
+              <input
+                type="password"
+                value={accessCode}
+                onChange={(e) => setAccessCode(e.target.value)}
+                placeholder="Ingresa tu código de acceso..."
+                className="w-full h-12 rounded-xl px-4 text-sm font-medium text-gray-800 dark:text-gray-100 outline-none transition-all bg-gray-50 dark:bg-gray-700 border"
+                style={{ borderColor: focusedField === "code" ? "#4F46E5" : "#E5E7EB", boxShadow: focusedField === "code" ? "0 0 0 3px rgba(79,70,229,0.15)" : "none" }}
+                onFocus={() => setFocusedField("code")}
+                onBlur={() => setFocusedField(null)}
+                onKeyDown={(e) => e.key === "Enter" && goToTest()}
+              />
+              {codeError && (
+                <p className="text-sm text-red-500">{codeError}</p>
+              )}
+            </div>
+            <button
+              onClick={goToTest}
+              disabled={!name.trim() || !accessCode.trim()}
+              className="w-full h-12 rounded-xl text-white font-semibold transition-all hover:opacity-90 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+              style={{
+                background: "linear-gradient(90deg, #4F46E5, #8B5CF6)",
+                boxShadow: "0 4px 20px rgba(139,92,246,0.45)",
+              }}
+            >
+              Hacer test de diagnóstico
+            </button>
+            <button
+              onClick={skipTest}
+              className="w-full text-sm text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+            >
+              Omitir test y empezar desde cero (A1)
+            </button>
+          </div>
+        </div>
+      </div>
+  );
+  }
+}
+  function App() {
   const { user, initialized, loadUser } = useUser();
   const { darkMode } = useTheme();
   const [blocked, setBlocked] = React.useState(false);
