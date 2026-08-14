@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
+import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
@@ -9,6 +10,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const rtdb = getDatabase(app);
 
 export async function syncUserToFirestore(user) {
   // Sincronización desactivada: el progreso es 100% local (IndexedDB)
@@ -16,3 +18,5 @@ export async function syncUserToFirestore(user) {
   void user;
   return;
 }
+
+export { db, rtdb };

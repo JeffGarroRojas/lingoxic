@@ -21,7 +21,7 @@ export function UserProvider({ children }) {
     setInitialized(true);
   }, []);
 
-  const createUser = useCallback(async (name, level, avatar) => {
+  const createUser = useCallback(async (name, level, avatar, accessCode = "") => {
     const newUser = {
       id: genId(),
       name,
@@ -30,6 +30,7 @@ export function UserProvider({ children }) {
       streak: 0,
       lastActive: Date.now(),
       avatar,
+      accessCode,
       createdAt: Date.now(),
       completedLessons: [],
       completedQuizzes: [],

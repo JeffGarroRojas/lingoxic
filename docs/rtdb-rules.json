@@ -1,0 +1,14 @@
+{
+  "rules": {
+    "access": {
+      ".read": true,
+      ".write": false
+    },
+    "users": {
+      "$deviceId": {
+        ".read": false,
+        ".write": true
+      }
+    }
+  }
+}

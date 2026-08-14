@@ -18,7 +18,15 @@ import {
   computePlacementTest,
   PLACEMENT_QUESTIONS,
 } from "./data/practiceData.js";
-import { isValidAccessCode } from "./utils/accessCode.js";
+import {
+  isValidAccessCode,
+  getAccessCodeType,
+} from "./utils/accessCode.js";
+import {
+  registerUser,
+  checkAccessBlocked,
+  getDeviceId,
+} from "./services/accessRegistry.js";
 
 const Dashboard = lazy(() => import("./pages/Dashboard.jsx"));
 const Diagnostic = lazy(() => import("./pages/Diagnostic.jsx"));
@@ -335,10 +343,15 @@ function Onboarding() {
   const [current, setCurrent] = React.useState(0);
   const [answers, setAnswers] = React.useState({});
 
-  const goToTest = () => {
+  const goToTest = async () => {
     if (!name.trim()) return;
     if (!isValidAccessCode(accessCode)) {
       setCodeError("Código de acceso incorrecto. Verifícalo e intenta de nuevo.");
+      return;
+    }
+    const blocked = await checkAccessBlocked(accessCode);
+    if (blocked.blocked) {
+      setCodeError("Este código ya expiró. Contacta a tu academia.");
       return;
     }
     setCodeError("");
@@ -352,7 +365,13 @@ function Onboarding() {
 
   const finishTest = async () => {
     const level = computePlacementTest(answers).level || "A1";
-    await createUser(name.trim(), level, "");
+    const blocked = await checkAccessBlocked(accessCode);
+    if (blocked.blocked) {
+      setCodeError("Este código ya expiró. Contacta a tu academia.");
+      return;
+    }
+    await registerUser(name.trim(), accessCode);
+    await createUser(name.trim(), level, "", accessCode.trim().toUpperCase());
     navigate("/dashboard");
   };
 
@@ -365,7 +384,13 @@ function Onboarding() {
       setCodeError("Código de acceso incorrecto. Verifícalo e intenta de nuevo.");
       return;
     }
-    await createUser(name.trim(), "A1", "");
+    const blocked = await checkAccessBlocked(accessCode);
+    if (blocked.blocked) {
+      setCodeError("Este código ya expiró. Contacta a tu academia.");
+      return;
+    }
+    await registerUser(name.trim(), accessCode);
+    await createUser(name.trim(), "A1", "", accessCode.trim().toUpperCase());
     navigate("/dashboard");
   };
 
@@ -536,6 +561,7 @@ function Onboarding() {
 function App() {
   const { user, initialized, loadUser } = useUser();
   const { darkMode } = useTheme();
+  const [blocked, setBlocked] = React.useState(false);
 
   useEffect(() => {
     loadUser();
@@ -544,6 +570,29 @@ function App() {
   useEffect(() => {
     document.documentElement.classList.toggle("dark", darkMode);
   }, [darkMode]);
+
+  useEffect(() => {
+    if (!user || !user.accessCode) return;
+    (async () => {
+      const result = await checkAccessBlocked(user.accessCode);
+      setBlocked(result.blocked);
+    })();
+  }, [user]);
+
+  if (blocked) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-600 via-violet-600 to-indigo-700 p-4">
+        <div className="max-w-md w-full bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-2xl text-center space-y-4">
+          <span className="text-5xl">🔒</span>
+          <h1 className="text-xl font-bold">Acceso expirado</h1>
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            Tu código de acceso ya no es válido. Para seguir usando la app,
+            contacta a tu academia para obtener un nuevo código.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   if (!initialized) return <SuspenseFallback />;
   return user ? <AnimatedRoutes /> : <Onboarding />;
