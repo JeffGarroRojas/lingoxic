@@ -2,12 +2,12 @@
   "rules": {
     "access": {
       ".read": true,
-      ".write": false
+      ".write": "!data.exists() || !newData.child('academyFirstUsedAt').exists() || !data.child('academyFirstUsedAt').exists() || data.child('academyFirstUsedAt').val() === 0"
     },
     "users": {
       "$deviceId": {
         ".read": false,
-        ".write": true
+        ".write": "$deviceId === auth.uid || !data.exists()"
       }
     }
   }
