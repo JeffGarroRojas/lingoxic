@@ -86,7 +86,9 @@ export async function checkAccessBlocked(accessCode) {
     if (!state) return { blocked: false, reason: null };
 
     if (isAcademyCode(code)) {
-      if (state.active === false) return { blocked: true, reason: "EXPIRED" };
+      if (state.active === false && state.academyFirstUsedAt) {
+        return { blocked: true, reason: "EXPIRED" };
+      }
       if (hasAcademyCodeExpired(state.academyFirstUsedAt)) {
         return { blocked: true, reason: "EXPIRED" };
       }
