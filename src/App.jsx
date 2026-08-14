@@ -485,9 +485,7 @@ function Onboarding() {
             >
               Comenzar ahora →
             </button>
-            <p className="text-center text-xs text-gray-400">
-              Gratis · Sin registro previo necesario
-            </p>
+
           </div>
         </div>
       </div>
