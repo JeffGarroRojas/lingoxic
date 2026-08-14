@@ -54,7 +54,7 @@ export default function Listening() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold flex items-center gap-2">
-          <Headphones className="text-emerald-500" /> Listening Lab
+          <Headphones className="text-violet-500" /> Listening Lab
         </h1>
         <p className="text-gray-500">
           Practica comprensión auditiva con textos narrados por IA
@@ -72,7 +72,7 @@ export default function Listening() {
             }}
             className={`px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-colors ${
               selectedUnit === u.id
-                ? `bg-gradient-to-r from-sky-500 to-emerald-500 text-white`
+                ? `bg-gradient-to-r from-indigo-500 to-violet-500 text-white`
                 : `bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400`
             }`}
           >
@@ -134,7 +134,7 @@ export default function Listening() {
                 {exercise && (
                   <Card>
                     <h3 className="font-semibold mb-3 flex items-center gap-2">
-                      <Headphones size={18} className="text-emerald-500" />{" "}
+                      <Headphones size={18} className="text-violet-500" />{" "}
                       Comprensión auditiva
                     </h3>
                     <p className="text-xs text-gray-400 mb-4">
@@ -162,9 +162,9 @@ export default function Listening() {
                                   ).includes(option);
                                 let borderClass = `border-gray-200 dark:border-gray-600`;
                                 if (selected && !isChecked)
-                                  borderClass = `border-emerald-500`;
+                                  borderClass = `border-violet-500`;
                                 if (isChecked && correct)
-                                  borderClass = `border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20`;
+                                  borderClass = `border-violet-500 bg-violet-50 dark:bg-violet-900/20`;
                                 if (isChecked && selected && !correct)
                                   borderClass = `border-red-500 bg-red-50 dark:bg-red-900/20`;
                                 return (
@@ -174,14 +174,14 @@ export default function Listening() {
                                     className={`w-full text-left px-4 py-3 rounded-xl border text-sm transition-all ${borderClass} ${
                                       isChecked
                                         ? `cursor-default`
-                                        : `hover:border-emerald-300 cursor-pointer`
+                                        : `hover:border-violet-300 cursor-pointer`
                                     }`}
                                   >
                                     <div className="flex items-center gap-2">
                                       {isChecked && correct && (
                                         <Check
                                           size={16}
-                                          className="text-emerald-500 shrink-0"
+                                          className="text-violet-500 shrink-0"
                                         />
                                       )}
                                       {isChecked && selected && !correct && (

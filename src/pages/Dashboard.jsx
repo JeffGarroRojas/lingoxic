@@ -67,7 +67,7 @@ export default function Dashboard() {
         </Card>
 
         <Card className="flex items-center gap-4">
-          <div className="p-3 bg-gradient-to-br from-sky-500 to-emerald-500 rounded-xl text-white">
+          <div className="p-3 bg-gradient-to-br from-indigo-500 to-violet-500 rounded-xl text-white">
             <TrendingUp size={24} />
           </div>
           <div>
@@ -80,7 +80,7 @@ export default function Dashboard() {
       </div>
 
       {nextUnit && (
-        <Card className="bg-gradient-to-r from-sky-500 to-emerald-500 text-white p-6">
+        <Card className="bg-gradient-to-r from-indigo-500 to-violet-500 text-white p-6">
           <div className="flex items-center justify-between">
             <div className="space-y-1">
               <p className="text-sm opacity-80">Continúa aprendiendo</p>
@@ -110,7 +110,7 @@ export default function Dashboard() {
         <Card>
           <div className="flex items-center justify-between mb-4">
             <h2 className="font-semibold flex items-center gap-2">
-              <BookOpen size={18} className="text-sky-500" />
+              <BookOpen size={18} className="text-indigo-500" />
               Unidades Temáticas
             </h2>
             <Badge variant="info">
@@ -119,7 +119,7 @@ export default function Dashboard() {
           </div>
           <div className="space-y-3">
             {units.map((u) => {
-              const from = (u.color || "from-sky-500").split(" ")[0].replace("from-", "").replace(/-/g, "");
+              const from = (u.color || "from-indigo-500").split(" ")[0].replace("from-", "").replace(/-/g, "");
               const color = from || "sky";
               return (
                 <div key={u.id} className="flex items-center gap-3">
@@ -146,7 +146,7 @@ export default function Dashboard() {
         <Card>
           <div className="flex items-center justify-between mb-4">
             <h2 className="font-semibold flex items-center gap-2">
-              <TrendingUp size={18} className="text-emerald-500" />
+              <TrendingUp size={18} className="text-violet-500" />
               Áreas a Mejorar
             </h2>
           </div>
@@ -185,7 +185,7 @@ export default function Dashboard() {
       <Card>
         <div className="flex items-center justify-between mb-4">
           <h2 className="font-semibold flex items-center gap-2">
-            <ClipboardCheck size={18} className="text-sky-500" />
+            <ClipboardCheck size={18} className="text-indigo-500" />
             Diagnóstico CEFR
           </h2>
           <Badge variant="info">{user.diagnostic ? user.diagnostic.overallLevel : "Sin evaluar"}</Badge>

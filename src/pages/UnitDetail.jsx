@@ -21,7 +21,7 @@ export default function UnitDetail() {
         <ArrowLeft size={16} /> Volver a unidades
       </button>
 
-      <div className={`rounded-2xl p-6 bg-gradient-to-r ${unit.color || "from-sky-500 to-blue-500"} text-white`}>
+      <div className={`rounded-2xl p-6 bg-gradient-to-r ${unit.color || "from-indigo-500 to-blue-500"} text-white`}>
         <div className="flex items-center gap-3 mb-2">
           <Badge variant="default" className="bg-white/20 text-white">
             {unit.level}
@@ -36,7 +36,7 @@ export default function UnitDetail() {
 
       <div className="space-y-3">
         <h2 className="font-semibold text-lg flex items-center gap-2">
-          <Play size={18} className="text-sky-500" /> Lecciones
+          <Play size={18} className="text-indigo-500" /> Lecciones
         </h2>
         {unit.lessons.length > 0 ? (
           unit.lessons.map((lesson, index) => {
@@ -81,7 +81,7 @@ export default function UnitDetail() {
 
       <div className="space-y-3">
         <h2 className="font-semibold text-lg flex items-center gap-2">
-          <Brain size={18} className="text-sky-500" /> Quizzes
+          <Brain size={18} className="text-indigo-500" /> Quizzes
         </h2>
         {unit.quizzes.length > 0 ? (
           unit.quizzes.map((quiz) => {
@@ -98,12 +98,12 @@ export default function UnitDetail() {
                       className={`p-2 rounded-lg ${
                         completed
                           ? `bg-green-100 dark:bg-green-900/30`
-                          : `bg-sky-100 dark:bg-sky-900/30`
+                          : `bg-indigo-100 dark:bg-indigo-900/30`
                       }`}
                     >
                       <Brain
                         size={18}
-                        className={completed ? `text-green-600` : `text-sky-600`}
+                        className={completed ? `text-green-600` : `text-indigo-600`}
                       />
                     </div>
                     <div>

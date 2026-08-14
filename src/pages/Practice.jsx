@@ -99,7 +99,7 @@ export default function Practice() {
     <div className="max-w-2xl mx-auto space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-bold flex items-center gap-2">
-          <BrainCircuit className="text-sky-500" /> Práctica Rápida
+          <BrainCircuit className="text-indigo-500" /> Práctica Rápida
         </h1>
         <div className="flex items-center gap-2">
           <SkillBadge skill={filter || question.skillArea} showLabel />
@@ -121,7 +121,7 @@ export default function Practice() {
               }}
               className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap ${
                 filter === s
-                  ? `bg-sky-500 text-white`
+                  ? `bg-indigo-500 text-white`
                   : `bg-gray-100 dark:bg-gray-800 text-gray-600`
               }`}
             >
@@ -150,7 +150,7 @@ export default function Practice() {
               onClick={() => answer(question.id, option)}
               className={`w-full text-left px-4 py-3.5 rounded-xl border-2 transition-all ${
                 answers[question.id] === option
-                  ? `border-sky-500 bg-sky-50 dark:bg-sky-900/20`
+                  ? `border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20`
                   : `border-gray-200 dark:border-gray-600 hover:border-gray-300`
               }`}
             >

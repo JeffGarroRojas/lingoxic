@@ -69,7 +69,7 @@ function Sidebar({ onNavigate }) {
           {collapsed ? <Menu size={20} /> : <X size={20} />}
         </button>
         {!collapsed && (
-          <span className="text-lg font-bold bg-gradient-to-r from-sky-500 to-emerald-500 bg-clip-text text-transparent">
+          <span className="text-lg font-bold bg-gradient-to-r from-indigo-500 to-violet-500 bg-clip-text text-transparent">
             LinGoXiC
           </span>
         )}
@@ -90,7 +90,7 @@ function Sidebar({ onNavigate }) {
             onClick={() => go(item.path)}
             className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
               location.pathname === item.path
-                ? `bg-gradient-to-r from-sky-500/10 to-emerald-500/10 text-sky-600 dark:text-sky-400 border border-sky-200 dark:border-sky-800`
+                ? `bg-gradient-to-r from-sky-500/10 to-emerald-500/10 text-indigo-600 dark:text-indigo-400 border border-sky-200 dark:border-sky-800`
                 : `text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800`
             }`}
             title={collapsed ? item.label : undefined}
@@ -136,14 +136,14 @@ function Header({ onMenuClick }) {
           </svg>
         </button>
         <div className="flex items-center gap-2 lg:hidden">
-          <span className="text-lg font-bold bg-gradient-to-r from-sky-500 to-emerald-500 bg-clip-text text-transparent">
+          <span className="text-lg font-bold bg-gradient-to-r from-indigo-500 to-violet-500 bg-clip-text text-transparent">
             LinGoXiC
           </span>
         </div>
         {user && (
           <div className="flex items-center gap-4 ml-auto">
             <div className="flex items-center gap-1.5 text-sm">
-              <Flame size={16} className="text-emerald-500" />
+              <Flame size={16} className="text-violet-500" />
               <span className="font-semibold text-emerald-600 dark:text-emerald-400">
                 {user.streak}
               </span>

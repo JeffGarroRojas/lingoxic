@@ -88,7 +88,7 @@ export default function ExamSim() {
     return (
       <div className="max-w-lg mx-auto space-y-6 pt-12">
         <div className="text-center space-y-4">
-          <div className="p-4 bg-gradient-to-br from-red-500 to-emerald-500 rounded-2xl w-16 h-16 flex items-center justify-center mx-auto text-white">
+          <div className="p-4 bg-gradient-to-br from-red-500 to-violet-500 rounded-2xl w-16 h-16 flex items-center justify-center mx-auto text-white">
             <ClipboardCheck size={32} />
           </div>
           <h1 className="text-2xl font-bold">Simulacro de Examen</h1>
@@ -202,7 +202,7 @@ export default function ExamSim() {
               <div
                 key={i}
                 className={`w-3 h-3 rounded-full ${
-                  answers[q.id] ? `bg-sky-500` : `bg-gray-200 dark:bg-gray-700`
+                  answers[q.id] ? `bg-indigo-500` : `bg-gray-200 dark:bg-gray-700`
                 }`}
               />
             ))}
@@ -236,7 +236,7 @@ export default function ExamSim() {
               onClick={() => selectAnswer(question.id, option)}
               className={`w-full text-left px-4 py-3.5 rounded-xl border-2 transition-all ${
                 answers[question.id] === option
-                  ? `border-sky-500 bg-sky-50 dark:bg-sky-900/20`
+                  ? `border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20`
                   : `border-gray-200 dark:border-gray-600 hover:border-gray-300`
               }`}
             >

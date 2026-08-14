@@ -66,7 +66,7 @@ export default function Vocabulary() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Buscar palabra en inglés o español..."
-          className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none transition-all"
+          className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
         />
       </div>
 
@@ -75,7 +75,7 @@ export default function Vocabulary() {
           onClick={() => setFilter("all")}
           className={`px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-colors ${
             filter === "all"
-              ? `bg-gradient-to-r from-sky-500 to-emerald-500 text-white`
+              ? `bg-gradient-to-r from-indigo-500 to-violet-500 text-white`
               : `bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400`
           }`}
         >
@@ -87,7 +87,7 @@ export default function Vocabulary() {
             onClick={() => setFilter(u.id)}
             className={`px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-colors ${
               filter === u.id
-                ? `bg-gradient-to-r from-sky-500 to-emerald-500 text-white`
+                ? `bg-gradient-to-r from-indigo-500 to-violet-500 text-white`
                 : `bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400`
             }`}
           >
@@ -108,8 +108,8 @@ export default function Vocabulary() {
                     disabled={playing === w.word}
                     className={`p-1.5 rounded-lg transition-all ${
                       playing === w.word
-                        ? `bg-sky-100 dark:bg-sky-900/30 text-sky-600 animate-pulse`
-                        : `hover:bg-gray-100 dark:hover:bg-gray-700 text-sky-500`
+                        ? `bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 animate-pulse`
+                        : `hover:bg-gray-100 dark:hover:bg-gray-700 text-indigo-500`
                     }`}
                     title="Escuchar pronunciación"
                   >

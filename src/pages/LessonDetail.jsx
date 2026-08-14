@@ -138,13 +138,13 @@ export default function LessonDetail() {
         <div className="flex items-start gap-3">
           <div className="flex items-center gap-2 mb-3">
             {section.type === `explanation` && (
-              <BookText size={20} className="text-sky-500 mt-0.5 shrink-0" />
+              <BookText size={20} className="text-indigo-500 mt-0.5 shrink-0" />
             )}
             {section.type === `example` && (
               <Lightbulb size={20} className="text-yellow-500 mt-0.5 shrink-0" />
             )}
             {section.type === `tip` && (
-              <Lightbulb size={20} className="text-emerald-500 mt-0.5 shrink-0" />
+              <Lightbulb size={20} className="text-violet-500 mt-0.5 shrink-0" />
             )}
           </div>
         </div>
@@ -162,7 +162,7 @@ export default function LessonDetail() {
               onClick={() => setCurrent(i)}
               className={`h-2.5 rounded-full transition-all ${
                 i === current
-                  ? "w-6 bg-sky-500"
+                  ? "w-6 bg-indigo-500"
                   : "w-2.5 bg-gray-300 dark:bg-gray-600"
               }`}
               aria-label={`Ir al slide ${i + 1}`}
@@ -181,7 +181,7 @@ export default function LessonDetail() {
       </div>
 
       {completed ? (
-        <div className="w-full p-4 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 rounded-xl flex items-center justify-center gap-2 font-semibold">
+        <div className="w-full p-4 bg-violet-50 dark:bg-violet-900/20 text-violet-700 dark:text-violet-400 rounded-xl flex items-center justify-center gap-2 font-semibold">
           <CircleCheckBig size={20} /> ¡Lección completada!
         </div>
       ) : (

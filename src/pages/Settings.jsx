@@ -75,7 +75,7 @@ export default function SettingsPage() {
           </div>
           <button
             onClick={toggleDarkMode}
-            className={`relative w-12 h-6 rounded-full transition-colors ${darkMode ? `bg-sky-500` : `bg-gray-300`}`}
+            className={`relative w-12 h-6 rounded-full transition-colors ${darkMode ? `bg-indigo-500` : `bg-gray-300`}`}
           >
             <div
               className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${darkMode ? `translate-x-6` : `translate-x-0.5`}`}
@@ -86,7 +86,7 @@ export default function SettingsPage() {
 
       <Card>
         <h2 className="font-semibold mb-4 flex items-center gap-2">
-          <Sparkles size={18} className="text-sky-500" /> Gemini IA
+          <Sparkles size={18} className="text-indigo-500" /> Gemini IA
         </h2>
         <div className="space-y-3">
           <div className="flex items-center justify-between">
@@ -102,7 +102,7 @@ export default function SettingsPage() {
 
       <Card>
         <h2 className="font-semibold mb-4 flex items-center gap-2">
-          <Info size={18} className="text-sky-500" /> Acerca de
+          <Info size={18} className="text-indigo-500" /> Acerca de
         </h2>
         <div className="space-y-2 text-sm text-gray-500">
           <p>

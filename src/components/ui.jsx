@@ -20,7 +20,7 @@ export function Button({ variant = "primary", size = "md", className, children, 
       className={cn(
         `rounded-xl font-semibold transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2`,
         {
-          primary: `bg-gradient-to-r from-sky-500 to-emerald-500 text-white hover:shadow-lg hover:shadow-sky-500/25`,
+          primary: `bg-gradient-to-r from-indigo-500 to-violet-500 text-white hover:shadow-lg hover:shadow-violet-500/25`,
           secondary: `bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700`,
           ghost: `text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800`,
           danger: `bg-red-500 text-white hover:bg-red-600`,
@@ -54,7 +54,7 @@ export function ProgressBar({
           className={cn(
             `h-full rounded-full transition-all duration-500 ease-out`,
             {
-              primary: `bg-gradient-to-r from-sky-500 to-emerald-500`,
+              primary: `bg-gradient-to-r from-indigo-500 to-violet-500`,
               green: `bg-green-500`,
               yellow: `bg-yellow-500`,
               purple: `bg-purple-500`,
@@ -113,7 +113,7 @@ export function Badge({ variant = "default", children, className }) {
           success: `bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400`,
           warning: `bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400`,
           danger: `bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400`,
-          info: `bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-400`,
+          info: `bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400`,
         }[variant],
         className
       )}
@@ -133,12 +133,12 @@ const SKILL_ICONS = {
 };
 
 const   SKILL_COLORS = {
-  grammar: `text-sky-600 bg-sky-100 dark:bg-sky-900/30`,
-  vocabulary: `text-sky-500 bg-sky-100 dark:bg-sky-900/30`,
-  reading: `text-emerald-600 bg-emerald-100 dark:bg-emerald-900/30`,
-  listening: `text-emerald-500 bg-emerald-100 dark:bg-emerald-900/30`,
-  writing: `text-sky-500 bg-sky-100 dark:bg-sky-900/30`,
-  speaking: `text-emerald-500 bg-emerald-100 dark:bg-emerald-900/30`,
+  grammar: `text-indigo-600 bg-indigo-100 dark:bg-indigo-900/30`,
+  vocabulary: `text-indigo-500 bg-indigo-100 dark:bg-indigo-900/30`,
+  reading: `text-violet-600 bg-violet-100 dark:bg-violet-900/30`,
+  listening: `text-violet-500 bg-violet-100 dark:bg-violet-900/30`,
+  writing: `text-indigo-500 bg-indigo-100 dark:bg-indigo-900/30`,
+  speaking: `text-violet-500 bg-violet-100 dark:bg-violet-900/30`,
 };
 
 const SKILL_LABELS = {

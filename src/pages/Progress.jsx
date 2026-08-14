@@ -47,7 +47,7 @@ export default function ProgressPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold flex items-center gap-2">
-            <BarChart3 className="text-emerald-500" /> Mi Progreso
+            <BarChart3 className="text-violet-500" /> Mi Progreso
           </h1>
           <p className="text-gray-500">Sigue tu avance en el aprendizaje</p>
         </div>
@@ -66,14 +66,14 @@ export default function ProgressPage() {
           <p className="text-xs text-gray-500">XP total</p>
         </Card>
         <Card className="text-center">
-          <Target size={24} className="text-sky-500 mx-auto mb-2" />
+          <Target size={24} className="text-indigo-500 mx-auto mb-2" />
           <p className="text-2xl font-bold">
             {user.completedLessons.length}/{totalLessons}
           </p>
           <p className="text-xs text-gray-500">Lecciones</p>
         </Card>
         <Card className="text-center">
-          <Trophy size={24} className="text-sky-500 mx-auto mb-2" />
+          <Trophy size={24} className="text-indigo-500 mx-auto mb-2" />
           <p className="text-2xl font-bold">
             {user.completedQuizzes.length}/{totalQuizzes}
           </p>
@@ -83,7 +83,7 @@ export default function ProgressPage() {
 
       <Card>
         <h2 className="font-semibold mb-3 flex items-center gap-2">
-          <TrendingUp size={18} className="text-emerald-500" /> Progreso general
+          <TrendingUp size={18} className="text-violet-500" /> Progreso general
         </h2>
         <div className="flex items-center justify-between text-sm mb-2">
           <span>
@@ -97,14 +97,14 @@ export default function ProgressPage() {
         {user.diagnostic && (
           <p className="text-sm text-gray-500 mt-2">
             Nivel CEFR real (diagnóstico):{" "}
-            <span className="font-semibold text-sky-600">{user.diagnostic.overallLevel}</span>
+            <span className="font-semibold text-indigo-600">{user.diagnostic.overallLevel}</span>
           </p>
         )}
       </Card>
 
       <Card>
         <h2 className="font-semibold mb-4 flex items-center gap-2">
-          <BarChart3 size={18} className="text-sky-500" /> Progreso por unidad
+          <BarChart3 size={18} className="text-indigo-500" /> Progreso por unidad
         </h2>
         <div className="h-64">
           <ResponsiveContainer width="100%" height="100%">
@@ -186,7 +186,7 @@ export default function ProgressPage() {
         )}
       </div>
 
-      <Card className="bg-gradient-to-r from-sky-500 to-emerald-500 text-white">
+      <Card className="bg-gradient-to-r from-indigo-500 to-violet-500 text-white">
         <div className="flex items-center justify-between">
           <div>
             <h3 className="font-semibold">🎯 Meta: completar el curso</h3>
