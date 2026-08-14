@@ -52,6 +52,34 @@ describe("checkAccessBlocked — código de academia", () => {
     const r = await checkAccessBlocked("ABA2026");
     expect(r.blocked).toBe(false);
   });
+
+  it("NO bloquea un dispositivo registrado sin campo allowed (bug real)", async () => {
+    localStorage.setItem("lingoxic_device_id", "dev_registered");
+    mockData["access"] = { academyFirstUsedAt: Date.now() - 1000, active: true };
+    mockData["users/dev_registered"] = {
+      name: "Ana",
+      code: "ABA2026",
+      deviceId: "dev_registered",
+      type: "academy",
+    };
+    const r = await checkAccessBlocked("ABA2026");
+    expect(r.blocked).toBe(false);
+  });
+
+  it("BLOQUEA un dispositivo marcado como allowed=false", async () => {
+    localStorage.setItem("lingoxic_device_id", "dev_revoked");
+    mockData["access"] = { academyFirstUsedAt: Date.now() - 1000, active: true };
+    mockData["users/dev_revoked"] = {
+      name: "Ana",
+      code: "ABA2026",
+      deviceId: "dev_revoked",
+      type: "academy",
+      allowed: false,
+    };
+    const r = await checkAccessBlocked("ABA2026");
+    expect(r.blocked).toBe(true);
+    expect(r.reason).toBe("REVOKED");
+  });
 });
 
 describe("checkAccessBlocked — código interno", () => {

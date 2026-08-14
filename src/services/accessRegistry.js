@@ -55,6 +55,7 @@ export async function registerUser(name, accessCode) {
         deviceId,
         registeredAt: new Date().toISOString(),
         type: "academy",
+        allowed: true,
       });
       return { ok: true, type: "academy" };
     }
@@ -95,7 +96,7 @@ export async function checkAccessBlocked(accessCode) {
       const deviceId = getDeviceId();
       const deviceSnap = await get(ref(rtdb, `users/${deviceId}`));
       const device = deviceSnap.val();
-      if (device && device.code === code && !device.allowed) {
+      if (device && device.code === code && device.allowed === false) {
         return { blocked: true, reason: "REVOKED" };
       }
     }
