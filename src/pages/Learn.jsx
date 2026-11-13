@@ -9,7 +9,7 @@ export default function Learn() {
   const navigate = useNavigate();
   const { user } = useUser();
 
-  if (!user) return null;
+  if (!user) return <Navigate to="/" replace />;
 
   return (
     <div className="space-y-6">

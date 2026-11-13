@@ -1,3 +1,4 @@
+import { Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { PenTool, Send, Sparkles } from "lucide-react";
 import { useUser } from "../hooks/useUser.jsx";
@@ -21,7 +22,7 @@ export default function Writing() {
   }, []);
 
   const unit = unitsData.find((u) => u.id === selectedUnit);
-  if (!user) return null;
+  if (!user) return <Navigate to="/" replace />;
 
  const submit = async () => {
  if (!text.trim()) return;

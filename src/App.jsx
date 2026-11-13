@@ -18,16 +18,6 @@ import {
   computePlacementTest,
   PLACEMENT_QUESTIONS,
 } from "./data/practiceData.js";
-import {
-  isValidAccessCode,
-  getAccessCodeType,
-} from "./utils/accessCode.js";
-import {
-  registerUser,
-  checkAccessBlocked,
-  getDeviceId,
-} from "./services/accessRegistry.js";
-
 const Dashboard = lazy(() => import("./pages/Dashboard.jsx"));
 const Diagnostic = lazy(() => import("./pages/Diagnostic.jsx"));
 const Learn = lazy(() => import("./pages/Learn.jsx"));
@@ -338,155 +328,31 @@ function Onboarding() {
   const { createUser } = useUser();
   const [step, setStep] = React.useState("welcome");
   const [name, setName] = React.useState("");
-  const [accessCode, setAccessCode] = React.useState("");
-  const [codeError, setCodeError] = React.useState("");
-  const [focusedField, setFocusedField] = React.useState(null);
   const [current, setCurrent] = React.useState(0);
   const [answers, setAnswers] = React.useState({});
 
-  const goToTest = async () => {
+  const goToDashboard = async () => {
     if (!name.trim()) return;
-    if (!isValidAccessCode(accessCode)) {
-      setCodeError("Código de acceso incorrecto. Verifícalo e intenta de nuevo.");
-      return;
-    }
-    const blocked = await checkAccessBlocked(accessCode);
-    if (blocked.blocked) {
-      setCodeError("Este código ya expiró. Contacta a tu academia.");
-      return;
-    }
-    setCodeError("");
-    setStep("test");
-  };
-
-  const answer = (questionId, value) => {
-    setAnswers((prev) => ({ ...prev, [questionId]: value }));
-    setCurrent((c) => (c < PLACEMENT_QUESTIONS.length - 1 ? c + 1 : c));
-  };
-
-  const finishTest = async () => {
-    const level = computePlacementTest(answers).level || "A1";
-    const blocked = await checkAccessBlocked(accessCode);
-    if (blocked.blocked) {
-      setCodeError("Este código ya expiró. Contacta a tu academia.");
-      return;
-    }
-    await registerUser(name.trim(), accessCode);
-    await createUser(name.trim(), level, "", accessCode.trim().toUpperCase());
+    await createUser(name.trim(), "A1");
     navigate("/dashboard");
   };
 
-  const skipTest = async () => {
-    if (!name.trim()) {
-      setCodeError("Escribe tu nombre para continuar.");
-      return;
-    }
-    if (!isValidAccessCode(accessCode)) {
-      setCodeError("Código de acceso incorrecto. Verifícalo e intenta de nuevo.");
-      return;
-    }
-    const blocked = await checkAccessBlocked(accessCode);
-    if (blocked.blocked) {
-      setCodeError("Este código ya expiró. Contacta a tu academia.");
-      return;
-    }
-    await registerUser(name.trim(), accessCode);
-    await createUser(name.trim(), "A1", "", accessCode.trim().toUpperCase());
+  const finishTest = async (newAnswers) => {
+    const lvl = (computePlacementTest(newAnswers).level || "A1");
+    await createUser(name.trim(), lvl);
     navigate("/dashboard");
   };
 
   if (step === "welcome") {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-gradient-to-br from-indigo-800 via-indigo-600 to-violet-600">
-        <div className="absolute -top-24 -left-24 w-72 h-72 rounded-full bg-violet-400/40 blur-3xl" />
-        <div className="absolute -bottom-32 -right-24 w-96 h-96 rounded-full bg-indigo-400/30 blur-3xl" />
-        <div className="absolute top-1/3 right-1/4 w-40 h-40 rounded-full bg-violet-300/20 blur-2xl" />
-        <div className="relative z-10 max-w-lg w-full text-center space-y-8">
-          <div className="space-y-3">
-            <h1 className="text-5xl font-bold text-white drop-shadow-lg">
-              LinGoXiC
-            </h1>
-            <p className="text-xl text-indigo-100 font-light">
-              Prepárate para las Pruebas Nacionales de Inglés del MEP con IA
-            </p>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-600 via-violet-600 to-indigo-700 p-4">
+        <div className="max-w-md w-full bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-2xl text-center space-y-6">
+          <div className="bg-white rounded-2xl p-4 shadow-lg ring-2 ring-indigo-200 border border-indigo-50 inline-block">
+            <img src="/icons/logolingo-512.png" alt="LinGoXiC" className="w-32 h-32 object-contain drop-shadow" />
           </div>
-          <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-2xl border border-indigo-100 dark:border-gray-700 space-y-5 text-left">
-            <h2 className="text-lg font-semibold text-indigo-700 dark:text-indigo-300">
-              🎯 ¿Qué vas a encontrar?
-            </h2>
-            {[
-              {
-                icon: (
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                    <polyline points="14 2 14 8 20 8" />
-                    <line x1="16" y1="13" x2="8" y2="13" />
-                    <line x1="16" y1="17" x2="8" y2="17" />
-                  </svg>
-                ),
-                label: "Test de diagnóstico",
-                desc: "para conocer tu nivel exacto (A1-B2)",
-                color: "#0EA5E9",
-              },
-              {
-                icon: (
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
-                  </svg>
-                ),
-                label: "6 escenarios temáticos",
-                desc: "alineados con el examen MEP",
-                color: "#10B981",
-              },
-              {
-                icon: (
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="3" y="11" width="18" height="10" rx="2" />
-                    <circle cx="12" cy="16" r="2" />
-                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                  </svg>
-                ),
-                label: "Tutor IA con Gemini",
-                desc: "feedback personalizado",
-                color: "#0EA5E9",
-              },
-              {
-                icon: (
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="12" r="10" />
-                    <polyline points="12 6 12 12 16 14" />
-                  </svg>
-                ),
-                label: "Simulacro completo",
-                desc: "100 preguntas tipo examen",
-                color: "#8B5CF6",
-              },
-            ].map((f, i) => (
-              <div key={i} className="flex items-start gap-3">
-                <span
-                  className="shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
-                  style={{ backgroundColor: f.color + "1A", color: f.color }}
-                >
-                  {f.icon}
-                </span>
-                <span className="text-sm text-gray-600 dark:text-gray-300">
-                  <strong className="text-indigo-700 dark:text-indigo-300">{f.label}</strong> {f.desc}
-                </span>
-              </div>
-            ))}
-            <button
-              onClick={() => setStep("name")}
-              className="w-full h-12 rounded-xl text-white font-semibold transition-all hover:opacity-90 active:scale-[0.98]"
-              style={{
-                background: "linear-gradient(90deg, #4F46E5, #8B5CF6)",
-                boxShadow: "0 4px 20px rgba(139,92,246,0.45)",
-              }}
-            >
-              Comenzar ahora →
-            </button>
-
-          </div>
+          <h1 className="text-3xl font-bold text-gray-800 dark:text-white">Bienvenido a LinGoXiC</h1>
+          <p className="text-gray-600 dark:text-gray-300">Aprende inglés con IA — niveles A1 a B2</p>
+          <Button onClick={() => setStep("name")} className="w-full">Comenzar</Button>
         </div>
       </div>
     );
@@ -494,85 +360,80 @@ function Onboarding() {
 
   if (step === "name") {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-gradient-to-br from-indigo-800 via-indigo-600 to-violet-600">
-        <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-violet-400/40 blur-3xl" />
-        <div className="absolute -bottom-32 -left-24 w-96 h-96 rounded-full bg-indigo-400/30 blur-3xl" />
-        <div className="relative z-10 w-full max-w-md">
-          <button
-            onClick={() => setStep("welcome")}
-            className="mb-6 flex items-center gap-2 text-sm text-indigo-100 hover:text-white transition-colors"
-          >
-            ← Volver
-          </button>
-          <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-2xl border border-indigo-100 dark:border-gray-700 space-y-6">
-            <h2 className="text-2xl font-bold text-indigo-700 dark:text-indigo-300">
-              ¿Cómo te llamas?
-            </h2>
-            <p className="text-sm text-gray-500 dark:text-gray-400 -mt-4">
-              Usaremos tu nombre para personalizar tu experiencia
-            </p>
-            <div className="space-y-2">
-              <label className="block text-xs font-medium text-indigo-700 dark:text-indigo-300">
-                Tu nombre
-              </label>
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Escribe tu nombre..."
-                className="w-full h-12 rounded-xl px-4 text-sm font-medium text-gray-800 dark:text-gray-100 outline-none transition-all bg-gray-50 dark:bg-gray-700 border"
-                style={{ borderColor: focusedField === "name" ? "#4F46E5" : "#E5E7EB", boxShadow: focusedField === "name" ? "0 0 0 3px rgba(79,70,229,0.15)" : "none" }}
-                onFocus={() => setFocusedField("name")}
-                onBlur={() => setFocusedField(null)}
-                onKeyDown={(e) => e.key === "Enter" && goToTest()}
-              />
-            </div>
-            <div className="space-y-2">
-              <label className="block text-xs font-medium text-indigo-700 dark:text-indigo-300">
-                Código de acceso
-              </label>
-              <input
-                type="password"
-                value={accessCode}
-                onChange={(e) => setAccessCode(e.target.value)}
-                placeholder="Ingresa tu código de acceso..."
-                className="w-full h-12 rounded-xl px-4 text-sm font-medium text-gray-800 dark:text-gray-100 outline-none transition-all bg-gray-50 dark:bg-gray-700 border"
-                style={{ borderColor: focusedField === "code" ? "#4F46E5" : "#E5E7EB", boxShadow: focusedField === "code" ? "0 0 0 3px rgba(79,70,229,0.15)" : "none" }}
-                onFocus={() => setFocusedField("code")}
-                onBlur={() => setFocusedField(null)}
-                onKeyDown={(e) => e.key === "Enter" && goToTest()}
-              />
-              {codeError && (
-                <p className="text-sm text-red-500">{codeError}</p>
-              )}
-            </div>
-            <button
-              onClick={goToTest}
-              disabled={!name.trim() || !accessCode.trim()}
-              className="w-full h-12 rounded-xl text-white font-semibold transition-all hover:opacity-90 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
-              style={{
-                background: "linear-gradient(90deg, #4F46E5, #8B5CF6)",
-                boxShadow: "0 4px 20px rgba(139,92,246,0.45)",
-              }}
-            >
-              Hacer test de diagnóstico
-            </button>
-            <button
-              onClick={skipTest}
-              className="w-full text-sm text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
-            >
-              Omitir test y empezar desde cero (A1)
-            </button>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-600 via-violet-600 to-indigo-700 p-4">
+        <div className="max-w-md w-full bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-2xl space-y-6">
+          <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-white">¿Cómo te llamas?</h2>
+          <input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Tu nombre"
+            className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
+            autoFocus
+          />
+          <div className="flex gap-3">
+            <Button variant="ghost" onClick={() => setStep("welcome")} className="flex-1">Atrás</Button>
+            <Button onClick={() => setStep("choice")} disabled={!name.trim()} className="flex-1">Continuar</Button>
           </div>
         </div>
       </div>
-  );
+    );
   }
+
+  if (step === "choice") {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-600 via-violet-600 to-indigo-700 p-4">
+        <div className="max-w-md w-full bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-2xl space-y-6">
+          <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-white">¿Cómo quieres empezar?</h2>
+          <p className="text-center text-sm text-gray-500 dark:text-gray-400">Elige una opción para personalizar tu nivel</p>
+          <div className="space-y-3">
+            <Button onClick={() => { setCurrent(0); setAnswers({}); setStep("test"); }} className="w-full">
+              Hacer diagnóstico — evalúa tu nivel (A1–B2)
+            </Button>
+            <Button variant="ghost" onClick={goToDashboard} className="w-full">
+              Empezar desde cero (A1)
+            </Button>
+          </div>
+          <Button variant="ghost" onClick={() => setStep("name")} className="w-full">Atrás</Button>
+        </div>
+      </div>
+    );
+  }
+
+  // step === "test"
+  const q = PLACEMENT_QUESTIONS[current];
+  const progress = ((current + 1) / PLACEMENT_QUESTIONS.length) * 100;
+  if (!q) return <div className="min-h-screen flex items-center justify-center p-4"><div className="bg-white dark:bg-gray-800 rounded-2xl p-8 text-center">No hay preguntas disponibles</div></div>;
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-600 via-violet-600 to-indigo-700 p-4">
+      <div className="max-w-md w-full bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-2xl space-y-4">
+        <ProgressBar value={current + 1} max={PLACEMENT_QUESTIONS.length} />
+        <h3 className="font-semibold text-gray-800 dark:text-white">{q.prompt || q.question}</h3>
+        <div className="space-y-2">
+          {q.options.map((opt, i) => (
+            <button
+              key={i}
+              onClick={() => {
+                const next = { ...answers, [q.id]: i };
+                setAnswers(next);
+                if (current + 1 < PLACEMENT_QUESTIONS.length) setCurrent((c) => c + 1);
+                else finishTest(next);
+              }}
+              className="w-full text-left px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 hover:bg-indigo-50 dark:hover:bg-gray-700 text-gray-800 dark:text-white"
+            >
+              {opt}
+            </button>
+          ))}
+        </div>
+        <Button variant="ghost" onClick={goToDashboard} className="w-full">Omitir y empezar en A1</Button>
+      </div>
+    </div>
+  );
 }
+
+
   function App() {
   const { user, initialized, loadUser } = useUser();
   const { darkMode } = useTheme();
-  const [blocked, setBlocked] = React.useState(false);
 
   useEffect(() => {
     loadUser();
@@ -581,29 +442,6 @@ function Onboarding() {
   useEffect(() => {
     document.documentElement.classList.toggle("dark", darkMode);
   }, [darkMode]);
-
-  useEffect(() => {
-    if (!user || !user.accessCode) return;
-    (async () => {
-      const result = await checkAccessBlocked(user.accessCode);
-      setBlocked(result.blocked);
-    })();
-  }, [user]);
-
-  if (blocked) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-600 via-violet-600 to-indigo-700 p-4">
-        <div className="max-w-md w-full bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-2xl text-center space-y-4">
-          <span className="text-5xl">🔒</span>
-          <h1 className="text-xl font-bold">Acceso expirado</h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            Tu código de acceso ya no es válido. Para seguir usando la app,
-            contacta a tu academia para obtener un nuevo código.
-          </p>
-        </div>
-      </div>
-    );
-  }
 
   if (!initialized) return <SuspenseFallback />;
   return user ? <AnimatedRoutes /> : <Onboarding />;

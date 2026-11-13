@@ -20,7 +20,7 @@ export function Button({ variant = "primary", size = "md", className, children, 
       className={cn(
         `rounded-xl font-semibold transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2`,
         {
-          primary: `bg-gradient-to-r from-indigo-500 to-violet-500 text-white hover:shadow-lg hover:shadow-violet-500/25`,
+          primary: `bg-gradient-to-r from-indigo-500 to-violet-500 text-white hover:shadow-md`,
           secondary: `bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700`,
           ghost: `text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800`,
           danger: `bg-red-500 text-white hover:bg-red-600`,

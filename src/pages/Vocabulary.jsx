@@ -1,141 +1,96 @@
-import { useState } from "react";
-import { getBestEnglishVoice } from "../utils/tts.js";
-import { Search, SpellCheck, Volume1, Volume2 } from "lucide-react";
-import { Card } from "../components/ui.jsx";
-import unitsData from "../data/unitsData.js";
+import { useState, useMemo, useEffect } from "react";
 import vocabularyBanks from "../data/vocabularyData.js";
-import { useUser } from "../hooks/useUser.jsx";
+import { Card } from "../components/ui.jsx";
+import { speak, stop, preloadVoices, hasVoices } from "../utils/tts.js";
+import { Search, Volume2 } from "lucide-react";
 
 export default function Vocabulary() {
-  const { user } = useUser();
   const [query, setQuery] = useState("");
-  const [filter, setFilter] = useState("all");
-  const [playing, setPlaying] = useState(null);
+  const [unitFilter, setUnitFilter] = useState("all");
+  const [ttsError, setTtsError] = useState(null);
+  useEffect(() => () => { try{ stop(); }catch{} }, []);
 
-  function playWord(word) {
-    setPlaying(word);
-    let audio = new Audio(`/audio/vocabulary/${encodeURIComponent(word)}.mp3`);
-    audio.onended = () => setPlaying(null);
-    audio.onerror = () => {
-      if ("speechSynthesis" in window) {
-        let utterance = new SpeechSynthesisUtterance(word);
-        const bestVoice = getBestEnglishVoice();
-        utterance.lang = bestVoice ? bestVoice.lang : "en-US";
-        if (bestVoice) utterance.voice = bestVoice;
-        utterance.onend = () => setPlaying(null);
-        utterance.onerror = () => setPlaying(null);
-        window.speechSynthesis.speak(utterance);
-      } else {
-        setPlaying(null);
+  const allWords = useMemo(() => {
+    return vocabularyBanks.flatMap((bank) =>
+      (bank.words || []).map((w) => ({ ...w, unit: bank.unitId || bank.id }))
+    );
+  }, []);
+
+  const units = useMemo(() => vocabularyBanks.map((b) => b.unitId || b.id), []);
+
+  const filtered = useMemo(() => {
+    return allWords.filter((w) => {
+      const matchesQuery =
+        !query ||
+        w.word.toLowerCase().includes(query.toLowerCase()) ||
+        w.translation.toLowerCase().includes(query.toLowerCase());
+      const matchesUnit = unitFilter === "all" || w.unit === unitFilter;
+      return matchesQuery && matchesUnit;
+    });
+  }, [allWords, query, unitFilter]);
+
+  const playWord = (word) => {
+    setTtsError(null);
+    // (hasVoices check removido — intentamos igual, el warn sale en tts.js)
+    try { stop(); } catch {}
+    preloadVoices();
+    speak(word, { rate: 0.9,
+      onError: (e) => {
+        const msg = e?.message === "no-voices" ? "Sin voces. Usa Chrome o instala voces del sistema." : "Error de audio. Probá en Chrome.";
+        setTtsError(msg);
       }
-    };
-    audio.play();
-  }
-
-  if (!user) return null;
-
-  const words = vocabularyBanks
-    .filter((bank) => filter === "all" || bank.unitId === filter)
-    .flatMap((bank) => bank.words);
-  const filtered = query
-    ? words.filter(
-        (w) =>
-          w.word.toLowerCase().includes(query.toLowerCase()) ||
-          w.translation.toLowerCase().includes(query.toLowerCase())
-      )
-    : words;
+    });
+  };
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold flex items-center gap-2">
-          <SpellCheck className="text-blue-500" /> Vocabulario
-        </h1>
-        <p className="text-gray-500">
-          Bancos de vocabulario por unidad temática
-        </p>
-      </div>
-
-      <div className="relative">
-        <Search
-          size={18}
-          className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
-        />
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Buscar palabra en inglés o español..."
-          className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
-        />
-      </div>
-
-      <div className="flex gap-2 overflow-x-auto pb-2">
-        <button
-          onClick={() => setFilter("all")}
-          className={`px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-colors ${
-            filter === "all"
-              ? `bg-gradient-to-r from-indigo-500 to-violet-500 text-white`
-              : `bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400`
-          }`}
+    <div className="p-4 max-w-5xl mx-auto space-y-4">
+      <h1 className="text-2xl font-bold">Vocabulary</h1>
+      <div className="flex gap-3 flex-wrap">
+        <div className="flex items-center gap-2 flex-1 min-w-[200px] border rounded-lg px-3 py-2 bg-white dark:bg-gray-800">
+          <Search size={18} className="text-gray-400" />
+          <input
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Buscar palabra o traduccion..."
+            className="flex-1 bg-transparent outline-none text-sm"
+          />
+        </div>
+        <select
+          value={unitFilter}
+          onChange={(e) => setUnitFilter(e.target.value)}
+          className="border rounded-lg px-3 py-2 bg-white dark:bg-gray-800 text-sm"
         >
-          Todas
-        </button>
-        {unitsData.map((u) => (
-          <button
-            key={u.id}
-            onClick={() => setFilter(u.id)}
-            className={`px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-colors ${
-              filter === u.id
-                ? `bg-gradient-to-r from-indigo-500 to-violet-500 text-white`
-                : `bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400`
-            }`}
-          >
-            {u.title}
-          </button>
-        ))}
+          <option value="all">Todas las unidades</option>
+          {units.map((u) => (
+            <option key={u} value={u}>{u}</option>
+          ))}
+        </select>
       </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
-        {filtered.map((w, i) => (
-          <Card key={i} hover>
-            <div className="flex items-start justify-between">
-              <div className="flex-1">
-                <div className="flex items-center gap-2">
-                  <h3 className="font-semibold text-lg">{w.word}</h3>
-                  <button
-                    onClick={() => playWord(w.word)}
-                    disabled={playing === w.word}
-                    className={`p-1.5 rounded-lg transition-all ${
-                      playing === w.word
-                        ? `bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 animate-pulse`
-                        : `hover:bg-gray-100 dark:hover:bg-gray-700 text-indigo-500`
-                    }`}
-                    title="Escuchar pronunciación"
-                  >
-                    {playing === w.word ? (
-                      <Volume1 size={16} />
-                    ) : (
-                      <Volume2 size={14} />
-                    )}
-                  </button>
-                </div>
-                {w.phonetic && (
-                  <p className="text-xs text-gray-400">{w.phonetic}</p>
-                )}
-                <p className="text-sm text-gray-500 mt-1">{w.translation}</p>
-                <p className="text-xs text-gray-400 mt-1">{w.definition}</p>
-                <p className="text-xs italic text-gray-500 mt-1">"{w.example}"</p>
+      {ttsError && <div className="bg-amber-50 border border-amber-200 text-amber-800 text-sm rounded p-2">{ttsError}</div>}
+      <p className="text-sm text-gray-500">{filtered.length} palabras</p>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        {filtered.map((w) => (
+          <Card key={`${w.unit}-${w.word}`} className="p-4 flex flex-col gap-2">
+            <div className="flex items-start justify-between gap-2">
+              <div>
+                <p className="font-semibold">{w.word}</p>
+                <p className="text-sm text-gray-500">{w.translation}</p>
+                {w.phonetic && <p className="text-xs text-gray-400">{w.phonetic}</p>}
               </div>
+              <button
+                onClick={() => playWord(w.word)}
+                className="p-2 rounded-full bg-indigo-50 dark:bg-indigo-900/30 hover:bg-indigo-100"
+                aria-label={`Escuchar ${w.word}`}
+              >
+                <Volume2 size={18} className="text-indigo-600" />
+              </button>
             </div>
+            {w.definition && <p className="text-sm text-gray-600 dark:text-gray-300">{w.definition}</p>}
+            {w.example && <p className="text-sm italic text-gray-500">"{w.example}"</p>}
+            <span className="text-xs text-gray-400">{w.unit}</span>
           </Card>
         ))}
       </div>
-      {filtered.length === 0 && (
-        <p className="text-center text-gray-400 py-8">
-          No se encontraron palabras
-        </p>
-      )}
     </div>
   );
 }

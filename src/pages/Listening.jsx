@@ -1,258 +1,224 @@
-import { useState } from "react";
-import { Check, Headphones, Play, Square, X } from "lucide-react";
-import { Badge, Button, Card, SkillBadge } from "../components/ui.jsx";
-import unitsData from "../data/unitsData.js";
-import { getListeningExercise } from "../data/listeningData.js";
-import { getBestEnglishVoice } from "../utils/tts.js";
-import { useUser } from "../hooks/useUser.jsx";
+import { useState, useEffect, useRef } from "react";
+import listeningExercises from "../data/listeningData.js";
+import { Card, Button } from "../components/ui.jsx";
+import { useActivityGuard } from "../hooks/useActivityGuard.jsx";
+import { speak, stop } from "../utils/tts.js";
+import { Volume2, Check, X } from "lucide-react";
+
+function friendlyTitle(id) {
+  const map = {
+    "high-tech-shopping-listening-1": "Compras tecnológicas",
+    "healthy-choices-listening-1": "Vida saludable",
+    "safe-travels-listening-1": "Viajes seguros",
+    "my-profile-listening-1": "Mi perfil — Presentación",
+    "my-profile-listening-2": "Mi perfil — Rutina diaria",
+    "cultural-variety-listening-1": "Cultural — Festival",
+    "cultural-variety-listening-2": "Cultural — Comidas típicas",
+    "careers-listening-1": "Trabajo — Entrevista",
+    "careers-listening-2": "Trabajo — Día laboral",
+    "global-competence-listening-1": "Global — Aeropuerto",
+    "global-competence-listening-2": "Global — Indicaciones",
+  };
+  return map[id] || id;
+}
 
 export default function Listening() {
-  const { user } = useUser();
-  const [selectedUnit, setSelectedUnit] = useState(unitsData[0].id);
-  const [speakingId, setSpeakingId] = useState(null);
+  const exercises = listeningExercises;
+  const [selectedId, setSelectedId] = useState(exercises[0]?.lessonId || "");
+  const exercise = exercises.find((e) => e.lessonId === selectedId) || exercises[0];
   const [answers, setAnswers] = useState({});
-  const [checked, setChecked] = useState({});
+  const [checked, setChecked] = useState(false);
+  const [audioError, setAudioError] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef(null);
 
-  const unit = unitsData.find((u) => u.id === selectedUnit);
+  useActivityGuard(isPlaying);
 
-  if (!user) return null;
+  useEffect(() => {
+    setAnswers({});
+    setChecked(false);
+    setAudioError(null);
+    setIsPlaying(false);
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+  }, [selectedId]);
 
-  const speak = (text, id) => {
-    if ("speechSynthesis" in window) {
-      speechSynthesis.cancel();
-      setSpeakingId(id);
-      const utterance = new SpeechSynthesisUtterance(text);
-      const bestVoice = getBestEnglishVoice();
-      utterance.lang = bestVoice ? bestVoice.lang : "en-US";
-      if (bestVoice) utterance.voice = bestVoice;
-      utterance.rate = 0.9;
-      utterance.onend = () => setSpeakingId(null);
-      speechSynthesis.speak(utterance);
+  const togglePlay = async () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (isPlaying) {
+      audio.pause();
+      setIsPlaying(false);
+      return;
+    }
+    setAudioError(null);
+    try {
+      if (audio.readyState < 2) {
+        await new Promise((resolve, reject) => {
+          const onCanPlay = () => {
+            audio.removeEventListener("canplay", onCanPlay);
+            audio.removeEventListener("error", onError);
+            resolve();
+          };
+          const onError = () => {
+            audio.removeEventListener("canplay", onCanPlay);
+            audio.removeEventListener("error", onError);
+            reject(new Error("load failed"));
+          };
+          audio.addEventListener("canplay", onCanPlay);
+          audio.addEventListener("error", onError);
+          audio.load();
+        });
+      }
+      await audio.play();
+      setIsPlaying(true);
+    } catch (e) {
+      if (e.name === "NotAllowedError") {
+        setAudioError("Tocá Escuchar de nuevo para reproducir (el navegador bloqueó el autoplay).");
+      } else {
+        setAudioError("No se pudo reproducir el audio. Verificá tu conexión o probá en Chrome.");
+      }
+      setIsPlaying(false);
     }
   };
 
-  const stop = () => {
-    speechSynthesis.cancel();
-    setSpeakingId(null);
+  const handleAudioError = () => {
+    setIsPlaying(false);
+    setAudioError("Error al cargar el audio. Probá en Chrome o verifica tu conexión. Usando voz del sistema como respaldo.");
   };
 
-  const selectAnswer = (questionId, option) => {
-    checked[questionId.split("-").slice(0, -1).join("-")] ||
-      setAnswers((prev) => ({ ...prev, [questionId]: option }));
+  const fallbackSpeak = () => {
+    stop();
+    speak(exercise.script, {
+      onEnd: () => {},
+      onError: () => setAudioError("Error de audio. Probá en Chrome o instala voces."),
+    });
   };
 
-  const verify = (lessonId) => {
-    setChecked((prev) => ({ ...prev, [lessonId]: true }));
+  const selectAnswer = (qId, opt) => {
+    if (checked) return;
+    setAnswers((prev) => ({ ...prev, [qId]: opt }));
   };
 
-  const isCorrect = (questionId, correctAnswer) =>
-    (Array.isArray(correctAnswer) ? correctAnswer : [correctAnswer]).includes(
-      answers[questionId]
-    );
+  if (!exercise) return <div className="p-8 text-center">No hay ejercicios</div>;
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold flex items-center gap-2">
-          <Headphones className="text-violet-500" /> Listening Lab
-        </h1>
-        <p className="text-gray-500">
-          Practica comprensión auditiva con textos narrados por IA
-        </p>
-      </div>
+    <div className="p-4 max-w-2xl mx-auto space-y-4">
+      <h1 className="text-2xl font-bold flex items-center gap-2">
+        <Volume2 size={24} className="text-indigo-600" /> Listening
+      </h1>
 
       <div className="flex gap-2 overflow-x-auto pb-2">
-        {unitsData.map((u) => (
+        {exercises.map((ex) => (
           <button
-            key={u.id}
-            onClick={() => {
-              setSelectedUnit(u.id);
-              setAnswers({});
-              setChecked({});
-            }}
-            className={`px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-colors ${
-              selectedUnit === u.id
-                ? `bg-gradient-to-r from-indigo-500 to-violet-500 text-white`
-                : `bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400`
+            key={ex.lessonId}
+            onClick={() => setSelectedId(ex.lessonId)}
+            className={`px-3 py-1.5 rounded-full text-sm whitespace-nowrap border ${
+              ex.lessonId === selectedId
+                ? "bg-indigo-600 text-white border-indigo-600"
+                : "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
             }`}
           >
-            {u.title}
+            {friendlyTitle(ex.lessonId)}
           </button>
         ))}
       </div>
 
-      <div className="space-y-6">
-        {unit?.lessons
-          .filter((lesson) => lesson.type === "listening")
-          .map((lesson) => {
-            const exercise = getListeningExercise(lesson.id);
-            const transcription =
-              (exercise && exercise.script) ||
-              lesson.content.sections
-                .map((s) => s.content)
-                .join(". ");
-            return (
-              <div key={lesson.id} className="space-y-4">
-                <Card>
-                  <div className="flex items-start justify-between">
-                    <div className="space-y-2 flex-1">
-                      <div className="flex items-center gap-2">
-                        <SkillBadge skill="listening" />
-                      </div>
-                      <h3 className="font-semibold">{lesson.title}</h3>
-                      <p className="text-sm text-gray-500">
-                        {lesson.description}
-                      </p>
-                      <div className="flex items-center gap-2 mt-3">
-                        {speakingId === lesson.id ? (
-                          <Button size="sm" variant="danger" onClick={stop}>
-                            <Square size={14} /> Detener
-                          </Button>
-                        ) : (
-                          <Button
-                            size="sm"
-                            onClick={() => speak(transcription, lesson.id)}
-                          >
-                            <Play size={14} /> Escuchar
-                          </Button>
-                        )}
-                      </div>
-                      <details className="mt-2">
-                        <summary className="text-xs text-gray-400 cursor-pointer hover:text-gray-600">
-                          Ver transcripción
-                        </summary>
-                        <p className="text-sm text-gray-600 dark:text-gray-400 mt-2 p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
-                          {lesson.content.sections
-                            .map((s) => s.content)
-                            .join("\n\n")}
-                        </p>
-                      </details>
-                    </div>
-                  </div>
-                </Card>
+      <Card className="p-4 space-y-3">
+        <div className="flex items-center gap-3">
+          <Button onClick={togglePlay} className="gap-2">
+            <Volume2 size={16} /> {isPlaying ? "Pausar" : "Escuchar"}
+          </Button>
+          <span className="text-sm text-gray-500">{friendlyTitle(exercise.lessonId)}</span>
+        </div>
 
-                {exercise && (
-                  <Card>
-                    <h3 className="font-semibold mb-3 flex items-center gap-2">
-                      <Headphones size={18} className="text-violet-500" />{" "}
-                      Comprensión auditiva
-                    </h3>
-                    <p className="text-xs text-gray-400 mb-4">
-                      Responde después de escuchar el diálogo
-                    </p>
-                    <div className="space-y-4">
-                      {exercise.questions.map((q, qi) => {
-                        const isChecked = checked[lesson.id];
-                        return (
-                          <div
-                            key={q.id}
-                            className="p-4 bg-gray-50 dark:bg-gray-800/50 rounded-xl"
-                          >
-                            <p className="text-sm font-medium mb-3">
-                              {qi + 1}. {q.prompt}
-                            </p>
-                            <div className="space-y-2">
-                              {q.options.map((option) => {
-                                const selected = answers[q.id] === option;
-                                const correct =
-                                  isChecked &&
-                                  (Array.isArray(q.correctAnswer)
-                                    ? q.correctAnswer
-                                    : [q.correctAnswer]
-                                  ).includes(option);
-                                let borderClass = `border-gray-200 dark:border-gray-600`;
-                                if (selected && !isChecked)
-                                  borderClass = `border-violet-500`;
-                                if (isChecked && correct)
-                                  borderClass = `border-violet-500 bg-violet-50 dark:bg-violet-900/20`;
-                                if (isChecked && selected && !correct)
-                                  borderClass = `border-red-500 bg-red-50 dark:bg-red-900/20`;
-                                return (
-                                  <button
-                                    key={option}
-                                    onClick={() => selectAnswer(q.id, option)}
-                                    className={`w-full text-left px-4 py-3 rounded-xl border text-sm transition-all ${borderClass} ${
-                                      isChecked
-                                        ? `cursor-default`
-                                        : `hover:border-violet-300 cursor-pointer`
-                                    }`}
-                                  >
-                                    <div className="flex items-center gap-2">
-                                      {isChecked && correct && (
-                                        <Check
-                                          size={16}
-                                          className="text-violet-500 shrink-0"
-                                        />
-                                      )}
-                                      {isChecked && selected && !correct && (
-                                        <X
-                                          size={16}
-                                          className="text-red-500 shrink-0"
-                                        />
-                                      )}
-                                      <span
-                                        className={
-                                          selected && !isChecked
-                                            ? `font-medium`
-                                            : ``
-                                        }
-                                      >
-                                        {option}
-                                      </span>
-                                    </div>
-                                  </button>
-                                );
-                              })}
-                            </div>
-                            {isChecked && (
-                              <p className="text-xs mt-2 text-gray-500">
-                                {q.explanation}
-                              </p>
-                            )}
-                          </div>
-                        );
-                      })}
-                    </div>
-                    {!checked[lesson.id] && (
-                      <Button
-                        className="mt-4"
-                        onClick={() => verify(lesson.id)}
-                        disabled={exercise.questions.some((q) => !answers[q.id])}
-                      >
-                        Verificar respuestas
-                      </Button>
-                    )}
-                    {checked[lesson.id] && (
-                      <div className="mt-4 flex items-center gap-2">
-                        <Badge
-                          variant={
-                            exercise.questions.every((q) =>
-                              isCorrect(q.id, q.correctAnswer)
-                            )
-                              ? `success`
-                              : `info`
-                          }
-                        >
-                          {
-                            exercise.questions.filter((q) =>
-                              isCorrect(q.id, q.correctAnswer)
-                            ).length
-                          }
-                          /{exercise.questions.length} correctas
-                        </Badge>
-                      </div>
-                    )}
-                  </Card>
-                )}
-              </div>
-            );
-          })}
-        {unit?.lessons.filter((lesson) => lesson.type === "listening")
-          .length === 0 && (
-          <p className="text-center text-gray-400 py-8">
-            No hay ejercicios de listening en esta unidad
-          </p>
+        <audio
+          ref={audioRef}
+          src={exercise.audioUrl}
+          preload="metadata"
+          crossOrigin="anonymous"
+          onLoadedData={() => setAudioError(null)}
+          onCanPlay={() => setAudioError(null)}
+          onEnded={() => setIsPlaying(false)}
+          onError={handleAudioError}
+          onPause={() => setIsPlaying(false)}
+          onPlay={() => setIsPlaying(true)}
+          className="w-full"
+          controls
+        >
+          <source src={exercise.audioUrl} type="audio/mpeg" />
+        </audio>
+
+        {audioError && (
+          <div className="bg-amber-50 border border-amber-200 text-amber-800 text-sm rounded p-2 space-y-2">
+            <p>{audioError}</p>
+            <Button variant="ghost" size="sm" onClick={fallbackSpeak} className="gap-2">
+              <Volume2 size={14} /> Probar voz del sistema
+            </Button>
+          </div>
         )}
+
+        <details className="text-sm">
+          <summary className="cursor-pointer text-indigo-600 dark:text-indigo-400">Ver transcripción</summary>
+          <p className="mt-2 p-3 bg-gray-50 dark:bg-gray-800 rounded text-gray-700 dark:text-gray-300 leading-relaxed">
+            {exercise.script}
+          </p>
+        </details>
+      </Card>
+
+      <div className="space-y-3">
+        {exercise.questions?.map((q) => (
+          <div key={q.id} className="border rounded-lg p-3 bg-gray-50 dark:bg-gray-900/40">
+            <p className="font-medium text-sm mb-2">{q.prompt || q.question}</p>
+            <div className="space-y-1">
+              {q.options?.map((opt) => {
+                const selected = answers[q.id] === opt;
+                const correct = checked && q.correctAnswer === opt;
+                const wrong = checked && selected && !correct;
+                return (
+                  <button
+                    key={opt}
+                    onClick={() => selectAnswer(q.id, opt)}
+                    className={`w-full text-left px-3 py-2 rounded border text-sm flex items-center justify-between ${
+                      correct
+                        ? "border-green-500 bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300"
+                        : wrong
+                        ? "border-red-500 bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-300"
+                        : selected
+                        ? "border-indigo-500 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300"
+                        : "border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800"
+                    }`}
+                  >
+                    <span>{opt}</span>
+                    {checked && correct && <Check size={16} className="text-green-600" />}
+                    {wrong && <X size={16} className="text-red-600" />}
+                  </button>
+                );
+              })}
+            </div>
+            {checked && (
+              <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">{q.explanation}</p>
+            )}
+          </div>
+        ))}
+      </div>
+
+      <div className="flex gap-3">
+        <Button onClick={() => setChecked(true)} disabled={checked} className="flex-1">
+          Verificar
+        </Button>
+        <Button
+          variant="ghost"
+          onClick={() => {
+            setAnswers({});
+            setChecked(false);
+          }}
+          className="flex-1"
+        >
+          Reiniciar
+        </Button>
       </div>
     </div>
   );

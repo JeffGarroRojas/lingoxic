@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
@@ -25,6 +25,7 @@ import { useTheme } from "../hooks/useTheme.jsx";
 import useOnlineStatus from "../hooks/useOnlineStatus.js";
 import { LevelBadge } from "./ui.jsx";
 import { streakEmoji } from "../utils/level.js";
+import { stop } from "../utils/tts.js";
 import { submitBugReport } from "../utils/reportBug.js";
 
 const NAV_ITEMS = [
@@ -45,6 +46,7 @@ const NAV_ITEMS = [
 
 function Sidebar({ onNavigate }) {
   const location = useLocation();
+  useEffect(() => { try{ stop(); }catch{} }, [location.pathname]);
   const navigate = useNavigate();
   const { user } = useUser();
   const { darkMode, toggleDarkMode, sidebarOpen } = useTheme();

@@ -9,7 +9,7 @@ export default function Dashboard() {
   const navigate = useNavigate();
   const { user } = useUser();
 
-  if (!user) return (navigate("/"), null);
+  if (!user) return <Navigate to="/" replace />;
 
   const totalLessons = unitsData.reduce((sum, u) => sum + u.lessons.length, 0);
   const nextThreshold = nextLevelThreshold(user.level);

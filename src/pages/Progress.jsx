@@ -11,7 +11,7 @@ const CHART_COLORS = [`#38bdf8`, `#34d399`, `#f59e0b`, `#a78bfa`, `#f472b6`, `#f
 export default function ProgressPage() {
   const navigate = useNavigate();
   const { user } = useUser();
-  if (!user) return null;
+  if (!user) return <Navigate to="/" replace />;
 
   const totalLessons = unitsData.reduce((e, t) => e + t.lessons.length, 0);
   const totalQuizzes = unitsData.reduce((e, t) => e + t.quizzes.length, 0);

@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { Link } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 import {
   BookOpen, Library, FileText, Headphones, PenLine, Mic,
   ArrowRight, RotateCcw, Award, Target, CheckCircle2,
@@ -44,7 +44,7 @@ export default function Diagnostic() {
     return { bySkill, weakest, strongest, overallLevel };
   }, [answers]);
 
-  if (!user) return null;
+  if (!user) return <Navigate to="/" replace />;
 
   function start() { setStarted(true); }
 

@@ -1,3 +1,4 @@
+import { Navigate } from "react-router-dom";
 import { useState } from "react";
 import { BookOpen, Check, X } from "lucide-react";
 import { Badge, Button, Card, SkillBadge } from "../components/ui.jsx";
@@ -13,7 +14,7 @@ export default function Reading() {
   const unit = unitsData.find((u) => u.id === selectedUnit);
   const quiz = unit?.quizzes.find((q) => q.type === "reading");
 
-  if (!user) return null;
+  if (!user) return <Navigate to="/" replace />;
 
   const selectAnswer = (questionId, option) => {
     checked[quiz?.id || ""] || setAnswers((prev) => ({ ...prev, [questionId]: option }));

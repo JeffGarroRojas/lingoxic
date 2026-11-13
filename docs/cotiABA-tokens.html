@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Evidencia de costos de IA (Hipotética) — Lingoxic · ABA</title>
+<style>
+  @page {
+    size: Letter;
+    margin: 16mm 15mm 14mm 15mm;
+    @bottom-right { content: counter(page) " / " counter(pages); font-size: 8px; color: #94a3b8; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "DejaVu Sans", Helvetica, Arial, sans-serif;
+    color: #1e293b; font-size: 10px; line-height: 1.45; margin: 0;
+  }
+  .stamp { position: absolute; top: 21mm; right: -22mm; transform: rotate(-28deg); font-size: 22px; font-weight: 700; color: rgba(220,38,38,0.20); letter-spacing: 3px; border: 3px solid rgba(220,38,38,0.30); padding: 3px 22px; border-radius: 6px; white-space: nowrap; z-index: 9; }
+  .topbar { height: 6px; background: linear-gradient(90deg, #dc2626, #0ea5e9); border-radius: 3px; margin-bottom: 12px; }
+  h1 { font-size: 18px; color: #0f172a; margin: 0 0 2px 0; letter-spacing: -0.3px; }
+  .sub { font-size: 11.5px; color: #0ea5e9; margin: 0 0 10px 0; font-weight: 600; }
+  .meta { background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 6px; padding: 7px 12px; margin-bottom: 12px; font-size: 9.3px; }
+  .meta b { color: #0f172a; }
+  .warn { background: #fef2f2; border: 1px solid #fecaca; border-left: 4px solid #dc2626; border-radius: 4px; padding: 8px 10px; margin: 8px 0; font-size: 9.3px; }
+  .box { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #0ea5e9; border-radius: 4px; padding: 8px 10px; margin: 8px 0; font-size: 9.3px; }
+  h2 { font-size: 12.5px; color: #1d4ed8; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1.5px solid #bfdbfe; padding-bottom: 3px; margin: 14px 0 7px 0; }
+  p { margin: 0 0 6px 0; }
+  ul { margin: 0 0 7px 0; padding-left: 15px; }
+  li { margin-bottom: 3px; }
+  table { width: 100%; border-collapse: collapse; margin: 5px 0 3px 0; page-break-inside: avoid; }
+  th { background: #0ea5e9; color: #fff; font-size: 9px; text-align: left; padding: 5px 7px; font-weight: 600; }
+  td { border: 1px solid #e2e8f0; padding: 4px 7px; font-size: 9.3px; }
+  tr:nth-child(even) td { background: #f8fafc; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .total td { background: #ecfeff !important; font-weight: 600; color: #0c4a6e; }
+  .formula { font-family: "DejaVu Sans Mono", monospace; background: #f8fafc; border: 1px dashed #94a3b8; border-radius: 4px; padding: 7px 10px; font-size: 9.5px; margin: 7px 0; }
+  .src { font-size: 8.6px; color: #64748b; line-height: 1.5; }
+  .src a { color: #0369a1; text-decoration: none; word-break: break-all; }
+  .foot { margin-top: 12px; font-size: 8.5px; color: #94a3b8; text-align: center; }
+</style>
+</head>
+<body>
+
+<div class="stamp">HIPOTÉTICO — NO ES COBRO</div>
+
+<div class="topbar"></div>
+<h1>EVIDENCIA DE COSTO DE IA — 1.000.000 TOKENS</h1>
+<p class="sub">Simulación transparente de consumo de IA para Lingoxic · American Business Academy (ABA)</p>
+
+<div class="meta">
+  <b>Presentado por:</b> Jefferson Garro Rojas — fundador de Lingoxic &nbsp;·&nbsp;
+  <b>Fecha del documento:</b> 27 de agosto de 2026<br>
+  <b>Para:</b> American Business Academy (ABA) &nbsp;·&nbsp;
+  <b>Catalogo:</b> anexo a la cotización cotiABA
+</div>
+
+<div class="warn">
+  <b>ADVERTENCIA:</b> Este documento es una <b>proyección hipotética</b> para que ABA entienda cómo se calcula y se evidencia el costo del consumo de IA. <b>No es una factura ni un cobro.</b> El importe real se liquidará con el registro real de consumo (log de tokens del sistema), los precios oficiales del proveedor y el tipo de cambio BCCR del día de facturación. Ningún monto aquí es inventado: todo sale de fuentes oficiales citadas en la sección 4, aplicadas sobre una cantidad supuesta de 1.000.000 tokens.
+</div>
+
+<h2>1. Supuestos declarados (¿de dónde sale cada número?)</h2>
+<table>
+  <tr><th style="width:32%">Supuesto</th><th>Valor</th><th style="width:38%">Fuente</th></tr>
+  <tr><td>Cantidad simulada</td><td><b>1.000.000 tokens</b> totales</td><td>Supuesto de ejemplo (el piloto dura 2–3 meses; el volumen real se mide con el log del sistema)</td></tr>
+  <tr><td>Modelo de IA</td><td><b>Gemini 2.5 Flash-Lite</b> (el que usa Lingoxic hoy)</td><td>src/services/gemini.js → MODELS</td></tr>
+  <tr><td>Precio del modelo</td><td>USD 0,10 / 1M de entrada · USD 0,40 / 1M de salida</td><td>ai.google.dev/pricing (sección 4, verificado a la fecha del documento)</td></tr>
+  <tr><td>Mezcla entrada/salida</td><td><b>80% entrada / 20% salida</b> (típico de lectura, gramática, writing y speaking)</td><td>Proporción observada en el uso real de Lingoxic</td></tr>
+  <tr><td>Tipo de cambio</td><td>TC BCCR venta del día de la facturación</td><td>bccr.fi.cr (sección 4)</td></tr>
+</table>
+
+<h2>2. Cálculo — paso a paso para 1.000.000 de tokens</h2>
+<div class="formula">
+Costo USD = (tokens de entrada / 1.000.000 × $0,10) + (tokens de salida / 1.000.000 × $0,40)<br>
+Costo CRC = Costo USD × TC BCCR venta (del día de la facturación) &nbsp;·&nbsp; Con IVA = Costo CRC × 1,13
+</div>
+<table>
+  <tr><th>Componente</th><th class="num">Tokens</th><th class="num">Tarifa / 1M</th><th class="num">Costo USD</th></tr>
+  <tr><td>Entrada (prompt + contexto)</td><td class="num">800.000</td><td class="num">$0,10</td><td class="num">$0,08</td></tr>
+  <tr><td>Salida (respuestas / correcciones)</td><td class="num">200.000</td><td class="num">$0,40</td><td class="num">$0,08</td></tr>
+  <tr class="total"><td>Total por 1M de tokens</td><td class="num">1.000.000</td><td class="num"></td><td class="num">$0,16</td></tr>
+</table>
+<p class="src" style="margin-top:3px">
+  Conversión a colones a <b>TC BCCR venta de ejemplo ₡516,00 / USD 1</b> (el TC real del día se aplica en la factura):<br>
+  &nbsp;· Sin IVA: $0,16 × 516 = <b>₡82,56</b> por cada millón de tokens &nbsp;·&nbsp; Con IVA (13%): <b>₡93,29</b><br>
+  &nbsp;· Referencia por estudiante (1M ÷ 150 estudiantes = ≈6.667 tokens/est): <b>₡0,55 / estudiante</b> sin IVA.
+</p>
+
+<h2>3. Tabla comparativa de escenarios (para que ABA vea el rango)</h2>
+<table>
+  <tr><th>Mezcla entrada / salida</th><th class="num">Costo USD</th><th class="num">CRC sin IVA (TC 516)</th><th class="num">CRC con IVA 13%</th></tr>
+   <tr><td>100 <span style="color:#94a3b8">(post-piloto @ ₡4.000)</span></td><td class="num">₡800.000</td><td class="num">₡1.200.000</td><td class="num">₡2.400.000</td><td class="num">₡4.800.000</td></tr>
+  <tr><td>80% entrada / 20% salida <b>(el usado en esta simulación)</b></td><td class="num">$0,16</td><td class="num">₡82,56</td><td class="num">₡93,29</td></tr>
+  <tr><td>50% entrada / 50% salida</td><td class="num">$0,25</td><td class="num">₡129,00</td><td class="num">₡145,77</td></tr>
+  <tr><td>100% salida (todo genera texto)</td><td class="num">$0,40</td><td class="num">₡206,40</td><td class="num">₡233,23</td></tr>
+  <tr><td>100% entrada (solo lectura/resumen)</td><td class="num">$0,10</td><td class="num">₡51,60</td><td class="num">₡58,31</td></tr>
+</table>
+<p class="src">El costo del texto generado es muy bajo. El costo sube notablemente solo si se incluyen imágenes o video con IA (que hoy ABA aporta; la generación de imágenes/video se cotiza aparte).</p>
+
+<h2>4. Cómo se evidencia el monto real (nada de números inventados)</h2>
+<table>
+  <tr><th>Fuente del dato</th><th>Qué demuestra</th><th>Dónde se verifica</th></tr>
+  <tr><td><b>Precio oficial del modelo</b></td><td>El valor $0,10 / $0,40 por 1M de tokens</td><td>ai.google.dev/pricing (tabla Gemini 2.5 Flash-Lite). Snapshots del día anexados.</td></tr>
+  <tr><td><b>Tipo de cambio BCCR</b></td><td>El TC de venta usado para pasar de USD a CRC</td><td>bccr.fi.cr → tipos de cambio (fecha de la facturación). Snapshot del día anexado.</td></tr>
+  <tr><td><b>Log real de consumo</b></td><td>Los tokens realmente usados, por fecha y por función (writing, speaking, tutor, contenido)</td><td>Contador de solicitudes y caché de respuestas del sistema Lingoxic (aiCache / dailyCounters). Pronto: log por usuario.</td></tr>
+  <tr><td><b>Reporte mensual</b></td><td>Cruce = tokens reales × precio × TC, desglose por concepto</td><td>Se entrega con la factura. Este mismo formato, lleno con los datos reales.</td></tr>
+</table>
+
+<h2>5. Condiciones y límites de esta simulación</h2>
+<ul>
+  <li>Este documento <b>no es un cobro</b>: es el mecanismo de cálculo y evidencia que se usará cuando se facture el consumo real.</li>
+  <li>El importe real se liquida con <b>precios oficiales del proveedor</b> y <b>TC BCCR del día en que se corte la factura</b>; cualquier diferencia vs. este ejemplo se explica por la fecha y el volumen real.</li>
+  <li>El consumo de IA es <b>costo aparte del retainer y de la tarifa por usuario</b> (ver cotización cotiABA): no se absorbe dentro del precio del servicio.</li>
+  <li>Recomendado desde la Fase 0: definir un <b>tope o alerta de consumo mensual</b> (ej. ₡20.000) para que ABA nunca tenga una sorpresa de costo.</li>
+  <li>Todos los montos en colones costarricenses (CRC). No incluyen IVA salvo que se indique. Si ABA requiere factura electrónica, se aplica el 13% y se desglosa.</li>
+</ul>
+
+<h2>6. Qué cubre cada uno de los tres pagos (para que quede claro)</h2>
+<table>
+  <tr><th>Pago</th><th>Qué cubre</th><th>Qué NO cubre</th></tr>
+  <tr><td><b>Retainer mensual (personalización)</b></td><td>Nuestro trabajo de desarrollo (marca ABA, invitaciones, analytics, calibración, motor de contenido por unidades), revisión de contenido y soporte durante el piloto.</td><td>El consumo de IA y las nuevas funciones fuera del alcance (se cotizan aparte).</td></tr>
+  <tr><td><b>Tarifa por usuario (₡2.500 piloto · ₡4.000 post-piloto / mes)</b></td><td>Acceso de los estudiantes a la app personalizada (todo el contenido), hosting y soporte.</td><td>El consumo de IA por imágenes o video y el trabajo de personalización.</td></tr>
+  <tr><td><b>Consumo de IA (tokens)</b></td><td>Lo que cobra el proveedor por generar contenido (preguntas, correcciones, tutoría).</td><td>El desarrollo y la operación de la app. Se pasa a costo real, con este mismo mecanismo de evidencia.</td></tr>
+</table>
+
+<h2>7. Cuánto cobrar — para cubrir el gasto y tener ganancia</h2>
+<p>Con los números de arriba queda claro que el texto generado es <b>muy barato</b>: el % del gasto de IA es mínimo respecto a la tarifa de ₡2.500/usuario/mes. Esto no significa “regalar tecnología”: significa que se puede incluir en la tarifa sin subirle el precio a ABA y aún así dejar margen. La prueba es esta tabla.</p>
+
+<h3>7.1 Costo real vs. ingreso de 50 usuarios (₡2.500 × 50 = ₡125.000/mes)</h3>
+<table>
+  <tr><th>Volumen / mes</th><th class="num">Costo USD</th><th class="num">CRC sin IVA (TC 516)</th><th class="num">CRC con IVA</th><th class="num">% del ingreso</th></tr>
+  <tr><td>1.000.000 tokens</td><td class="num">$0,16</td><td class="num">₡82,56</td><td class="num">₡93,29</td><td class="num">0,07%</td></tr>
+  <tr><td>5.000.000 tokens</td><td class="num">$0,80</td><td class="num">₡412,80</td><td class="num">₡466,46</td><td class="num">0,37%</td></tr>
+  <tr><td>10.000.000 tokens</td><td class="num">$1,60</td><td class="num">₡825,60</td><td class="num">₡932,93</td><td class="num">0,75%</td></tr>
+  <tr><td>50.000.000 tokens</td><td class="num">$8,00</td><td class="num">₡4.128,00</td><td class="num">₡4.664,64</td><td class="num">3,73%</td></tr>
+</table>
+<p class="src">Punto de equilibrio: la tarifa de 50 usuarios pagaría <b>≈1,5 millones de tokens/mes</b> solo con el costo de textos. El uso real estimado es de unos 6.000–7.000 tokens por estudiante al mes, es decir <b>~350.000 tokens/mes para 50 usuarios</b> — unas 4 veces menos del punto de equilibrio. El host y la ganancia ya están cubiertos dentro de los ₡2.500.</p>
+
+<h3>7.2 Modelo de cobro recomendado: bolsa de tokens incluida + exceso facturable</h3>
+<table>
+  <tr><th style="width:52%">Componente</th><th>Regla</th></tr>
+  <tr><td><b>Bolsa incluida</b> en la tarifa de ₡2.500/usuario/mes</td><td><b>Hasta 10 M de tokens/mes</b> de texto (≈ ₡933 con IVA). Cubre con 30× de margen el uso esperado en el piloto.</td></tr>
+  <tr><td><b>Exceso</b> sobre la bolsa</td><td>Se factura a <b>costo real + 100% de margen</b>, con la evidencia de la sección 4 (log real × precio oficial × TC BCCR del día).</td></tr>
+  <tr><td><b>Imágenes y video</b></td><td>Fuera de la bolsa, como ya dice la cotización (sección 4 de cotiABA): se cotizan aparte. ABA puede aportar sus videos sin costo adicional.</td></tr>
+  <tr><td><b>Tope / alerta</b></td><td>Se define desde la Fase 0 (ej. ₡20.000/mes de consumo alerta y corte opcional) para que ABA nunca tenga sorpresas.</td></tr>
+</table>
+<div class="formula">
+Ejemplo de exceso: si en un mes se usan 20M tokens → 20M − 10M (bolsa) = 10M extra.<br>
+Costo de 10M (80/20): $1,60 → ₡825,60 sin IVA. &nbsp;·&nbsp; Con margen +100% y IVA: ≈ <b>₡1.866</b>.
+</div>
+<p class="src">Para ABA este modelo es simple: <b>paga ₡2.500 por estudiante y no ve facturas por “respirar”</b> mientras el uso sea razonable; solo si el uso se dispara (p. ej. ABA pide generar todo el temario por IA) se factura el exceso, con números auditables.</p>
+
+<h3>7.3 Alternativa si ABA insiste en “costo puro”</h3>
+<table>
+  <tr><th>Opción</th><th>Regla</th><th class="num">1M / mes</th><th class="num">50M / mes</th></tr>
+  <tr><td>A. Todo incluido (recomendado)</td><td>₡2.500 sin facturas extra hasta 10M</td><td class="num">₡0 extra</td><td class="num">₡7.430 con IVA*</td></tr>
+  <tr><td>B. Costo + margen fijo</td><td>Costo real × (1 + 100%)</td><td class="num">₡165</td><td class="num">₡9.329 con IVA</td></tr>
+  <tr><td>C. Solo costo real</td><td>Sin margen sobre tokens (no recomendado)</td><td class="num">₡82,56</td><td class="num">₡4.664 con IVA</td></tr>
+</table>
+<p class="src">* En la opción A, 50M = 40M de exceso sobre la bolsa de 10M → 40M × $0,16 = $6,40 → ₡3.302 sin IVA; con margen +100%: ₡6.604 + IVA 13% ≈ ₡7.463.</p>
+
+<h2>8. Consumo real del sistema Lingoxic (modelo gemini-flash-lite-latest)</h2>
+<p>Estos cálculos usan el modelo que Lingoxic carga hoy en <b>src/services/gemini.js</b>: <b>gemini-flash-lite-latest</b>, con precio oficial de USD 0,10 / 1M de tokens de entrada y USD 0,40 / 1M de salida. Las tres funciones que llaman a Gemini están en <b>Writing.jsx</b> (corrección), <b>Speaking.jsx</b> (evaluación oral y tutor conversacional de 5 pasos).</p>
+
+<h3>8.1 Tokens estimados por función</h3>
+<table>
+  <tr><th>Función (archivo)</th><th class="num">Entrada (prompt + contexto)</th><th class="num">Salida (texto generado)</th><th class="num">Total ≈</th><th class="num">Costo USD aprox.</th><th class="num">Costo CRC aprox. (TC 516)</th></tr>
+  <tr><td><b>correctWriting</b> (Writing.jsx)</td><td class="num">700–1.200</td><td class="num">≈ 250 pal. → ~130</td><td class="num">~800–1.300</td><td class="num">$0,00013–0,0004</td><td class="num">₡0,07–0,21</td></tr>
+  <tr><td><b>evaluateSpeaking</b> (Speaking.jsx)</td><td class="num">400–700</td><td class="num">≈ 180 pal. → ~100</td><td class="num">~500–800</td><td class="num">$0,0001–0,0003</td><td class="num">₡0,05–0,15</td></tr>
+  <tr><td><b>chatWithTutor</b> (Speaking.jsx, 5 pasos)</td><td class="num">600–1.200 / turno (historial crece)</td><td class="num">1–3 oraciones → ~40–80</td><td class="num">~750–1.200 / turno</td><td class="num">$0,0001–0,0004</td><td class="num">₡0,05–0,21</td></tr>
+</table>
+<p class="src"><b>Cómo se cubre ese gasto:</b> a nivel de sistema, cada llamada cuesta menos de ₡0,21. La bolsa incluida de la sección 7 (10M tokens/mes) paga esas llamadas con 30× de margen; solo si ABA llega al tope extremo (todos usando IA a 20/día) se factura el exceso con la fórmula de la sección 2.</p>
+<p class="src">Límites del sistema: máx. <b>20 solicitudes/día/usuario</b> (LÍMITE_SESION) y <b>20/día totales</b> (LÍMITE_GEMINI); la caché de respuestas (aiCache) hace que una petición repetida cueste ₡0. Todo esto está controlado en gemini.js y db.js.</p>
+
+<h3>8.2 Consumo mensual real proyectado (piloto máx. 50 usuarios)</h3>
+<table>
+  <tr><th>Escenario</th><th class="num">Llamadas/mes</th><th class="num">Tokens/mes ≈</th><th class="num">Costo USD/mes</th><th class="num">CRC/mes (TC 516, sin IVA)</th></tr>
+  <tr><td>Uso típico (≈11 llamadas por estudiante/mes: 5 escritos + 5 orales + 1 tutoría)</td><td class="num">550</td><td class="num">550.000</td><td class="num">$0,09</td><td class="num">₡46</td></tr>
+  <tr><td>Uso intensivo (50% del límite diario: 10/día × 50)</td><td class="num">15.000</td><td class="num">15.000.000</td><td class="num">$2,40</td><td class="num">₡1.238</td></tr>
+  <tr><td>Máximo absoluto (20/día × 50 usuarios)</td><td class="num">30.000</td><td class="num">30.000.000</td><td class="num">$4,80</td><td class="num">₡2.477</td></tr>
+</table>
+<p class="src"><b>Conclusión:</b> en el peor caso imaginable (todo el mundo usando IA al tope todos los días), el costo de Gemini es ≈ ₡2.500/mes — un 2% del ingreso de los 50 usuarios (₡125.000). El uso real del sistema sería unas 50 veces menor. La bolsa incluida de 10M tokens/mes de la sección 7 cubre holgadamente el uso intensivo (15M llegaría a ₡1.238, aún dentro de la bolsa).</p>
+
+<h2>9. Gasto total estimado para ABA (piloto 50 usuarios)</h2>
+<p>Todo sumado (retainer + licencias de usuarios + consumo de IA), esto es lo que ABA pagaría en un piloto de 2 o 3 meses. <b>Montos sin IVA</b>; el 13% se suma solo si se factura electrónicamente. Cálculo hipotético de referencia.</p>
+
+<h3>9.1 Escenarios de consumo de IA (50 usuarios)</h3>
+<table>
+  <tr><th>Volumen / mes</th><th class="num">Tokens/estudiante/mes</th><th class="num">Costo real sin IVA</th><th class="num">IVA 13%</th><th class="num">% del ingreso (₡125.000)</th><th>¿Extra a cobrar?</th></tr>
+  <tr><td>350.000 (conservador, uso real estimado)</td><td class="num">7.000</td><td class="num">₡28,90</td><td class="num">₡32,65</td><td class="num">0,02%</td><td>No — bolsa 10M lo cubre</td></tr>
+  <tr><td>1.000.000 (esperado)</td><td class="num">20.000</td><td class="num">₡82,56</td><td class="num">₡93,29</td><td class="num">0,07%</td><td>No</td></tr>
+  <tr><td>10.000.000 (intensivo texto)</td><td class="num">200.000</td><td class="num">₡825,60</td><td class="num">₡932,93</td><td class="num">0,75%</td><td>No — en el límite de la bolsa</td></tr>
+  <tr><td>50.000.000 (extremo)</td><td class="num">1.000.000</td><td class="num">₡4.128,00</td><td class="num">₡4.664,64</td><td class="num">3,73%</td><td><b>Sí</b> → ₡3.302 sin IVA / ₡7.463 con IVA y margen</td></tr>
+</table>
+
+<h3>9.2 Total que paga ABA (piloto máx. 50 usuarios, retainer @ ₡3.500/h)</h3>
+<table>
+  <tr><th>Combinación @ ₡3.500/h</th><th class="num">2 meses (sin IVA)</th><th class="num">2 meses (IVA 13%)</th><th class="num">3 meses (sin IVA)</th><th class="num">3 meses (IVA 13%)</th></tr>
+  <tr><td><b>Piloto 10 h/sem</b> (40 h/mes) + IA normal (sin exceso)</td><td class="num">₡530.000</td><td class="num">₡598.900</td><td class="num">₡795.000</td><td class="num">₡898.350</td></tr>
+  <tr><td><b>Piloto 12.5 h/sem</b> (50 h/mes) + IA normal</td><td class="num">₡600.000</td><td class="num">₡678.000</td><td class="num">₡900.000</td><td class="num">₡1.017.000</td></tr>
+  <tr><td><b>Piloto 15 h/sem</b> (60 h/mes) + IA normal</td><td class="num">₡670.000</td><td class="num">₡757.100</td><td class="num">₡1.005.000</td><td class="num">₡1.135.650</td></tr>
+  <tr><td><b>Piloto 17 h/sem</b> (68 h/mes) + IA normal</td><td class="num">₡726.000</td><td class="num">₡820.380</td><td class="num">₡1.089.000</td><td class="num">₡1.230.570</td></tr>
+  <tr><td><b>Piloto 20 h/sem</b> (80 h/mes) + IA normal</td><td class="num">₡810.000</td><td class="num">₡915.300</td><td class="num">₡1.215.000</td><td class="num">₡1.372.950</td></tr>
+</table>
+<p class="src">Lectura rápida (tarifa única @ ₡3.500/h): 2 meses ronda <b>₡0,53M – ₡0,81M</b> sin IVA; 3 meses <b>₡0,80M – ₡1,22M</b>. El salto de 2 a 3 meses son +₡125.000 de licencias + 1 mes de retainer. Lo que define el gasto es el <b>retainer</b>, no los tokens: incluso en el escenario extremo (50M/mes, 13× el uso estimado), la IA sigue representando menos del 4% del total. Incluir imágenes y video con IA (cotizado aparte) es el único caso que puede mover el gasto de forma importante.</p>
+
+<div class="foot">Anexo de evidencia de costos de IA · Lingoxic 2026 · Jefferson Garro Rojas · garrorojasjeffersonlisandro@gmail.com · +506 8539 8594 · Documento de evidencia y propuesta de cobro de IA (cálculos hipotéticos) · no constituye factura</div>
+
+</body>
+</html>

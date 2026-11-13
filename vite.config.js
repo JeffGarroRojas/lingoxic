@@ -14,8 +14,9 @@ export default defineConfig({
  plugins: [
  react(),
     VitePWA({
-      registerType: "prompt",
-      includeAssets: ["icons/icon-192x192.png", "icons/icon-512x512.png"],
+      registerType: "autoUpdate",
+      workbox: { maximumFileSizeToCacheInBytes: 3000000, globPatterns: ["**/*.{js,css,html,ico,png,svg,mp3}"] },
+      includeAssets: ["icons/icon-192x192.png", "icons/icon-512x512.png", "icons/logolingo-512.png"],
       manifest: {
         name: "LinGoXiC - Aprende Inglés con IA",
         short_name: "LinGoXiC",

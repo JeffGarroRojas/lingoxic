@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Guion de Reunión — Lingoxic para ABA</title>
+<style>
+  @page { size: Letter; margin: 15mm 13mm 13mm 13mm; @bottom-right { content: counter(page) " / " counter(pages); font-size: 8px; color: #94a3b8; } }
+  * { box-sizing: border-box; }
+  body { font-family: "DejaVu Sans", Helvetica, Arial, sans-serif; color: #1e293b; font-size: 10.2px; line-height: 1.48; margin: 0; }
+  .topbar { height: 6px; background: linear-gradient(90deg, #0ea5e9, #2563eb); border-radius: 3px; margin-bottom: 10px; }
+  h2 { font-size: 11px; color: #1d4ed8; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1.5px solid #bfdbfe; padding-bottom: 2px; margin: 14px 0 6px 0; }
+  p { margin: 0 0 7px 0; text-align: justify; }
+  .ej { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 3px solid #0ea5e9; border-radius: 4px; padding: 6px 8px; margin: 6px 0; font-size: 9.5px; }
+  .ej b { color: #0f172a; }
+  .ej i { color: #475569; }
+  .foot { margin-top: 10px; font-size: 8.5px; color: #94a3b8; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 6px; }
+</style>
+</head>
+<body>
+<div class="topbar"></div>
+
+
+<h2>1. Quiénes somos</h2>
+<p>Hola, mucho gusto. Antes de mostrarles la app, quiero presentarles al equipo que estaría con ustedes si avanzamos. Yo soy Jefferson Garro Rojas, fundador de Lingoxic — yo hice la app y soy el responsable del proyecto. Me acompaña Esteban Cordero, mi tío: Lead Senior Developer con más de 20 años de experiencia en desarrollo de software, especializado en desarrollo web — él es quien cuida que todo quede bien hecho y estable. Somos un equipo familiar, técnico y comprometido. Gracias de verdad por recibirnos hoy.</p>
+
+<h2>2. Qué es Lingoxic</h2>
+<p>Miren, Lingoxic es una app para aprender inglés que se abre directo en el celular, como una página web, y con un toque se instala como si fuera del Play Store. No hay que descargar nada raro. Es para chicos de cole, de A1 a B2, y lo bonito es que la parte de datos queda guardada en el mismo celular del estudiante, con IndexedDB — rápida, privada y sin costos de base de datos. El chico entra, pone su nombre, y en un menú elige si quiere hacer un test cortito que le dice su nivel o empezar desde A1. Para ustedes como academia: los servidores, hosting y el servicio de IA están cubiertos dentro del monto inicial de personalización, para mantener los usuarios requeridos.</p>
+
+<h2>3. Qué enseña — con ejemplos de la app</h2>
+<p>Acá es donde creo que les va a gustar más. No son lecciones al azar — son siete unidades tal cual las pide el MEP: Mi Perfil en A1, Compras Tecnológicas, Estilos de Vida Saludables y Viajes Seguros en A2, Variedad Cultural y Mercado Laboral en B1, y Global Competence en B2. En total son más de cien lecciones, con 49 palabras con fonética, 51 temas de gramática, 11 audios de listening, 18 de speaking, 45 de práctica y 32 de diagnóstico. Todo ya está listo para usar.</p>
+<div class="ej"><b>Les muestro un ejemplo real:</b> en Mi Perfil ven algo como <i>“I am a student at Liceo de Costa Rica.”</i> o <i>“She is very friendly and intelligent.”</i> — y abajo un tip que dice <i>“No confundas it’s con its.”</i> — justo lo que confunde a los chicos en el examen.</div>
+<div class="ej"><b>Y en listening:</b> le dan play y escuchan <i>“Good afternoon, sir. I bought this laptop but it does not turn on.”</i> — audio precargado en MP3, listo al instante. Después responden y ven si acertaron al instante.</div>
+
+<h2>4. Qué hace el estudiante — flujo en 1 min</h2>
+<p>El flujo es súper simple, en un minuto lo entienden. Entran a su panel, ven su saludo, su racha y su nivel. Van a Unidades y ven las siete — la siguiente se desbloquea cuando terminan la anterior, así llevan orden. Entran a una lección, leen, escuchan el vocabulario y le dan a completar. Si quieren practicar, tienen Listening, Reading, Writing con tutor y Speaking. Si quieren repasar, van a Vocabulario donde pueden buscar y escuchar cada palabra, o a Gramática donde practican y les sale verde si aciertan y rojo si no. Y si quieren evaluarse, hacen el quiz de la unidad, el simulacro de 100 preguntas con tiempo, o el test que les dice su nivel. Todo está en la barra de la izquierda, en el celular se ve como un menú, y el audio se corta solo si cambian de página. En serio, en dos minutos cualquier chico lo agarra.</p>
+<div class="ej"><b>Un ejemplo que les gusta mucho:</b> en Writing eligen un tema, escriben, y en segundos les llega la corrección en español.</div>
+
+<h2>5. IA y offline</h2>
+<p>Acá quiero serles muy transparente con la IA, porque sé que a veces asusta el tema del costo. La IA gasta tokens según para qué se use — no es lo mismo un texto que una imagen o un video — el consumo de IA está cubierto dentro de la Fase 1 del proyecto (monto inicial de personalización) y en la Fase 2 se define dentro del monto por usuario. Pero lo tenemos controlado: hay un límite de 20 por sesión, un caché para no volver a pagar lo mismo y un contador que ven en Ajustes. Y algo que les va a encantar: todo lo que es lecciones, vocabulario, gramática y quizzes funciona sin internet. Solo Writing y Speaking con IA necesitan conexión. La app se actualiza sola y hasta el audio es del navegador, no hay que descargar nada.</p>
+
+<h2>6. El piloto y cierre — según lo que requiera el ABA y podamos implementar</h2>
+<p>Entonces, lo que les proponemos es algo muy sencillo y sin compromiso largo: un piloto cortito con un grupito de sus estudiantes para probar todo con gente real. La duración la vemos juntos, según lo que ustedes necesiten y lo que podamos implementar. El piloto cubre la app personalizada, acceso completo para ese grupo y nuestro acompañamiento con ajustes y con datos de uso para que vean cómo les va.</p>
+<p>¿Qué necesitamos para arrancar? Muy poco: el logo de ABA, la listita del grupo piloto con un profe referente, y el material que ya usan para esas dos primeras unidades, Mi Perfil y Compras Tecnológicas. No hay un plazo cerrado — lo acordamos directamente según el material que nos brinden. Y para que estemos tranquilos: lo que no incluye es la migración a base de datos en la nube, que se ve después del piloto. Les dejo la cotización (cotiABA2): Fase 1 de ₡565.000 para el inicio — 50% al arrancar y 50% al completar la personalización — y como Fase 2 el monto por usuario, que definimos con la información que nos suministren.</p>
+<p>Entonces, ¿les parece si avanzamos con ese piloto de 50 chicos y dejamos de una vez agendada la fecha de arranque y por dónde nos hablamos para el seguimiento?</p>
+
+
+<div class="foot">
+  Lingoxic — Guion para lectura del presentador (6 secciones espejo de la landing) · Confidencial · Ver landing-lingoxic-aba.html y cotiABA2.pdf
+</div>
+
+</body>
+</html>

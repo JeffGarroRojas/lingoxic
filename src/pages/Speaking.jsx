@@ -1,3 +1,4 @@
+import { Navigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import {
   AlertCircle,
@@ -554,7 +555,7 @@ export default function Speaking() {
       setSelectedLesson(speakingLessons[0].id);
   }, [selectedUnit, speakingLessons, selectedLesson]);
 
-  if (!user) return null;
+  if (!user) return <Navigate to="/" replace />;
 
   const lesson = speakingLessons.find((l) => l.id === selectedLesson);
   const exercise = lesson ? getSpeakingExercise(lesson.id) : undefined;

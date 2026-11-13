@@ -1,3 +1,4 @@
+import { Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Info, Moon, RefreshCw, Settings, Sparkles, Sun, Trash2 } from "lucide-react";
 import { Button, Card } from "../components/ui.jsx";
@@ -14,7 +15,7 @@ export default function SettingsPage() {
     getRemainingRequests().then(setRequests);
   }, []);
 
-  if (!user) return null;
+  if (!user) return <Navigate to="/" replace />;
 
   return (
     <div className="max-w-2xl mx-auto space-y-6">
