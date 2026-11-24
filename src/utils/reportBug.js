@@ -27,3 +27,22 @@ export async function submitBugReport(details, endpoint = FORMSPREE_ENDPOINT) {
     return { ok: false, error: "Sin conexión" };
   }
 }
+
+export async function promptAndReportBug() {
+  const description = window.prompt(
+    "¿Qué problema encontraste? Describe brevemente lo que pasó:"
+  );
+  if (!description || !description.trim()) return;
+  const res = await submitBugReport({
+    description,
+    page: window.location.pathname,
+    browser: navigator.userAgent,
+  });
+  window.alert(
+    res.ok
+      ? "Gracias. Tu reporte fue enviado."
+      : res.error === "Sin conexión"
+        ? "No tienes internet. Vuelve a intentar cuando estés conectado."
+        : "No se pudo enviar el reporte. Intenta de nuevo."
+  );
+}

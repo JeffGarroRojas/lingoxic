@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<title>LinGoXiC · propuestas de logo</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0}
+  body{background:#0b0d12;color:#e5e7eb;font-family:Inter,sans-serif;padding:36px 28px 60px}
+  h1{font-size:28px;letter-spacing:-.6px;margin-bottom:6px}
+  .sub{color:#9aa3b2;font-size:14px;margin-bottom:28px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:1280px;margin:0 auto}
+  .card{background:#12161e;border:1px solid #222835;border-radius:22px;padding:22px}
+  .head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+  .head h2{font-size:15px;letter-spacing:.2px}
+  .num{font-size:11px;letter-spacing:1.6px;text-transform:uppercase;color:#8b93a3}
+  .row{display:flex;gap:14px;align-items:stretch}
+  .box{flex:1;border-radius:16px;display:flex;align-items:center;justify-content:center;min-height:178px;padding:14px}
+  .light{background:#FAF7F2;color:#0f172a}
+  .dark{background:#070B14;color:#fff}
+  .box img{width:132px;height:132px}
+  .lock{display:flex;align-items:center;gap:12px;margin-top:16px;padding-top:16px;border-top:1px solid #222835}
+  .lock.lightLock{background:#FAF7F2;border-radius:14px;padding:12px 14px;border:0}
+  .lock.lightLock .word{color:#0f172a}
+  .lock img{width:44px;height:44px}
+  .word{font-family:Nunito,sans-serif;font-weight:900;font-size:26px;letter-spacing:-.8px}
+  .word i{font-style:normal;color:#0E7490}
+  .darkWord{color:#fff}.darkWord i{color:#5EEAD4}
+  .sizes{display:flex;align-items:center;gap:14px;margin-top:14px;color:#8b93a3;font-size:11px}
+  .sizes img{display:block}
+  .sizes .s40 img{width:40px;height:40px}
+  .sizes .s24 img{width:24px;height:24px}
+  .foot{max-width:1280px;margin:26px auto 0;color:#6b7280;font-size:12.5px}
+</style></head><body>
+<h1>Propuestas de logo · LinGoXiC</h1>
+<p class="sub">Marca, lockup con wordmark y comportamiento a 40 px y 24 px. Todas usan la paleta del sistema (teal/cian + ámbar/coral) y funcionan sin emojis.</p>
+<div class="grid" id="grid"></div>
+<p class="foot">La 7 es la versión actual, para comparar. Dime el número y la dejo instalada en la app, PWA y favicons.</p>
+<script>
+const items = [
+  ["1","Monograma LX","1-lx"],
+  ["2","Página con check","2-check"],
+  ["3","Burbuja de audio","3-audio"],
+  ["4","Marcador (bookmark)","4-bookmark"],
+  ["5","X de cintas","5-ribbons"],
+  ["6","L con chispa","6-spark"],
+  ["7","Actual (referencia)","7-actual"],
+];
+document.getElementById("grid").innerHTML = items.map(([n,t,f])=>`
+  <div class="card">
+    <div class="head"><h2>${t}</h2><span class="num">Opción ${n}</span></div>
+    <div class="row">
+      <div class="box light"><img src="logos/${f}.svg" alt=""></div>
+      <div class="box dark"><img src="logos/${f}.svg" alt=""></div>
+    </div>
+    <div class="lock lightLock"><img src="logos/${f}.svg" alt=""><div class="word">LinGo<i>XiC</i></div></div>
+    <div class="lock"><img src="logos/${f}.svg" alt=""><div class="word darkWord">LinGo<i>XiC</i></div></div>
+    <div class="sizes"><span class="s40"><img src="logos/${f}.svg"></span><span class="s24"><img src="logos/${f}.svg"></span> 40 px · 24 px</div>
+  </div>`).join("");
+</script>
+</body></html>

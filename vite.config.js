@@ -25,7 +25,7 @@ export default defineConfig({
         start_url: "/dashboard",
         display: "standalone",
         background_color: "#FAF7F2",
-        theme_color: "#0F766E",
+        theme_color: "#0D9488",
         lang: "es",
         scope: "/",
         orientation: "portrait",

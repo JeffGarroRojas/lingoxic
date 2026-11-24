@@ -26,7 +26,7 @@ import { useTheme } from "../hooks/useTheme.jsx";
 import useOnlineStatus from "../hooks/useOnlineStatus.js";
 import { LevelBadge } from "./ui.jsx";
 import { stop } from "../utils/tts.js";
-import { submitBugReport } from "../utils/reportBug.js";
+import { promptAndReportBug } from "../utils/reportBug.js";
 
 const NAV_ITEMS = [
   { path: "/dashboard", label: "Inicio", icon: LayoutDashboard },
@@ -107,7 +107,15 @@ function Sidebar({ onNavigate }) {
         ))}
       </nav>
 
-      <div className="p-2 border-t border-gray-200 dark:border-gray-800">
+      <div className="border-t border-gray-200 p-2 dark:border-gray-800">
+        <button
+          onClick={promptAndReportBug}
+          className="mb-0.5 flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
+          title={collapsed ? "Reportar un error" : undefined}
+        >
+          <Bug size={20} />
+          {!collapsed && <span>Reportar error</span>}
+        </button>
         <button
           onClick={toggleDarkMode}
           className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
@@ -199,32 +207,6 @@ export default function Layout() {
           )}
           <Outlet />
         </main>
-        <button
-          onClick={async () => {
-            const description = window.prompt(
-              "¿Qué problema encontraste? Describe brevemente lo que pasó:"
-            );
-            if (!description || !description.trim()) return;
-            const res = await submitBugReport({
-              description,
-              page: window.location.pathname,
-              browser: navigator.userAgent,
-            });
-            alert(
-              res.ok
-                ? "¡Gracias! Tu reporte fue enviado. Lo revisaremos pronto."
-                : res.error === "Sin conexión"
-                  ? "No tienes internet. Vuelve a intentar cuando estés conectado."
-                  : "Hubo un problema al enviar el reporte. Intenta de nuevo."
-            );
-          }}
-          className="fixed bottom-4 right-4 z-50 flex items-center gap-2 rounded-full bg-gray-900 px-3 py-2.5 text-sm font-medium text-white shadow-lg transition hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600 sm:bottom-5 sm:right-5 sm:px-4"
-          title="Reportar un error"
-          aria-label="Reportar un error"
-        >
-          <Bug size={16} />
-          <span className="hidden sm:inline">Reportar error</span>
-        </button>
       </div>
     </div>
   );

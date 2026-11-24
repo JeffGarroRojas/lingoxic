@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<title>LinGoXiC · propuestas de logo v2</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0}
+  body{background:radial-gradient(1200px 600px at 15% -10%, #11343a 0%, #0b0d12 55%);color:#e5e7eb;font-family:Inter,sans-serif;padding:38px 28px 64px}
+  h1{font-size:30px;letter-spacing:-.8px}
+  .sub{color:#9aa3b2;font-size:14px;margin:6px 0 30px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:1300px;margin:0 auto}
+  .card{position:relative;overflow:hidden;background:linear-gradient(160deg,#161c25,#10141b);border:1px solid #26303c;border-radius:24px;padding:22px}
+  .card:before{content:"";position:absolute;inset:-40% 40% 60% -30%;background:radial-gradient(closest-side,rgba(14,116,144,.28),transparent);pointer-events:none}
+  .head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px;position:relative}
+  .head h2{font-size:16px}
+  .desc{font-size:12px;color:#8b93a3;margin-top:3px}
+  .num{font-size:11px;letter-spacing:1.6px;text-transform:uppercase;color:#7dd3c7;white-space:nowrap}
+  .row{display:flex;gap:14px;position:relative}
+  .box{flex:1;border-radius:18px;display:flex;align-items:center;justify-content:center;min-height:190px;padding:14px}
+  .light{background:#FAF7F2;color:#0f172a}
+  .dark{background:linear-gradient(160deg,#081018,#0c1a1d);border:1px solid #1d2a2e;color:#fff}
+  .box img{width:142px;height:142px;filter:drop-shadow(0 10px 18px rgba(0,0,0,.18))}
+  .lock{display:flex;align-items:center;gap:12px;margin-top:16px;padding:12px 14px;border-radius:14px;background:#FAF7F2;position:relative}
+  .lock img{width:44px;height:44px}
+  .word{font-family:Nunito,sans-serif;font-weight:900;font-size:26px;letter-spacing:-.9px;color:#0f172a}
+  .word i{font-style:normal;color:#0E7490}
+  .darkLock{background:transparent;padding:12px 2px 0}
+  .darkLock .word{color:#fff}.darkLock .word i{color:#5EEAD4}
+  .sizes{display:flex;align-items:center;gap:14px;margin-top:12px;color:#8b93a3;font-size:11px;position:relative}
+  .sizes img{display:block}
+  .sizes .s40 img{width:40px;height:40px}
+  .sizes .s24 img{width:24px;height:24px}
+  .foot{max-width:1300px;margin:28px auto 0;color:#6b7280;font-size:12.5px}
+</style></head><body>
+<h1>Propuestas de logo · ronda 2</h1>
+<p class="sub">Más carácter: profundidad, movimiento y acentos cálidos. Todas mantienen la paleta y funcionan sin emojis.</p>
+<div class="grid" id="grid"></div>
+<p class="foot">Responde el número. La elegida se instala en app, PWA y favicons.</p>
+<script>
+const items=[
+ ["1","Burbuja viva","Libro con luz y chispa","1-viva"],
+ ["2","Lápiz L","La L se dibuja con un lápiz","2-lapiz"],
+ ["3","Onda X","Dos ondas de voz que se cruzan","3-onda"],
+ ["4","Hoja viva","Hoja tropical con venas y rocío","4-hoja"],
+ ["5","Amanecer","Sol cálido sobre un libro","5-amanecer"],
+ ["6","Planeta Lingo","Mundo + órbita cálida","6-planeta"],
+];
+document.getElementById("grid").innerHTML=items.map(([n,t,d,f])=>`
+ <div class="card">
+  <div class="head"><div><h2>${t}</h2><div class="desc">${d}</div></div><span class="num">Opción ${n}</span></div>
+  <div class="row"><div class="box light"><img src="logos/${f}.svg"></div><div class="box dark"><img src="logos/${f}.svg"></div></div>
+  <div class="lock"><img src="logos/${f}.svg"><div class="word">LinGo<i>XiC</i></div></div>
+  <div class="lock darkLock"><img src="logos/${f}.svg"><div class="word">LinGo<i>XiC</i></div></div>
+  <div class="sizes"><span class="s40"><img src="logos/${f}.svg"></span><span class="s24"><img src="logos/${f}.svg"></span>40 px · 24 px</div>
+ </div>`).join("");
+</script></body></html>

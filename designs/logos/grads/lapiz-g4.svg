@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><defs>
+
+<linearGradient id="bgDeep" x1="80" y1="40" x2="440" y2="480" gradientUnits="userSpaceOnUse">
+<stop offset="0" stop-color="#0E7490"/><stop offset=".6" stop-color="#0F766E"/><stop offset="1" stop-color="#134E4A"/></linearGradient>
+<linearGradient id="warm" x1="270" y1="110" x2="430" y2="380" gradientUnits="userSpaceOnUse">
+<stop offset="0" stop-color="#FDE047"/><stop offset=".5" stop-color="#FBBF24"/><stop offset="1" stop-color="#FB7185"/></linearGradient>
+<linearGradient id="page" x1="180" y1="200" x2="330" y2="380" gradientUnits="userSpaceOnUse">
+<stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#CCFBF1"/></linearGradient>
+<linearGradient id="mint" x1="120" y1="120" x2="380" y2="400" gradientUnits="userSpaceOnUse">
+<stop offset="0" stop-color="#5EEAD4"/><stop offset="1" stop-color="#22D3EE"/></linearGradient>
+<radialGradient id="glow" cx=".28" cy=".18" r=".85">
+<stop offset="0" stop-color="#FFFFFF" stop-opacity=".35"/><stop offset=".55" stop-color="#FFFFFF" stop-opacity=".06"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></radialGradient>
+<radialGradient id="sun" cx=".35" cy=".3" r=".8">
+<stop offset="0" stop-color="#FEF3C7"/><stop offset=".45" stop-color="#FBBF24"/><stop offset="1" stop-color="#F97316"/></radialGradient>
+<linearGradient id="bg" x1="80" y1="40" x2="440" y2="480" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#818CF8"/><stop offset=".5" stop-color="#0891B2"/><stop offset="1" stop-color="#0F766E"/></linearGradient></defs><path fill="url(#bg)" d="M168 56h176a112 112 0 0 1 112 112v176a112 112 0 0 1-112 112H168A112 112 0 0 1 56 344V168A112 112 0 0 1 168 56Z"/><path fill="url(#glow)" d="M168 56h176a112 112 0 0 1 112 112v176a112 112 0 0 1-112 112H168A112 112 0 0 1 56 344V168A112 112 0 0 1 168 56Z"/>
+<path d="M178 170v190h112" stroke="#fff" stroke-width="54" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<g transform="rotate(45 330 190)">
+<rect x="312" y="86" width="36" height="150" rx="10" fill="url(#warm)"/>
+<path d="M312 236h36l-18 34Z" fill="#FDE68A"/>
+<path d="M321 256h18l-9 14Z" fill="#134E4A"/>
+<rect x="312" y="80" width="36" height="14" rx="7" fill="#FB7185"/>
+</g></svg>

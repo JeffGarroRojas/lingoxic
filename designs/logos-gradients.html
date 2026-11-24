@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<title>LinGoXiC · modos de degradado</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@800;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0}
+  body{background:radial-gradient(1100px 600px at 20% -10%, #12363c 0%, #0b0d12 55%);color:#e5e7eb;font-family:Inter,sans-serif;padding:36px 28px 60px}
+  h1{font-size:29px;letter-spacing:-.7px}.sub{color:#9aa3b2;font-size:14px;margin:6px 0 26px}
+  .section{max-width:1300px;margin:0 auto 30px}
+  .section>h2{font-size:15px;letter-spacing:.4px;margin-bottom:12px;color:#cbd5e1}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .card{background:linear-gradient(160deg,#161c25,#10141b);border:1px solid #26303c;border-radius:20px;padding:16px}
+  .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+  .name{font-size:13px;font-weight:600}
+  .sw{display:flex;gap:4px}.sw i{width:12px;height:12px;border-radius:50%;display:block;border:1px solid rgba(255,255,255,.2)}
+  .boxes{display:flex;gap:10px}
+  .box{flex:1;border-radius:14px;display:flex;align-items:center;justify-content:center;padding:10px;min-height:122px}
+  .light{background:#FAF7F2}.darkB{background:#081018;border:1px solid #1d2a2e}
+  .box img{width:96px;height:96px}
+  .lock{display:flex;align-items:center;gap:9px;margin-top:11px}
+  .lock img{width:30px;height:30px}
+  .word{font-family:Nunito;font-weight:900;font-size:18px;letter-spacing:-.6px;color:#f1f5f9}
+  .word i{font-style:normal;color:#5EEAD4}
+  .foot{max-width:1300px;margin:8px auto 0;color:#6b7280;font-size:12.5px}
+</style></head><body>
+<h1>Modos de degradado</h1>
+<p class="sub">Mismo símbolo, seis atmósferas. Elige símbolo + modo (por ejemplo: “burbuja viva, atardecer”).</p>
+<div class="section"><h2>Burbuja viva</h2><div class="grid" id="gA"></div></div>
+<div class="section"><h2>Lápiz L</h2><div class="grid" id="gB"></div></div>
+<p class="foot">Los modos también se pueden aplicar al fondo del dashboard y a los botones, no solo al icono.</p>
+<script>
+const modes=[["g1","Océano","#06B6D4","#0E7490","#115E59"],["g2","Atardecer","#F59E0B","#FB7185","#9F1239"],["g3","Tropical","#34D399","#0D9488","#065F46"],["g4","Aurora","#818CF8","#0891B2","#0F766E"],["g5","Noche","#1E293B","#134E4A","#0E7490"],["g6","Lima","#A3E635","#0D9488","#115E59"]];
+function card(mark,gid,name,a,b,c){return `<div class="card"><div class="top"><span class="name">${name}</span><span class="sw"><i style="background:${a}"></i><i style="background:${b}"></i><i style="background:${c}"></i></span></div>
+<div class="boxes"><div class="box light"><img src="logos/grads/${mark}-${gid}.svg"></div><div class="box darkB"><img src="logos/grads/${mark}-${gid}.svg"></div></div>
+<div class="lock"><img src="logos/grads/${mark}-${gid}.svg"><div class="word">LinGo<i>XiC</i></div></div></div>`}
+document.getElementById("gA").innerHTML=modes.map(m=>card("viva",...m)).join("");
+document.getElementById("gB").innerHTML=modes.map(m=>card("lapiz",...m)).join("");
+</script></body></html>
