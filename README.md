@@ -133,6 +133,10 @@ Salidas en `/tmp/opencode/qa-full/`:
 
 El flujo cubre: onboarding (diagnóstico y desde cero), diagnóstico CEFR, lección, quiz aprobado/reprobado, práctica (mixta y filtrada), simulacro de 100 preguntas, listening con audio, vocabulario, gramática, reading, writing sin IA, speaking (3 modos), progreso, ajustes (tema persistente y reset), vista móvil 390×844 y modo offline en producción.
 
+## Prototipos de diseño
+
+Abre `designs/index.html` en el navegador para comparar las 6 direcciones visuales (cuaderno, juego, neo-brutalista, tropical, enfoque y bento). Cada una muestra dashboard, lección y simulacro.
+
 ## Variables de entorno
 
 Todas son opcionales. Copia `.env.example` a `.env` si quieres habilitar IA o Firebase:

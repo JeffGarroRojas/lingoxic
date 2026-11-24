@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LinGoXiC · 6 direcciones de diseño</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Inter:wght@400;500;600;700;800&family=Nunito:wght@500;700;800;900&family=Space+Grotesk:wght@500;700&family=IBM+Plex+Mono:wght@500&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background:#0b0d12; color:#e5e7eb; font-family: Inter, system-ui, sans-serif; }
+  .top { position: sticky; top:0; z-index:20; display:flex; gap:8px; flex-wrap:wrap; align-items:center; justify-content:center;
+    padding:14px 18px; background:rgba(10,12,18,.88); backdrop-filter:blur(10px); border-bottom:1px solid #1f2430; }
+  .top b { margin-right:auto; font-size:14px; letter-spacing:.3px; }
+  .top a { color:#c7cbd6; text-decoration:none; font-size:12.5px; padding:7px 11px; border:1px solid #2a3040; border-radius:999px; }
+  .top a:hover { color:#fff; border-color:#4b5563; }
+  .intro { max-width:1180px; margin:0 auto; padding:44px 20px 6px; }
+  .intro h1 { font-size:34px; letter-spacing:-.8px; margin-bottom:8px; }
+  .intro p { color:#9aa3b2; max-width:680px; line-height:1.6; }
+  .concept { max-width:1240px; margin:0 auto; padding:52px 20px 12px; }
+  .concept > header { display:flex; align-items:flex-end; gap:16px; flex-wrap:wrap; margin-bottom:18px; }
+  .concept h2 { font-size:24px; letter-spacing:-.3px; }
+  .concept .why { color:#9aa3b2; font-size:14px; max-width:760px; line-height:1.5; }
+  .tag { font-size:11px; text-transform:uppercase; letter-spacing:1.4px; padding:5px 10px; border-radius:999px; border:1px solid #2a3040; color:#aab2c0; }
+  .swatches { display:flex; gap:6px; }
+  .sw { width:20px; height:20px; border-radius:50%; border:1px solid rgba(255,255,255,.18); }
+  .phones { display:flex; gap:22px; overflow-x:auto; padding:10px 4px 26px; align-items:flex-start; }
+  .phone { flex:0 0 auto; width:340px; min-height:660px; border-radius:34px; padding:10px; background:#15181f;
+    border:1px solid #262b36; box-shadow:0 18px 50px rgba(0,0,0,.45); }
+  .screen { border-radius:26px; overflow:hidden; min-height:640px; }
+  .notch { height:22px; display:flex; align-items:center; justify-content:center; font-size:10px; letter-spacing:.4px; opacity:.5; }
+
+  /* ============ 1. CUADERNO MEP ============ */
+  .notebook { background:#FBF8F1; color:#1F2937; font-family: Inter, sans-serif; }
+  .notebook.screen { background:#FBF8F1; }
+  .nb-head { padding:22px 20px 8px; }
+  .nb-kicker { font-family:"IBM Plex Mono", monospace; font-size:10.5px; letter-spacing:2px; color:#0F766E; text-transform:uppercase; }
+  .nb-head h3 { font-family:Fraunces, serif; font-size:30px; line-height:1.05; margin-top:6px; font-weight:800; letter-spacing:-.6px; }
+  .nb-head p { color:#6b7280; font-size:13px; margin-top:5px; }
+  .nb-stats { display:flex; gap:10px; padding:14px 20px; }
+  .nb-stat { flex:1; border:1.5px solid #1F2937; border-radius:10px; padding:10px; background:#fff; box-shadow:3px 3px 0 #1F2937; }
+  .nb-stat b { font-family:Fraunces, serif; font-size:22px; display:block; line-height:1; }
+  .nb-stat span { font-size:10.5px; text-transform:uppercase; letter-spacing:1px; color:#6b7280; }
+  .nb-mark { background:linear-gradient(transparent 55%, #FDE68A 55%); padding:0 2px; }
+  .nb-body { padding:8px 20px 20px; }
+  .nb-card { background:#fff; border:1.5px solid #d6d3c8; border-radius:12px; padding:14px; margin-bottom:12px; }
+  .nb-card h4 { font-family:Fraunces, serif; font-size:17px; margin-bottom:4px; }
+  .nb-card p { font-size:12.5px; color:#4b5563; line-height:1.6; }
+  .nb-rule { height:1px; background:repeating-linear-gradient(90deg,#d6d3c8 0 6px, transparent 6px 11px); margin:10px 0; }
+  .nb-btn { display:block; width:100%; padding:13px; border-radius:10px; background:#0F766E; color:#fff; border:1.5px solid #0b5f59;
+    font-weight:800; font-size:13.5px; box-shadow:3px 3px 0 #0b5f59; text-align:center; }
+  .nb-ghost { background:#fff; color:#1F2937; border-color:#1F2937; box-shadow:3px 3px 0 #1F2937; }
+  .nb-opt { display:flex; gap:10px; align-items:center; border:1.5px solid #d6d3c8; border-radius:10px; padding:11px 12px; margin-bottom:8px; background:#fff; font-size:13px; }
+  .nb-opt i { font-style:normal; font-family:"IBM Plex Mono", monospace; font-size:11px; width:20px; height:20px; border:1.5px solid #1F2937; border-radius:50%; display:grid; place-items:center; }
+  .nb-opt.on { border-color:#0F766E; background:#ECFDF5; }
+  .nb-opt.on i { background:#0F766E; color:#fff; border-color:#0F766E; }
+  .nb-meta { display:flex; justify-content:space-between; font-family:"IBM Plex Mono", monospace; font-size:10.5px; color:#6b7280; }
+  .nb-timer { font-family:"IBM Plex Mono", monospace; font-size:20px; font-weight:500; background:#1F2937; color:#FDE68A; padding:6px 10px; border-radius:8px; }
+
+  /* ============ 2. DUOLINGO LIMPIO ============ */
+  .playful { font-family:Nunito, sans-serif; color:#111827; }
+  .playful.screen { background:#fff; }
+  .pl-top { background:#22C55E; color:#fff; padding:20px 20px 26px; border-radius:0 0 28px 28px; }
+  .pl-top small { font-size:11px; letter-spacing:1.5px; text-transform:uppercase; opacity:.85; }
+  .pl-top h3 { font-size:27px; font-weight:900; letter-spacing:-.4px; margin-top:2px; }
+  .pl-pills { display:flex; gap:8px; margin-top:14px; }
+  .pl-pill { background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.35); border-radius:999px; padding:6px 11px; font-size:12px; font-weight:800; }
+  .pl-body { padding:18px 20px; }
+  .pl-card { border:2px solid #E5E7EB; border-radius:20px; padding:16px; margin-bottom:12px; background:#fff; }
+  .pl-card h4 { font-size:16px; font-weight:900; }
+  .pl-card p { font-size:12.5px; color:#6B7280; margin-top:3px; }
+  .pl-btn { width:100%; border:0; border-bottom:5px solid #15803D; border-radius:16px; background:#22C55E; color:#fff; font-family:inherit;
+    font-size:15px; font-weight:900; padding:14px; }
+  .pl-btn.orange { background:#F97316; border-bottom-color:#C2410C; }
+  .pl-opt { border:2px solid #E5E7EB; border-bottom-width:4px; border-radius:16px; padding:14px; margin-bottom:10px; font-weight:800; font-size:13.5px; background:#fff; }
+  .pl-opt.on { border-color:#22C55E; background:#F0FDF4; color:#15803D; }
+  .pl-progress { height:14px; border-radius:99px; background:#E5E7EB; overflow:hidden; margin-bottom:14px; }
+  .pl-progress i { display:block; height:100%; width:34%; background:#22C55E; border-radius:99px; }
+  .pl-xp { display:flex; justify-content:space-between; font-weight:900; font-size:12px; color:#6B7280; margin-bottom:6px; }
+  .pl-mascot { font-size:44px; text-align:center; margin:6px 0 2px; }
+
+  /* ============ 3. NEO-BRUTALISTA ============ */
+  .brutal { font-family:"Space Grotesk", sans-serif; color:#0a0a0a; }
+  .brutal.screen { background:#FFFDF5; }
+  .br-head { padding:20px; border-bottom:2px solid #0a0a0a; background:#BEF264; }
+  .br-head h3 { font-size:29px; font-weight:700; letter-spacing:-1px; line-height:1; }
+  .br-head p { font-size:12px; margin-top:6px; }
+  .br-body { padding:18px; }
+  .br-box { border:2px solid #0a0a0a; background:#fff; box-shadow:5px 5px 0 #0a0a0a; padding:13px; margin-bottom:14px; }
+  .br-box.accent { background:#6366F1; color:#fff; box-shadow:5px 5px 0 #0a0a0a; }
+  .br-box h4 { font-size:15px; text-transform:uppercase; letter-spacing:.5px; }
+  .br-box p { font-size:12.5px; margin-top:4px; opacity:.85; }
+  .br-row { display:flex; gap:12px; }
+  .br-row .br-box { flex:1; }
+  .br-num { font-size:30px; font-weight:700; line-height:1; }
+  .br-btn { width:100%; border:2px solid #0a0a0a; background:#0a0a0a; color:#FFFDF5; font-family:inherit; font-weight:700;
+    font-size:14px; padding:13px; box-shadow:5px 5px 0 #BEF264; text-transform:uppercase; letter-spacing:.6px; }
+  .br-opt { border:2px solid #0a0a0a; background:#fff; padding:12px; margin-bottom:9px; font-weight:700; font-size:13px; display:flex; gap:10px; }
+  .br-opt b { background:#0a0a0a; color:#fff; width:22px; height:22px; display:grid; place-items:center; font-size:11px; }
+  .br-opt.on { background:#BEF264; }
+  .br-timer { display:inline-block; background:#0a0a0a; color:#BEF264; font-family:"IBM Plex Mono", monospace; font-size:19px; padding:7px 10px; }
+
+  /* ============ 4. COSTA RICA NATURAL ============ */
+  .tropical { font-family:"Source Sans 3", sans-serif; color:#123033; }
+  .tropical.screen { background:#FAF7F2; }
+  .tp-hero { padding:24px 20px 20px; background:linear-gradient(160deg,#0E7490 0%, #0F766E 55%, #115E59 100%); color:#fff;
+    border-radius:0 0 36px 36px; position:relative; overflow:hidden; }
+  .tp-hero:after { content:""; position:absolute; width:190px; height:190px; border-radius:50%; right:-70px; top:-70px;
+    background:radial-gradient(circle at 35% 35%, #FB7185, transparent 65%); opacity:.55; }
+  .tp-hero small { font-size:11px; letter-spacing:1.6px; text-transform:uppercase; opacity:.8; }
+  .tp-hero h3 { font-family:"Bricolage Grotesque", sans-serif; font-size:30px; line-height:1.05; margin-top:4px; letter-spacing:-.5px; }
+  .tp-hero p { font-size:12.5px; opacity:.85; margin-top:5px; }
+  .tp-cards { display:flex; gap:10px; margin-top:16px; }
+  .tp-card { flex:1; background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.3); border-radius:16px; padding:10px; backdrop-filter:blur(2px); }
+  .tp-card b { font-size:19px; font-family:"Bricolage Grotesque", sans-serif; }
+  .tp-card span { font-size:10px; text-transform:uppercase; letter-spacing:1px; opacity:.8; display:block; }
+  .tp-body { padding:18px 20px; }
+  .tp-sec { font-family:"Bricolage Grotesque", sans-serif; font-size:17px; margin-bottom:10px; }
+  .tp-lesson { display:flex; gap:12px; align-items:center; background:#fff; border-radius:18px; padding:13px; margin-bottom:10px;
+    box-shadow:0 6px 18px rgba(14,116,144,.08); }
+  .tp-ico { width:42px; height:42px; border-radius:14px; background:#CCFBF1; color:#0F766E; display:grid; place-items:center; font-size:20px; flex:0 0 auto; }
+  .tp-lesson b { font-size:13.5px; display:block; }
+  .tp-lesson span { font-size:11.5px; color:#6B7280; }
+  .tp-btn { width:100%; border:0; border-radius:18px; background:#F59E0B; color:#3B2500; font-family:inherit; font-weight:700; font-size:14px; padding:14px; }
+  .tp-opt { border:1.5px solid #D6E4E3; background:#fff; border-radius:14px; padding:12px 13px; margin-bottom:9px; font-size:13px; }
+  .tp-opt.on { border-color:#0E7490; background:#ECFEFF; }
+  .tp-chip { display:inline-block; background:#FFF7ED; color:#C2410C; border:1px solid #FED7AA; border-radius:999px; font-size:10.5px; padding:4px 9px; font-weight:600; }
+
+  /* ============ 5. MODO ENFOQUE ============ */
+  .focus { font-family:Inter, sans-serif; color:#E5E7EB; }
+  .focus.screen { background:#070B14; }
+  .fo-head { padding:22px 20px 10px; }
+  .fo-head small { color:#6B7280; font-size:11px; letter-spacing:1.6px; text-transform:uppercase; }
+  .fo-head h3 { font-size:27px; letter-spacing:-.5px; margin-top:4px; }
+  .fo-head h3 em { color:#A3E635; font-style:normal; }
+  .fo-body { padding:14px 20px 20px; }
+  .fo-big { border:1px solid #1F2937; background:#0B1220; border-radius:18px; padding:16px; margin-bottom:12px; }
+  .fo-big .lbl { font-size:10.5px; letter-spacing:1.4px; text-transform:uppercase; color:#6B7280; }
+  .fo-big .val { font-size:30px; font-weight:800; letter-spacing:-1px; margin-top:2px; font-variant-numeric:tabular-nums; }
+  .fo-big .val span { color:#A3E635; }
+  .fo-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px; }
+  .fo-tile { border:1px solid #1F2937; border-radius:16px; padding:12px; background:#0B1220; }
+  .fo-tile b { font-size:22px; display:block; font-variant-numeric:tabular-nums; }
+  .fo-tile span { font-size:10.5px; color:#6B7280; text-transform:uppercase; letter-spacing:1px; }
+  .fo-btn { width:100%; border:0; border-radius:14px; background:#A3E635; color:#0A0F05; font-family:inherit; font-weight:800; font-size:14px; padding:14px; }
+  .fo-opt { border:1px solid #1F2937; background:#0B1220; border-radius:12px; padding:12px; margin-bottom:8px; font-size:13px; color:#D1D5DB; }
+  .fo-opt.on { border-color:#A3E635; background:rgba(163,230,53,.08); color:#D9F99D; }
+  .fo-bar { height:6px; border-radius:99px; background:#1F2937; overflow:hidden; margin:10px 0 16px; }
+  .fo-bar i { display:block; height:100%; width:34%; background:#A3E635; }
+  .fo-timer { font-variant-numeric:tabular-nums; font-size:22px; font-weight:700; color:#A3E635; border:1px solid #1F2937; border-radius:12px; padding:6px 10px; display:inline-block; }
+
+  /* ============ 6. BENTO ============ */
+  .bento { font-family:Inter, sans-serif; color:#0F172A; }
+  .bento.screen { background:#F8FAFC; }
+  .be-head { padding:22px 20px 8px; display:flex; align-items:center; justify-content:space-between; }
+  .be-head h3 { font-size:24px; letter-spacing:-.6px; }
+  .be-head p { font-size:12px; color:#64748B; margin-top:2px; }
+  .be-avatar { width:40px; height:40px; border-radius:14px; background:#EEF2FF; color:#4F46E5; display:grid; place-items:center; font-weight:800; }
+  .be-body { padding:10px 20px 20px; }
+  .be-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .be-tile { background:#fff; border:1px solid #E2E8F0; border-radius:18px; padding:13px; }
+  .be-tile.wide { grid-column:1 / -1; }
+  .be-tile.hero { background:linear-gradient(135deg,#4F46E5,#8B5CF6); color:#fff; border:0; }
+  .be-tile .lbl { font-size:10.5px; color:#64748B; text-transform:uppercase; letter-spacing:1.1px; }
+  .be-tile.hero .lbl { color:rgba(255,255,255,.75); }
+  .be-tile .big { font-size:25px; font-weight:800; letter-spacing:-.6px; margin-top:3px; }
+  .be-tile .sub { font-size:11.5px; color:#64748B; margin-top:2px; }
+  .be-tile.hero .sub { color:rgba(255,255,255,.8); }
+  .be-btn { width:100%; border:0; border-radius:14px; background:#4F46E5; color:#fff; font-family:inherit; font-weight:700; font-size:14px; padding:13px; }
+  .be-btn.light { background:#EEF2FF; color:#4338CA; }
+  .be-opt { border:1px solid #E2E8F0; background:#fff; border-radius:14px; padding:12px; margin-bottom:9px; font-size:13px; }
+  .be-opt.on { border-color:#4F46E5; background:#EEF2FF; }
+  .be-bar { height:8px; border-radius:99px; background:#E2E8F0; overflow:hidden; margin-top:8px; }
+  .be-bar i { display:block; height:100%; width:34%; background:#4F46E5; }
+  .be-ring { width:46px; height:46px; border-radius:50%; background:conic-gradient(#4F46E5 0 72%, #E2E8F0 72% 100%); display:grid; place-items:center; }
+  .be-ring b { width:34px; height:34px; border-radius:50%; background:#fff; display:grid; place-items:center; font-size:11px; }
+  .be-nav { display:flex; justify-content:space-between; border-top:1px solid #E2E8F0; padding:10px 24px; font-size:10.5px; color:#94A3B8; background:#fff; }
+  .be-nav b { color:#4F46E5; }
+
+  .foot { max-width:1240px; margin:0 auto; padding:30px 20px 80px; color:#6b7280; font-size:13px; border-top:1px solid #1f2430; }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <b>LinGoXiC · 6 direcciones</b>
+  <a href="#cuaderno">1 Cuaderno</a>
+  <a href="#juego">2 Juego</a>
+  <a href="#brutal">3 Brutal</a>
+  <a href="#tropical">4 Tropical</a>
+  <a href="#enfoque">5 Enfoque</a>
+  <a href="#bento">6 Bento</a>
+</div>
+
+<div class="intro">
+  <h1>6 diseños para LinGoXiC</h1>
+  <p>Cada concepto muestra tres pantallas reales del producto: <strong>dashboard</strong>, <strong>lección</strong> y <strong>simulacro</strong>. Son prototipos estáticos para comparar identidad, jerarquía y legibilidad antes de tocar la app.</p>
+</div>
+
+<!-- 1 -->
+<section class="concept" id="cuaderno">
+  <header>
+    <h2>1. Cuaderno MEP</h2>
+    <span class="tag">editorial · confiable</span>
+    <div class="swatches"><i class="sw" style="background:#FBF8F1"></i><i class="sw" style="background:#0F766E"></i><i class="sw" style="background:#FDE68A"></i><i class="sw" style="background:#1F2937"></i></div>
+    <p class="why">Papel, tinta y resaltador. Se siente material de estudio oficial: credibilidad para familias y docentes, cero efectos costosos.</p>
+  </header>
+  <div class="phones">
+
+    <div class="phone"><div class="screen notebook">
+      <div class="notch">9:41</div>
+      <div class="nb-head">
+        <div class="nb-kicker">Martes 24 · Unidad 1</div>
+        <h3>Hola, Sofía.<br><span class="nb-mark">Vamos a practicar.</span></h3>
+        <p>My Profile · A1</p>
+      </div>
+      <div class="nb-stats">
+        <div class="nb-stat"><b>12</b><span>Racha</span></div>
+        <div class="nb-stat"><b>1.240</b><span>XP</span></div>
+        <div class="nb-stat"><b>38%</b><span>Curso</span></div>
+      </div>
+      <div class="nb-body">
+        <div class="nb-card">
+          <div class="nb-meta"><span>LECCIÓN 3 DE 4</span><span>12 min</span></div>
+          <h4>Present Simple</h4>
+          <p>Habla de rutinas y hechos: <em>She works</em>, <em>they study</em>.</p>
+          <div class="nb-rule"></div>
+          <p><strong>Ejemplo:</strong> “My brother <span class="nb-mark">works</span> in a hospital.”</p>
+        </div>
+        <a class="nb-btn">Continuar lección →</a>
+      </div>
+    </div></div>
+
+    <div class="phone"><div class="screen notebook">
+      <div class="notch">9:41</div>
+      <div class="nb-head">
+        <div class="nb-kicker">My Profile · Lección 3</div>
+        <h3>Present Simple</h3>
+        <p>Regla + ejemplo + práctica</p>
+      </div>
+      <div class="nb-body">
+        <div class="nb-card">
+          <h4>La regla</h4>
+          <p>Con <strong>he / she / it</strong> el verbo lleva <strong>-s</strong>: work → works, study → studies.</p>
+        </div>
+        <div class="nb-card">
+          <h4>Elige la forma correcta</h4>
+          <div class="nb-opt on"><i>A</i> She <strong>works</strong> in San José.</div>
+          <div class="nb-opt"><i>B</i> She work in San José.</div>
+          <div class="nb-opt"><i>C</i> She working in San José.</div>
+        </div>
+        <a class="nb-btn">Comprobar respuesta</a>
+      </div>
+    </div></div>
+
+    <div class="phone"><div class="screen notebook">
+      <div class="notch">9:41</div>
+      <div class="nb-head">
+        <div class="nb-kicker">Simulacro MEP</div>
+        <h3>Pregunta 34<span style="font-size:16px;color:#6b7280">/100</span></h3>
+        <p>Comprensión auditiva</p>
+      </div>
+      <div class="nb-body">
+        <div class="nb-meta" style="margin-bottom:10px"><span>34 respondidas</span><span class="nb-timer">24:31</span></div>
+        <div class="nb-card">
+          <h4>Listen to the conversation</h4>
+          <p>What does the customer want?</p>
+        </div>
+        <div class="nb-opt"><i>A</i> A refund for a laptop.</div>
+        <div class="nb-opt on"><i>B</i> A replacement laptop.</div>
+        <div class="nb-opt"><i>C</i> A repair receipt.</div>
+        <div class="nb-rule"></div>
+        <a class="nb-btn nb-ghost">Siguiente pregunta</a>
+      </div>
+    </div></div>
+
+  </div>
+</section>
+
+<!-- 2 -->
+<section class="concept" id="juego">
+  <header>
+    <h2>2. Juego limpio</h2>
+    <span class="tag">retención · diario</span>
+    <div class="swatches"><i class="sw" style="background:#22C55E"></i><i class="sw" style="background:#F97316"></i><i class="sw" style="background:#fff"></i><i class="sw" style="background:#111827"></i></div>
+    <p class="why">Botones grandes, una acción por pantalla y celebración de racha/XP. Ideal para uso diario de 10 minutos.</p>
+  </header>
+  <div class="phones">
+
+    <div class="phone"><div class="screen playful">
+      <div class="notch">9:41</div>
+      <div class="pl-top">
+        <small>¡Buen día!</small>
+        <h3>Sofía</h3>
+        <div class="pl-pills"><span class="pl-pill">🔥 12 días</span><span class="pl-pill">⚡ 1.240 XP</span><span class="pl-pill">A1</span></div>
+      </div>
+      <div class="pl-body">
+        <div class="pl-card">
+          <div class="pl-xp"><span>Meta diaria</span><span>34 / 50 XP</span></div>
+          <div class="pl-progress"><i></i></div>
+          <h4>Continúa: My Profile</h4>
+          <p>Te faltan 2 lecciones para cerrar la unidad.</p>
+        </div>
+        <button class="pl-btn">Seguir aprendiendo</button>
+        <div class="pl-mascot">🦁</div>
+        <div class="pl-card"><h4>Práctica rápida</h4><p>10 preguntas mezcladas · 3 min</p></div>
+      </div>
+    </div></div>
+
+    <div class="phone"><div class="screen playful">
+      <div class="notch">9:41</div>
+      <div class="pl-body" style="padding-top:20px">
+        <div class="pl-xp"><span>Lección 3</span><span>2 / 4</span></div>
+        <div class="pl-progress"><i style="width:50%"></i></div>
+        <h4 style="font-size:20px;font-weight:900;margin:6px 0 4px">Completa la oración</h4>
+        <p style="font-size:12.5px;color:#6B7280;margin-bottom:14px">Present Simple · My Profile</p>
+        <div style="font-size:15px;font-weight:800;margin-bottom:12px">She ___ in San José.</div>
+        <div class="pl-opt">work</div>
+        <div class="pl-opt on">works ✓</div>
+        <div class="pl-opt">working</div>
+        <button class="pl-btn orange" style="margin-top:12px">Comprobar</button>
+      </div>
+    </div></div>
+
+    <div class="phone"><div class="screen playful">
+      <div class="notch">9:41</div>
+      <div class="pl-top" style="background:#F97316;border-radius:0 0 24px 24px;padding-bottom:16px">
+        <small>Simulacro</small>
+        <h3 style="font-size:22px">Pregunta 34 / 100</h3>
+        <div class="pl-pills"><span class="pl-pill">⏱ 24:31</span><span class="pl-pill">34%</span></div>
+      </div>
+      <div class="pl-body">
+        <div class="pl-progress" style="height:10px"><i style="width:34%;background:#F97316"></i></div>
+        <div class="pl-card"><h4>Listening</h4><p>What does the customer want?</p></div>
+        <div class="pl-opt">A refund.</div>
+        <div class="pl-opt on">A replacement laptop.</div>
+        <div class="pl-opt">A receipt.</div>
+        <button class="pl-btn" style="margin-top:8px">Siguiente</button>
+      </div>
+    </div></div>
+
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="concept" id="brutal">
+  <header>
+    <h2>3. Neo-brutalista</h2>
+    <span class="tag">diferenciador · alto contraste</span>
+    <div class="swatches"><i class="sw" style="background:#FFFDF5"></i><i class="sw" style="background:#0a0a0a"></i><i class="sw" style="background:#BEF264"></i><i class="sw" style="background:#6366F1"></i></div>
+    <p class="why">Bordes duros, sombras desplazadas y tipografía enorme. Memorabilidad máxima con un costo de render casi nulo.</p>
+  </header>
+  <div class="phones">
+
+    <div class="phone"><div class="screen brutal">
+      <div class="notch">9:41</div>
+      <div class="br-head">
+        <h3>HOLA,<br>SOFÍA.</h3>
+        <p>MY PROFILE · NIVEL A1</p>
+      </div>
+      <div class="br-body">
+        <div class="br-row">
+          <div class="br-box"><div class="br-num">12</div><p>DÍAS DE RACHA</p></div>
+          <div class="br-box"><div class="br-num">1240</div><p>XP TOTAL</p></div>
+        </div>
+        <div class="br-box accent"><h4>SIGUIENTE</h4><p>Present Simple · Lección 3 de 4</p></div>
+        <button class="br-btn">CONTINUAR →</button>
+      </div>
+    </div></div>
+
+    <div class="phone"><div class="screen brutal">
+      <div class="notch">9:41</div>
+      <div class="br-head" style="background:#FFFDF5">
+        <h3>PRESENT<br>SIMPLE</h3>
+        <p>REGLA 03 / 08</p>
+      </div>
+      <div class="br-body">
+        <div class="br-box"><p style="font-size:13px;opacity:1">Con HE / SHE / IT el verbo lleva <b>-S</b>.</p></div>
+        <div class="br-box"><h4>¿Cuál es correcta?</h4></div>
+        <div class="br-opt"><b>A</b> SHE WORK HERE</div>
+        <div class="br-opt on"><b>B</b> SHE WORKS HERE</div>
+        <div class="br-opt"><b>C</b> SHE WORKING HERE</div>
+        <button class="br-btn" style="margin-top:6px">COMPROBAR</button>
+      </div>
+    </div></div>
+
+    <div class="phone"><div class="screen brutal">
+      <div class="notch">9:41</div>
+      <div class="br-head" style="background:#6366F1;color:#fff;border-bottom-color:#0a0a0a">
+        <h3>SIMULACRO</h3>
+        <p style="display:flex;justify-content:space-between;align-items:center">34 / 100 <span class="br-timer">24:31</span></p>
+      </div>
+      <div class="br-body">
+        <div class="br-box"><h4>LISTENING</h4><p>WHAT DOES THE CUSTOMER WANT?</p></div>
+        <div class="br-opt"><b>A</b> A REFUND</div>
+        <div class="br-opt on"><b>B</b> A REPLACEMENT</div>
+        <div class="br-opt"><b>C</b> A RECEIPT</div>
+        <button class="br-btn">SIGUIENTE</button>
+      </div>
+    </div></div>
+
+  </div>
+</section>
+
+<!-- 4 -->
+<section class="concept" id="tropical">
+  <header>
+    <h2>4. Costa Rica natural</h2>
+    <span class="tag">identidad local · cálido</span>
+    <div class="swatches"><i class="sw" style="background:#0E7490"></i><i class="sw" style="background:#0F766E"></i><i class="sw" style="background:#F59E0B"></i><i class="sw" style="background:#FB7185"></i></div>
+    <p class="why">Océano, mango y coral con formas suaves. Conecta con los escenarios MEP (viajes, feria, entrevista) sin depender de fotos pesadas.</p>
+  </header>
+  <div class="phones">
+
+    <div class="phone"><div class="screen tropical">
+      <div class="notch">9:41</div>
+      <div class="tp-hero">
+        <small>Pura vida, Sofía</small>
+        <h3>Tu inglés,<br>paso a paso.</h3>
+        <p>My Profile · A1</p>
+        <div class="tp-cards">
+          <div class="tp-card"><b>12</b><span>Racha</span></div>
+          <div class="tp-card"><b>1.240</b><span>XP</span></div>
+          <div class="tp-card"><b>38%</b><span>Curso</span></div>
+        </div>
+      </div>
+      <div class="tp-body">
+        <div class="tp-sec">Continúa donde ibas</div>
+        <div class="tp-lesson"><div class="tp-ico">📖</div><div><b>Present Simple</b><span>Lección 3 de 4 · 12 min</span></div></div>
+        <button class="tp-btn">Continuar lección</button>
+      </div>
+    </div></div>
+
+    <div class="phone"><div class="screen tropical">
+      <div class="notch">9:41</div>
+      <div class="tp-hero" style="padding-bottom:16px">
+        <small>Unidad 1 · Lección 3</small>
+        <h3 style="font-size:24px">Present Simple</h3>
+      </div>
+      <div class="tp-body">
+        <div class="tp-lesson" style="display:block"><b>La regla</b><span style="display:block;margin-top:4px">Con he / she / it, el verbo lleva -s. <br><em>She works</em> · <em>He studies</em>.</span></div>
+        <div class="tp-sec" style="margin-top:14px">Elige la opción correcta</div>
+        <div class="tp-opt on">A. She works in San José.</div>
+        <div class="tp-opt">B. She work in San José.</div>
+        <div class="tp-opt">C. She working in San José.</div>
+        <button class="tp-btn" style="margin-top:6px">Comprobar respuesta</button>
+      </div>
+    </div></div>
+
+    <div class="phone"><div class="screen tropical">
+      <div class="notch">9:41</div>
+      <div class="tp-hero" style="padding-bottom:16px">
+        <small>Simulacro MEP</small>
+        <h3 style="font-size:22px">Pregunta 34 de 100</h3>
+        <div class="tp-cards"><div class="tp-card"><b>24:31</b><span>Tiempo</span></div><div class="tp-card"><b>34%</b><span>Avance</span></div></div>
+      </div>
+      <div class="tp-body">
+        <span class="tp-chip">Listening</span>
+        <div class="tp-sec" style="margin-top:10px">What does the customer want?</div>
+        <div class="tp-opt">A. A refund.</div>
+        <div class="tp-opt on">B. A replacement laptop.</div>
+        <div class="tp-opt">C. A receipt.</div>
+        <button class="tp-btn">Siguiente pregunta</button>
+      </div>
+    </div></div>
+
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="concept" id="enfoque">
+  <header>
+    <h2>5. Modo enfoque</h2>
+    <span class="tag">nocturno · concentración</span>
+    <div class="swatches"><i class="sw" style="background:#070B14"></i><i class="sw" style="background:#0B1220"></i><i class="sw" style="background:#A3E635"></i><i class="sw" style="background:#E5E7EB"></i></div>
+    <p class="why">Navy profundo y lima eléctrico. Pensado para estudiar de noche, con datos en primer plano y cero ruido visual.</p>
+  </header>
+  <div class="phones">
+
+    <div class="phone"><div class="screen focus">
+      <div class="notch">9:41</div>
+      <div class="fo-head">
+        <small>Martes · 20:14</small>
+        <h3>Sesión de <em>enfoque</em></h3>
+      </div>
+      <div class="fo-body">
+        <div class="fo-big">
+          <div class="lbl">Objetivo de hoy</div>
+          <div class="val">34 <span>/ 50 XP</span></div>
+          <div class="fo-bar"><i style="width:68%"></i></div>
+          <div class="lbl">Siguiente: Present Simple · 12 min</div>
+        </div>
+        <div class="fo-grid">
+          <div class="fo-tile"><b>12</b><span>Racha</span></div>
+          <div class="fo-tile"><b>1.240</b><span>XP</span></div>
+          <div class="fo-tile"><b>38%</b><span>Curso</span></div>
+          <div class="fo-tile"><b>A1</b><span>Nivel</span></div>
+        </div>
+        <button class="fo-btn">Empezar 25 min</button>
+      </div>
+    </div></div>
+
+    <div class="phone"><div class="screen focus">
+      <div class="notch">9:41</div>
+      <div class="fo-head">
+        <small>My Profile · 03/04</small>
+        <h3>Present Simple</h3>
+      </div>
+      <div class="fo-body">
+        <div class="fo-bar"><i style="width:50%"></i></div>
+        <div class="fo-big" style="padding:13px">
+          <div class="lbl">Regla</div>
+          <div style="font-size:13.5px;margin-top:5px;line-height:1.6">Con <b>he / she / it</b> el verbo lleva <span style="color:#A3E635">-s</span>.<br><span style="color:#9CA3AF">She works · He studies</span></div>
+        </div>
+        <div class="fo-opt">A. She work here.</div>
+        <div class="fo-opt on">B. She works here. ✓</div>
+        <div class="fo-opt">C. She working here.</div>
+        <button class="fo-btn" style="margin-top:8px">Comprobar</button>
+      </div>
+    </div></div>
+
+    <div class="phone"><div class="screen focus">
+      <div class="notch">9:41</div>
+      <div class="fo-head">
+        <small>Simulacro</small>
+        <h3>Pregunta 34 <span style="color:#6B7280;font-size:16px">/100</span></h3>
+      </div>
+      <div class="fo-body">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+          <div class="fo-bar" style="flex:1;margin:0 12px 0 0"><i style="width:34%"></i></div>
+          <span class="fo-timer">24:31</span>
+        </div>
+        <div class="fo-big" style="padding:13px"><div class="lbl">Listening</div><div style="font-size:13.5px;margin-top:4px">What does the customer want?</div></div>
+        <div class="fo-opt">A. A refund.</div>
+        <div class="fo-opt on">B. A replacement laptop.</div>
+        <div class="fo-opt">C. A receipt.</div>
+        <button class="fo-btn" style="margin-top:8px">Siguiente</button>
+      </div>
+    </div></div>
+
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="concept" id="bento">
+  <header>
+    <h2>6. Bento dashboard</h2>
+    <span class="tag">evolución · ordenado</span>
+    <div class="swatches"><i class="sw" style="background:#F8FAFC"></i><i class="sw" style="background:#4F46E5"></i><i class="sw" style="background:#8B5CF6"></i><i class="sw" style="background:#E2E8F0"></i></div>
+    <p class="why">Mosaicos modulares para leer el estado de un vistazo. Es el cambio de menor riesgo: conserva la paleta actual y mejora la jerarquía.</p>
+  </header>
+  <div class="phones">
+
+    <div class="phone"><div class="screen bento">
+      <div class="notch">9:41</div>
+      <div class="be-head"><div><h3>Hola, Sofía</h3><p>Martes 24 · A1</p></div><div class="be-avatar">S</div></div>
+      <div class="be-body">
+        <div class="be-grid">
+          <div class="be-tile hero wide">
+            <div class="lbl">Siguiente lección</div>
+            <div class="big">Present Simple</div>
+            <div class="sub">My Profile · 3 de 4 · 12 min</div>
+            <div style="height:10px"></div>
+            <button class="be-btn" style="background:#fff;color:#4338CA">Continuar →</button>
+          </div>
+          <div class="be-tile"><div class="lbl">Racha</div><div class="big">12 🔥</div><div class="sub">días seguidos</div></div>
+          <div class="be-tile"><div class="lbl">XP total</div><div class="big">1.240</div><div class="be-bar"><i style="width:62%"></i></div></div>
+          <div class="be-tile wide" style="display:flex;gap:12px;align-items:center">
+            <div class="be-ring"><b>38%</b></div>
+            <div><div class="lbl">Curso</div><div class="sub">12 de 31 lecciones · 5 de 13 quizzes</div></div>
+          </div>
+          <div class="be-tile wide"><div class="lbl">Áreas a mejorar</div><div class="sub">Listening · Grammar</div><button class="be-btn light" style="margin-top:8px">Practicar</button></div>
+        </div>
+      </div>
+      <div class="be-nav"><span><b>Inicio</b></span><span>Aprender</span><span>Practicar</span><span>Progreso</span></div>
+    </div></div>
+
+    <div class="phone"><div class="screen bento">
+      <div class="notch">9:41</div>
+      <div class="be-head"><div><h3>Present Simple</h3><p>My Profile · Lección 3</p></div><div class="be-avatar">📖</div></div>
+      <div class="be-body">
+        <div class="be-tile wide"><div class="lbl">Regla</div><div class="sub" style="font-size:13px;color:#0F172A;margin-top:5px">Con <b>he / she / it</b> el verbo lleva <b>-s</b>. <br>She works · He studies.</div></div>
+        <div style="height:10px"></div>
+        <div class="lbl" style="font-size:10.5px;color:#64748B;text-transform:uppercase;letter-spacing:1.1px;margin-bottom:7px">Elige la correcta</div>
+        <div class="be-opt">A. She work here.</div>
+        <div class="be-opt on">B. She works here. ✓</div>
+        <div class="be-opt">C. She working here.</div>
+        <button class="be-btn">Comprobar respuesta</button>
+      </div>
+    </div></div>
+
+    <div class="phone"><div class="screen bento">
+      <div class="notch">9:41</div>
+      <div class="be-head"><div><h3>Simulacro</h3><p>Pregunta 34 de 100</p></div><div class="be-avatar">⏱</div></div>
+      <div class="be-body">
+        <div class="be-grid">
+          <div class="be-tile"><div class="lbl">Tiempo</div><div class="big" style="font-size:21px">24:31</div></div>
+          <div class="be-tile"><div class="lbl">Avance</div><div class="big" style="font-size:21px">34%</div><div class="be-bar"><i style="width:34%"></i></div></div>
+        </div>
+        <div style="height:10px"></div>
+        <div class="be-tile wide"><div class="lbl">Listening</div><div class="sub" style="color:#0F172A;font-size:13px;margin-top:4px">What does the customer want?</div></div>
+        <div style="height:9px"></div>
+        <div class="be-opt">A. A refund.</div>
+        <div class="be-opt on">B. A replacement laptop.</div>
+        <div class="be-opt">C. A receipt.</div>
+        <button class="be-btn">Siguiente pregunta</button>
+      </div>
+    </div></div>
+
+  </div>
+</section>
+
+<div class="foot">
+  Prototipos estáticos · LinGoXiC · 2026. Ninguno usa blur pesado ni animaciones continuas; todos están pensados para móvil y batería.
+</div>
+
+</body>
+</html>
