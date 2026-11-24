@@ -1,20 +1,24 @@
 {
   "rules": {
-    "access": {
-      ".read": true,
-      ".write": "!data.exists() || !data.child('academyFirstUsedAt').exists() || data.child('academyFirstUsedAt').val() === 0 || newData.child('academyFirstUsedAt').val() === data.child('academyFirstUsedAt').val()"
-    },
-    "users": {
-      "$deviceId": {
-        ".read": true,
-        ".write": "!data.exists() || data.child('deviceId').val() === $deviceId"
-      }
-    },
     "progress": {
       "$userId": {
-        ".read": true,
-        ".write": "!data.exists() || newData.child('updatedAt').isNumber()",
+        ".read": false,
+        ".write": "newData.hasChildren(['name', 'level', 'xp', 'updatedAt']) && newData.child('xp').isNumber() && newData.child('lastActive').isNumber()",
         ".validate": "newData.hasChildren(['name', 'level', 'xp', 'updatedAt']) && newData.child('xp').isNumber() && newData.child('level').isString() && newData.child('updatedAt').isNumber()"
+      }
+    },
+    "users": {
+      "$userId": {
+        ".read": false,
+        ".write": "newData.hasChildren(['name', 'lastSeen']) && newData.child('lastSeen').isNumber()",
+        ".validate": "newData.hasChildren(['name', 'lastSeen']) && newData.child('lastSeen').isNumber() && newData.child('name').isString()"
+      }
+    },
+    "entries": {
+      "$entryId": {
+        ".read": false,
+        ".write": "newData.hasChildren(['userId', 'at']) && newData.child('at').isNumber() && newData.child('userId').isString()",
+        ".validate": "newData.hasChildren(['userId', 'at']) && newData.child('at').isNumber()"
       }
     }
   }

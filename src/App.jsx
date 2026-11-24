@@ -11,6 +11,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useRegisterSW } from "virtual:pwa-register/react";
 import { RotateCw, X } from "lucide-react";
 import { UserProvider, useUser } from "./hooks/useUser.jsx";
+import { registerEntry } from "./services/firebase.js";
 import { ThemeProvider, useTheme } from "./hooks/useTheme.jsx";
 import { Button, ProgressBar } from "./components/ui.jsx";
 import Layout from "./components/Layout.jsx";
@@ -441,7 +442,18 @@ function Onboarding() {
   }, [loadUser]);
 
   useEffect(() => {
-    if (user?.id) updateStreak();
+    if (!user?.id) return;
+    updateStreak();
+    // Una entrada por sesión de navegador (no en cada recarga interna).
+    const key = `lingoxic_entry_${user.id}`;
+    try {
+      if (!sessionStorage.getItem(key)) {
+        sessionStorage.setItem(key, "1");
+        registerEntry(user);
+      }
+    } catch {
+      registerEntry(user);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id]);
 

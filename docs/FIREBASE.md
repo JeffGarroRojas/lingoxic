@@ -22,10 +22,40 @@ Sin ellas la app arranca en modo 100 % local (IndexedDB) y no intenta conectar.
 | Ruta | Contenido |
 |---|---|
 | `progress/<userId>` | Copia del progreso: nombre, nivel, XP, racha, lecciones/quizzes, áreas débiles, diagnóstico, `updatedAt`. |
-| `users/<deviceId>` | Registro de dispositivo del control de acceso (códigos ABA/MEP). |
-| `access` | Estado global del código de academia (`active`, `academyFirstUsedAt`). |
+| `users/<userId>` | Registro de quién entra: nombre, nivel, dispositivo, agente y `lastSeen`. |
+| `entries/<entryId>` | Bitácora append-only de entradas (`userId`, `name`, `level`, `at`, `deviceId`, `agent`). |
 
-Reglas en `docs/rtdb-rules.json`.
+Las reglas no permiten lectura desde el cliente (`.read: false`): la consulta se hace desde la consola o con el CLI (`firebase database:get`), que omite reglas.
+
+```bash
+# Ver la bitácora de entradas
+npx firebase database:get /entries --project lingoxic | tail -1
+
+# Ver usuarios registrados
+npx firebase database:get /users --project lingoxic | tail -1
+```
+
+## Registro de entradas
+
+- `users/<userId>`: perfil de quien entra (nombre, nivel, dispositivo, `lastSeen`).
+- `entries/<entryId>`: bitácora append-only, una por sesión de navegador.
+- Las reglas tienen `.read: false`; se consultan con el CLI/consola (omiten reglas).
+
+## Protección de la clave de IA
+
+La clave de Gemini (`VITE_GEMINI_API_KEY`) está en un proyecto propio (`lingoxic`) y **restringida por HTTP referrer**:
+
+- `https://lingoxic.web.app/*`
+- `https://lingoxic.firebaseapp.com/*`
+- `http://localhost:5173/*`, `http://127.0.0.1:5173/*`
+- `http://localhost:4173/*`, `http://127.0.0.1:4173/*`
+
+Desde otro dominio o sin referrer, Google responde **403**. Si la clave se filtra, se rota en Google Cloud → APIs y servicios → Credenciales (clave `lingoxicweb2026`).
+
+Protección adicional recomendada:
+
+1. Activar **App Check** con reCAPTCHA v3 (variable `VITE_RECAPTCHA_SITE_KEY`) y luego forzarlo en Firebase Console para RTDB.
+2. Si se necesita ocultar la clave por completo, mover las llamadas a una Cloud Function proxy (requiere plan Blaze).
 
 ## Comandos
 
