@@ -12,9 +12,11 @@
 <stop offset="0" stop-color="#FFFFFF" stop-opacity=".35"/><stop offset=".55" stop-color="#FFFFFF" stop-opacity=".06"/><stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/></radialGradient>
 <radialGradient id="sun" cx=".35" cy=".3" r=".8">
 <stop offset="0" stop-color="#FEF3C7"/><stop offset=".45" stop-color="#FBBF24"/><stop offset="1" stop-color="#F97316"/></radialGradient>
-<linearGradient id="bg" x1="80" y1="40" x2="440" y2="480" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#34D399"/><stop offset=".5" stop-color="#0D9488"/><stop offset="1" stop-color="#065F46"/></linearGradient></defs><path fill="url(#bg)" d="M168 56h176a112 112 0 0 1 112 112v176a112 112 0 0 1-112 112H244c-9 0-16 6-19 15l-10 32c-4 12-19 15-27 5l-34-42a24 24 0 0 0-19-10h-7A112 112 0 0 1 56 344V168A112 112 0 0 1 168 56Z"/>
-<path fill="url(#page)" d="M256 206c-22-19-54-30-88-30-15 0-27 2-38 6v146c11-4 23-6 38-6 34 0 66 11 88 30V206Z"/>
-<path fill="url(#page)" d="M256 206c22-19 54-30 88-30 15 0 27 2 38 6v146c-11-4-23-6-38-6-34 0-66 11-88 30V206Z"/>
-<path fill="#0E7490" opacity=".14" d="M256 220v140c-19-16-46-26-76-28V224c27 1 55 8 76 22Z"/>
-<path fill="url(#warm)" d="M362 106l11 32 32 11-32 11-11 32-11-32-32-11 32-11 11-32Z"/>
-<circle cx="398" cy="196" r="12" fill="#FB7185"/></svg>
+<linearGradient id="bg" x1="80" y1="40" x2="440" y2="480" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#34D399"/><stop offset=".5" stop-color="#0D9488"/><stop offset="1" stop-color="#065F46"/></linearGradient></defs><path fill="url(#bg)" d="M168 56h176a112 112 0 0 1 112 112v176a112 112 0 0 1-112 112H168A112 112 0 0 1 56 344V168A112 112 0 0 1 168 56Z"/><path fill="url(#glow)" d="M168 56h176a112 112 0 0 1 112 112v176a112 112 0 0 1-112 112H168A112 112 0 0 1 56 344V168A112 112 0 0 1 168 56Z"/>
+<path d="M178 170v190h112" stroke="#fff" stroke-width="54" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<g transform="rotate(45 330 190)">
+<rect x="312" y="86" width="36" height="150" rx="10" fill="url(#warm)"/>
+<path d="M312 236h36l-18 34Z" fill="#FDE68A"/>
+<path d="M321 256h18l-9 14Z" fill="#134E4A"/>
+<rect x="312" y="80" width="36" height="14" rx="7" fill="#FB7185"/>
+</g></svg>
