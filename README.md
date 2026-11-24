@@ -142,6 +142,13 @@ El logo vive en `public/icons/logo-mark.svg` (burbuja teal + libro + chispa ámb
 
 Abre `designs/index.html` en el navegador para comparar las 6 direcciones visuales (cuaderno, juego, neo-brutalista, tropical, enfoque y bento). Cada una muestra dashboard, lección y simulacro.
 
+## Registro de entradas
+
+```bash
+npm run registro          # quién entró: fecha, nombre, nivel, dispositivo
+npm run registro -- --csv # exportar a CSV
+```
+
 ## Variables de entorno
 
 Todas son opcionales. Copia `.env.example` a `.env` si quieres habilitar IA o Firebase:

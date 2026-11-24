@@ -13,7 +13,8 @@
     "qa": "node qa/full-qa.mjs",
     "qa:prod": "node qa/full-qa.mjs http://localhost:4173",
     "qa:ocr": "node qa/ocr.mjs",
-    "deploy:rules": "firebase deploy --only database"
+    "deploy:rules": "firebase deploy --only database",
+    "registro": "node scripts/registro.mjs"
   },
   "dependencies": {
     "@google/generative-ai": "^0.21.0",

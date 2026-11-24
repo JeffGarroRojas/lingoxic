@@ -41,6 +41,24 @@ npx firebase database:get /users --project lingoxic | tail -1
 - `entries/<entryId>`: bitácora append-only, una por sesión de navegador.
 - Las reglas tienen `.read: false`; se consultan con el CLI/consola (omiten reglas).
 
+## Ver el registro de entradas
+
+```bash
+npm run registro                # tabla: fecha, nombre, nivel, dispositivo, usuario
+npm run registro -- --csv       # CSV para Excel/Sheets
+npm run registro -- --json      # JSON crudo
+```
+
+## Activar App Check (anti-abuso de Firebase)
+
+El cliente ya soporta App Check; falta crear la site key y forzarlo:
+
+1. Crea una clave **reCAPTCHA v3** en https://www.google.com/recaptcha/admin/create con los dominios:
+   `lingoxic.web.app`, `lingoxic.firebaseapp.com`, `localhost`.
+2. Copia la *site key* a `.env`: `VITE_RECAPTCHA_SITE_KEY=...` y ejecuta `npm run deploy`.
+3. En Firebase Console → **App Check** → Realtime Database → registra el proveedor reCAPTCHA v3 y pulsa **Enforce**.
+4. Verifica en producción que la app sigue escribiendo en `progress/` y `entries/`.
+
 ## Protección de la clave de IA
 
 La clave de Gemini (`VITE_GEMINI_API_KEY`) está en un proyecto propio (`lingoxic`) y **restringida por HTTP referrer**:
