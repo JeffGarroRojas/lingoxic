@@ -16,7 +16,6 @@ export function UserProvider({ children }) {
 
   const loadUser = useCallback(async () => {
     let u = await getUser();
-    if (u && (!u.avatar || u.avatar === "default")) u = { ...u, avatar: "🦁" };
     setUser(u);
     setInitialized(true);
   }, []);

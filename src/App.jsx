@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRegisterSW } from "virtual:pwa-register/react";
-import { RotateCw } from "lucide-react";
+import { RotateCw, X } from "lucide-react";
 import { UserProvider, useUser } from "./hooks/useUser.jsx";
 import { ThemeProvider, useTheme } from "./hooks/useTheme.jsx";
 import { Button, ProgressBar } from "./components/ui.jsx";
@@ -38,7 +38,7 @@ const Settings = lazy(() => import("./pages/Settings.jsx"));
 function Loading({ text = "Cargando...", fullPage }) {
   const spinner = (
     <div className="flex flex-col items-center justify-center gap-3 py-16">
-      <div className="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+      <div className="w-8 h-8 border-4 border-teal-600 border-t-transparent rounded-full animate-spin" />
       <p className="text-sm text-gray-500">{text}</p>
     </div>
   );
@@ -86,7 +86,7 @@ class ErrorBoundary extends Component {
                   this.setState({ hasError: false });
                   window.location.reload();
                 }}
-                className="px-6 py-2.5 bg-gradient-to-r from-indigo-500 to-violet-500 text-white rounded-xl font-semibold hover:shadow-lg transition-all"
+                className="px-6 py-2.5 bg-gradient-to-r from-teal-600 to-cyan-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all"
               >
                 Recargar página
               </button>
@@ -127,7 +127,7 @@ function UpdateToast() {
           className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[100]"
         >
           <div className="bg-gray-900 dark:bg-gray-800 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 border border-gray-700">
-            <RotateCw size={20} className="text-indigo-400" />
+            <RotateCw size={20} className="text-teal-500" />
             <div>
               <p className="text-sm font-medium">Nueva versión disponible</p>
               <p className="text-xs text-gray-400">
@@ -136,15 +136,16 @@ function UpdateToast() {
             </div>
         <button
           onClick={handleUpdate}
-          className="px-4 py-2 bg-gradient-to-r from-indigo-500 to-violet-500 text-white rounded-xl text-sm font-semibold hover:shadow-lg transition-all"
+          className="px-4 py-2 bg-gradient-to-r from-teal-600 to-cyan-600 text-white rounded-xl text-sm font-semibold hover:shadow-lg transition-all"
         >
           Actualizar
         </button>
             <button
               onClick={dismiss}
               className="p-2 hover:bg-gray-700 rounded-lg transition-colors text-gray-400"
+              aria-label="Cerrar aviso"
             >
-              ✕
+              <X size={16} />
             </button>
           </div>
         </motion.div>
@@ -345,10 +346,10 @@ function Onboarding() {
 
   if (step === "welcome") {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-600 via-violet-600 to-indigo-700 p-4">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-teal-700 via-cyan-700 to-teal-700 p-4">
         <div className="max-w-md w-full bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-2xl text-center space-y-6">
-          <div className="bg-white rounded-2xl p-4 shadow-lg ring-2 ring-indigo-200 border border-indigo-50 inline-block">
-            <img src="/icons/logolingo-512.png" alt="LinGoXiC" className="w-32 h-32 object-contain drop-shadow" />
+          <div className="bg-white rounded-3xl p-3 shadow-lg ring-2 ring-teal-200 border border-teal-50 inline-block">
+            <img src="/icons/logo-mark.svg" alt="LinGoXiC" className="h-28 w-28 object-contain" width="112" height="112" />
           </div>
           <h1 className="text-3xl font-bold text-gray-800 dark:text-white">Bienvenido a LinGoXiC</h1>
           <p className="text-gray-600 dark:text-gray-300">Aprende inglés con IA — niveles A1 a B2</p>
@@ -360,14 +361,14 @@ function Onboarding() {
 
   if (step === "name") {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-600 via-violet-600 to-indigo-700 p-4">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-teal-700 via-cyan-700 to-teal-700 p-4">
         <div className="max-w-md w-full bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-2xl space-y-6">
           <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-white">¿Cómo te llamas?</h2>
           <input
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Tu nombre"
-            className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
+            className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-teal-600 outline-none"
             autoFocus
           />
           <div className="flex gap-3">
@@ -381,7 +382,7 @@ function Onboarding() {
 
   if (step === "choice") {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-600 via-violet-600 to-indigo-700 p-4">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-teal-700 via-cyan-700 to-teal-700 p-4">
         <div className="max-w-md w-full bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-2xl space-y-6">
           <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-white">¿Cómo quieres empezar?</h2>
           <p className="text-center text-sm text-gray-500 dark:text-gray-400">Elige una opción para personalizar tu nivel</p>
@@ -404,7 +405,7 @@ function Onboarding() {
   const progress = ((current + 1) / PLACEMENT_QUESTIONS.length) * 100;
   if (!q) return <div className="min-h-screen flex items-center justify-center p-4"><div className="bg-white dark:bg-gray-800 rounded-2xl p-8 text-center">No hay preguntas disponibles</div></div>;
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-600 via-violet-600 to-indigo-700 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-teal-700 via-cyan-700 to-teal-700 p-4">
       <div className="max-w-md w-full bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-2xl space-y-4">
         <ProgressBar value={current + 1} max={PLACEMENT_QUESTIONS.length} />
         <h3 className="font-semibold text-gray-800 dark:text-white">{q.prompt || q.question}</h3>
@@ -418,7 +419,7 @@ function Onboarding() {
                 if (current + 1 < PLACEMENT_QUESTIONS.length) setCurrent((c) => c + 1);
                 else finishTest(next);
               }}
-              className="w-full text-left px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 hover:bg-indigo-50 dark:hover:bg-gray-700 text-gray-800 dark:text-white"
+              className="w-full text-left px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 hover:bg-teal-50 dark:hover:bg-gray-700 text-gray-800 dark:text-white"
             >
               {opt}
             </button>

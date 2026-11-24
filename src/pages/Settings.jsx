@@ -1,6 +1,6 @@
 import { Link, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { ArrowRight, Info, Moon, RefreshCw, Settings, Sparkles, Sun, Trash2 } from "lucide-react";
+import { ArrowRight, Info, Moon, Palette, RefreshCw, Settings, Sparkles, Sun, Trash2, User } from "lucide-react";
 import { Button, Card } from "../components/ui.jsx";
 import { useTheme } from "../hooks/useTheme.jsx";
 import { useUser } from "../hooks/useUser.jsx";
@@ -28,7 +28,7 @@ export default function SettingsPage() {
       </div>
 
       <Card>
-        <h2 className="font-semibold mb-4">👤 Perfil</h2>
+        <h2 className="mb-4 flex items-center gap-2 font-semibold"><User size={18} className="text-teal-600" /> Perfil</h2>
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-sm text-gray-500">Nombre</span>
@@ -56,7 +56,7 @@ export default function SettingsPage() {
           </div>
           <div className="flex items-center justify-between">
             <span className="text-sm text-gray-500">Racha actual</span>
-            <span className="font-medium">{user.streak} {user.streak === 1 ? "día" : "días"} 🔥</span>
+            <span className="font-medium">{user.streak} {user.streak === 1 ? "día" : "días"}</span>
           </div>
         </div>
       </Card>
@@ -75,7 +75,7 @@ export default function SettingsPage() {
       )}
 
       <Card>
-        <h2 className="font-semibold mb-4">🎨 Apariencia</h2>
+        <h2 className="mb-4 flex items-center gap-2 font-semibold"><Palette size={18} className="text-teal-600" /> Apariencia</h2>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             {darkMode ? <Moon size={18} /> : <Sun size={18} />}
@@ -83,7 +83,7 @@ export default function SettingsPage() {
           </div>
           <button
             onClick={toggleDarkMode}
-            className={`relative w-12 h-6 rounded-full transition-colors ${darkMode ? `bg-indigo-500` : `bg-gray-300`}`}
+            className={`relative w-12 h-6 rounded-full transition-colors ${darkMode ? `bg-teal-600` : `bg-gray-300`}`}
           >
             <div
               className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${darkMode ? `translate-x-6` : `translate-x-0.5`}`}
@@ -94,7 +94,7 @@ export default function SettingsPage() {
 
       <Card>
         <h2 className="font-semibold mb-4 flex items-center gap-2">
-          <Sparkles size={18} className="text-indigo-500" /> Gemini IA
+          <Sparkles size={18} className="text-teal-600" /> Gemini IA
         </h2>
         <div className="space-y-3">
           <div className="flex items-center justify-between">
@@ -110,7 +110,7 @@ export default function SettingsPage() {
 
       <Card>
         <h2 className="font-semibold mb-4 flex items-center gap-2">
-          <Info size={18} className="text-indigo-500" /> Acerca de
+          <Info size={18} className="text-teal-600" /> Acerca de
         </h2>
         <div className="space-y-2 text-sm text-gray-500">
           <p>
@@ -120,7 +120,7 @@ export default function SettingsPage() {
             App educativa para preparar las Pruebas Nacionales Estandarizadas de Inglés del MEP
             (Costa Rica).
           </p>
-          <p>Basada en el MCER (A1-B2) y los 6 escenarios temáticos oficiales.</p>
+          <p>Basada en el MCER (A1-B2) y los 7 escenarios temáticos oficiales.</p>
           <p className="pt-2 text-xs">
             Datos almacenados localmente en tu dispositivo. Con tecnología de Gemini Flash Lite.
           </p>

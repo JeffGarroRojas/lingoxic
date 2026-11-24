@@ -77,7 +77,7 @@ export default function QuizPage() {
                     key={opt}
                     onClick={() => selectAnswer(q.id, opt)}
                     className={`w-full text-left px-3 py-2 rounded border text-sm flex items-center justify-between ${
-                      isCorrectOpt ? "border-green-500 bg-green-50 dark:bg-green-900/20" : isWrongSel ? "border-red-500 bg-red-50 dark:bg-red-900/20" : selected ? "border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20" : "border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800"
+                      isCorrectOpt ? "border-green-500 bg-green-50 dark:bg-green-900/20" : isWrongSel ? "border-red-500 bg-red-50 dark:bg-red-900/20" : selected ? "border-teal-600 bg-teal-50 dark:bg-teal-900/20" : "border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800"
                     }`}
                   >
                     <span>{opt}</span>

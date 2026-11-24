@@ -1,9 +1,11 @@
 import { useState } from "react";
 import {
+  BookOpen,
   Check,
   ChevronDown,
   ChevronUp,
   GraduationCap,
+  Lightbulb,
 } from "lucide-react";
 import { Badge, Button, Card, EmptyState } from "../components/ui.jsx";
 import grammarData from "../data/grammarData.js";
@@ -53,8 +55,9 @@ function GrammarExercise({ exercise, index }) {
         })}
       </div>
       {answered && (
-        <p className={`text-xs mt-2 ${correct ? `text-green-600` : `text-red-600`}`}>
-          💡 {exercise.explanation}
+        <p className={`mt-2 flex items-start gap-1.5 text-xs ${correct ? `text-green-600` : `text-red-600`}`}>
+          <Lightbulb size={14} className="mt-0.5 shrink-0" />
+          <span>{exercise.explanation}</span>
         </p>
       )}
     </div>
@@ -70,7 +73,7 @@ export default function Grammar() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold flex items-center gap-2">
-          <GraduationCap className="text-indigo-500" /> Gramática
+          <GraduationCap className="text-teal-600" /> Gramática
         </h1>
         <p className="text-gray-500">
           8 módulos gramaticales para el examen MEP
@@ -87,7 +90,7 @@ export default function Grammar() {
                   className="w-full flex items-center justify-between text-left"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-gradient-to-br from-indigo-500 to-indigo-500 text-white">
+                    <div className="p-2 rounded-lg bg-gradient-to-br from-teal-600 to-teal-600 text-white">
                       <GraduationCap size={18} />
                     </div>
                     <div>
@@ -111,7 +114,7 @@ export default function Grammar() {
                       <p className="text-sm leading-relaxed">{topic.explanation}</p>
                     </div>
                     <div className="space-y-3">
-                      <h4 className="font-semibold text-sm">📖 Reglas:</h4>
+                      <h4 className="flex items-center gap-1.5 text-sm font-semibold"><BookOpen size={15} /> Reglas</h4>
                       {topic.rules.map((rule, i) => (
                         <div
                           key={i}
@@ -125,7 +128,7 @@ export default function Grammar() {
                       ))}
                     </div>
                     <div className="space-y-2">
-                      <h4 className="font-semibold text-sm">💡 Ejemplos:</h4>
+                      <h4 className="flex items-center gap-1.5 text-sm font-semibold"><Lightbulb size={15} /> Ejemplos</h4>
                       {topic.examples.map((ex, i) => (
                         <div key={i} className="flex items-start gap-2 text-sm">
                           <Check

@@ -25,7 +25,6 @@ import { useUser } from "../hooks/useUser.jsx";
 import { useTheme } from "../hooks/useTheme.jsx";
 import useOnlineStatus from "../hooks/useOnlineStatus.js";
 import { LevelBadge } from "./ui.jsx";
-import { streakEmoji } from "../utils/level.js";
 import { stop } from "../utils/tts.js";
 import { submitBugReport } from "../utils/reportBug.js";
 
@@ -73,9 +72,12 @@ function Sidebar({ onNavigate }) {
           {collapsed ? <Menu size={20} /> : <X size={20} />}
         </button>
         {!collapsed && (
-          <span className="text-lg font-bold bg-gradient-to-r from-indigo-500 to-violet-500 bg-clip-text text-transparent">
-            LinGoXiC
-          </span>
+          <>
+            <img src="/icons/logo-mark.svg" alt="" className="h-7 w-7 shrink-0" width="28" height="28" />
+            <span className="text-lg font-extrabold tracking-tight text-slate-900 dark:text-white">
+              LinGo<span className="text-teal-700 dark:text-teal-300">XiC</span>
+            </span>
+          </>
         )}
       </div>
 
@@ -94,7 +96,7 @@ function Sidebar({ onNavigate }) {
             onClick={() => go(item.path)}
             className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
               location.pathname === item.path
-                ? `bg-gradient-to-r from-indigo-500/10 to-violet-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800`
+                ? `bg-gradient-to-r from-teal-600/10 to-amber-400/10 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800`
                 : `text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800`
             }`}
             title={collapsed ? item.label : undefined}
@@ -141,19 +143,20 @@ function Header({ onMenuClick }) {
           </svg>
         </button>
         <div className="flex items-center gap-2 lg:hidden">
-          <span className="text-lg font-bold bg-gradient-to-r from-indigo-500 to-violet-500 bg-clip-text text-transparent">
-            LinGoXiC
+          <img src="/icons/logo-mark.svg" alt="" className="h-7 w-7" width="28" height="28" />
+          <span className="text-lg font-extrabold tracking-tight text-slate-900 dark:text-white">
+            LinGo<span className="text-teal-700 dark:text-teal-300">XiC</span>
           </span>
         </div>
         {user && (
           <div className="flex items-center gap-4 ml-auto">
             <div className="flex items-center gap-1.5 text-sm">
-              <Flame size={16} className="text-violet-500" />
-              <span className="font-semibold text-violet-600 dark:text-violet-400">
+              <Flame size={16} className="text-rose-500" />
+              <span className="font-semibold text-rose-600 dark:text-rose-400">
                 {user.streak}
               </span>
               <span className="text-xs text-gray-400">
-                {streakEmoji(user.streak)}
+                {user.streak === 1 ? "día" : "días"}
               </span>
             </div>
             <div className="hidden md:flex items-center gap-1.5 text-sm">
@@ -177,7 +180,7 @@ export default function Layout() {
   const { sidebarOpen, setSidebarOpen } = useTheme();
   const isOnline = useOnlineStatus();
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100">
+    <div className="min-h-screen bg-stone-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100">
       <Sidebar onNavigate={() => setSidebarOpen(false)} />
       {sidebarOpen && (
         <div

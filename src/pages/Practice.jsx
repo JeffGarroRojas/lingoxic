@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { BrainCircuit, RefreshCw } from "lucide-react";
+import { BrainCircuit, Lightbulb, RefreshCw } from "lucide-react";
 import { Button, Card, ProgressBar, SkillBadge } from "../components/ui.jsx";
 import unitsData from "../data/unitsData.js";
 import grammarData from "../data/grammarData.js";
@@ -86,7 +86,10 @@ export default function Practice() {
               <p>
                 <strong>{i + 1}.</strong> {q.prompt}
               </p>
-              <p className="text-xs text-gray-500 mt-1">💡 {q.explanation}</p>
+              <p className="mt-1 flex items-start gap-1.5 text-xs text-gray-500">
+                <Lightbulb size={13} className="mt-0.5 shrink-0" />
+                <span>{q.explanation}</span>
+              </p>
             </div>
           ))}
         </div>
@@ -108,7 +111,7 @@ export default function Practice() {
     <div className="max-w-2xl mx-auto space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-bold flex items-center gap-2">
-          <BrainCircuit className="text-indigo-500" /> Práctica Rápida
+          <BrainCircuit className="text-teal-600" /> Práctica Rápida
         </h1>
         <div className="flex items-center gap-2">
           <SkillBadge skill={filter || question.skillArea} showLabel />
@@ -137,7 +140,7 @@ export default function Practice() {
               }}
               className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap ${
                 filter === s
-                  ? `bg-indigo-500 text-white`
+                  ? `bg-teal-600 text-white`
                   : `bg-gray-100 dark:bg-gray-800 text-gray-600`
               }`}
             >
@@ -166,7 +169,7 @@ export default function Practice() {
               onClick={() => answer(question.id, option)}
               className={`w-full text-left px-4 py-3.5 rounded-xl border-2 transition-all ${
                 answers[question.id] === option
-                  ? `border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20`
+                  ? `border-teal-600 bg-teal-50 dark:bg-teal-900/20`
                   : `border-gray-200 dark:border-gray-600 hover:border-gray-300`
               }`}
             >

@@ -44,7 +44,7 @@ export default function Writing() {
     <div className="space-y-6 max-w-3xl mx-auto">
       <div>
         <h1 className="text-2xl font-bold flex items-center gap-2">
-          <PenTool className="text-indigo-500" /> Writing Practice
+          <PenTool className="text-teal-600" /> Writing Practice
         </h1>
         <p className="text-gray-500">Escribe en inglés y recibe feedback con IA</p>
       </div>
@@ -56,7 +56,7 @@ export default function Writing() {
             onClick={() => setSelectedUnit(u.id)}
             className={`px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-colors ${
               selectedUnit === u.id
-                ? `bg-gradient-to-r from-indigo-500 to-violet-500 text-white`
+                ? `bg-gradient-to-r from-teal-600 to-cyan-600 text-white`
                 : `bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400`
             }`}
           >
@@ -87,7 +87,7 @@ export default function Writing() {
           onChange={(e) => setText(e.target.value)}
           placeholder="Escribe al menos 3-4 oraciones en inglés sobre el tema de la unidad..."
           rows={6}
-          className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all resize-none"
+          className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-teal-600 focus:border-transparent outline-none transition-all resize-none"
         />
         <div className="flex items-center justify-between mt-3">
           <span className="text-xs text-gray-400 flex items-center gap-1">
@@ -108,7 +108,7 @@ export default function Writing() {
       {feedback && (
         <Card>
           <div className="flex items-start gap-3">
-            <Sparkles size={20} className="text-indigo-500 mt-0.5 shrink-0" />
+            <Sparkles size={20} className="text-teal-600 mt-0.5 shrink-0" />
             <div className="text-sm leading-relaxed whitespace-pre-wrap">
               {feedback}
             </div>

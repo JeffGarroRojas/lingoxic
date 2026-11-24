@@ -1,6 +1,18 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { getCachedAI, setCachedAI, getGeminiCount, setGeminiCount } from "./db.js";
 
+// La app usa solo iconos: limpiamos cualquier emoji que devuelva el modelo.
+const EMOJI_RE =
+  /[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}]/gu;
+
+function stripEmoji(text) {
+  return String(text || "")
+    .replace(EMOJI_RE, "")
+    .replace(/[ \t]+\n/g, "\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
 const GEMINI_CONFIG = {
   MODEL: "gemini-flash-lite-latest",
   MAX_REQUESTS_PER_SESSION: 20,
@@ -18,21 +30,14 @@ export const AI_ERRORS = {
   LÍMITE_LOCAL:
     "Límite de solicitudes de esta sesión alcanzado. Vuelve a cargar la página o practica con los ejercicios locales.",
   LÍMITE_GEMINI:
-    "Límite diario de Gemini alcanzado. Vuelve mañana o usa los ejercicios locales. 🔄",
+    "Límite diario de Gemini alcanzado. Vuelve mañana o usa los ejercicios locales.",
   ERROR_RED:
     "Error al conectar con Gemini. Verifica tu conexión e intenta de nuevo.",
+  IA_OCUPADA:
+    "El servicio de IA está ocupado en este momento. Intenta de nuevo en unos segundos.",
 };
 
-const ERROR_MESSAGES = {
-  SIN_CONFIG:
-    "La IA no está configurada todavía (falta VITE_GEMINI_API_KEY). Puedes seguir practicando con los ejercicios locales.",
-  LÍMITE_LOCAL:
-    "Límite de solicitudes de esta sesión alcanzado. Vuelve a cargar la página o practica con los ejercicios locales.",
-  LÍMITE_GEMINI:
-    "Límite diario de Gemini alcanzado. Vuelve mañana o usa los ejercicios locales. 🔄",
-  ERROR_RED:
-    "Error al conectar con Gemini. Verifica tu conexión e intenta de nuevo.",
-};
+const ERROR_MESSAGES = AI_ERRORS;
 
 async function callGemini(prompt) {
   const cached = await getCachedAI(prompt);
@@ -47,25 +52,36 @@ async function callGemini(prompt) {
   sessionCount = count + 1;
   await setGeminiCount(sessionCount);
 
+  const statusOf = (error) => {
+    if (error?.status) return error.status;
+    const match = String(error?.message || "").match(/\b(\d{3})\b/);
+    return match ? Number(match[1]) : 0;
+  };
+
   try {
     let result;
-    try {
-      result = await model.generateContent(prompt);
-    } catch (retryErr) {
-      sessionCount = Math.max(0, sessionCount - 1);
-      await setGeminiCount(sessionCount);
-      if (retryErr?.message?.includes("429") || retryErr?.status === 429) throw retryErr;
-      result = await model.generateContent(prompt);
+    // Reintenta una vez si el servicio está saturado (5xx) o hay hipo de red.
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try {
+        result = await model.generateContent(prompt);
+        break;
+      } catch (error) {
+        const status = statusOf(error);
+        if (status === 429) throw error;
+        if (attempt === 1) throw error;
+        await new Promise((resolve) => setTimeout(resolve, 700));
+      }
     }
-    const text = result.response.text();
+    const text = stripEmoji(result.response.text());
     await setCachedAI(prompt, text);
     return text;
   } catch (e) {
     sessionCount = Math.max(0, sessionCount - 1);
     await setGeminiCount(sessionCount);
-    return e?.message?.includes("429") || e?.status === 429
-      ? "LÍMITE_GEMINI"
-      : "ERROR_RED";
+    const status = statusOf(e);
+    if (status === 429) return "LÍMITE_GEMINI";
+    if (status >= 500) return "IA_OCUPADA";
+    return "ERROR_RED";
   }
 }
 
@@ -98,7 +114,7 @@ export async function correctWriting(text, level) {
  const result = await callGemini(
  `Eres un evaluador oficial CEFR (niveles A1-A2-B1-B2). Un estudiante en Costa Rica te presenta un texto escrito. Tu objetivo es determinar si su escritura demuestra dominio REAL del nivel ${level} del Marco Común Europeo.
 
-Corrige el siguiente texto en inglés. Señala los errores y da sugerencias de mejora. Responde EN ESPAÑOL.
+Corrige el siguiente texto en inglés. Señala los errores y da sugerencias de mejora. Responde EN ESPAÑOL. No uses emojis ni símbolos decorativos.
 
 Texto del estudiante:
 "${text}"
@@ -110,13 +126,13 @@ Criterios CEFR ${level} que debes verificar:
 - Precisión: errores que impiden la comprensión
 
 Formato de respuesta (máximo 250 palabras):
-✅ Correcciones:
+Correcciones:
 - [error] → [corrección] : [explicación breve]
 
-💡 Consejos:
+Consejos:
 - [2-3 consejos para mejorar]
 
-📊 Evaluación CEFR:
+Evaluación CEFR:
 Nivel demostrado: [A1|A2|B1|B2]
 ¿Cumple el nivel ${level}? [SÍ/NO]
 Puntuación estimada: [X/10]`
@@ -137,7 +153,7 @@ Criterios CEFR ${level} que debes verificar:
 3) Fluidez y pronunciación
 4) Interacción, coherencia y adecuación al tema
 
-Responde EN ESPAÑOL, máximo 180 palabras:
+Responde EN ESPAÑOL, máximo 180 palabras. No uses emojis.
 - Puntuación /10
 - Nivel demostrado: [A1|A2|B1|B2]
 - ¿Cumple el nivel ${level}? [SÍ/NO]

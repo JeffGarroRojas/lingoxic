@@ -6,7 +6,7 @@ const unitsData = [
     level: `A1`,
     icon: `User`,
     order: 1,
-    color: `from-indigo-500 to-violet-500`,
+    color: `from-teal-600 to-cyan-600`,
     lessons: [
       {
         id: `my-profile-grammar-1`,
@@ -292,7 +292,7 @@ const unitsData = [
     level: `A2`,
     icon: `ShoppingBag`,
     order: 2,
-    color: `from-indigo-600 to-sky-500`,
+    color: `from-teal-700 to-sky-500`,
     lessons: [
       {
         id: `high-tech-shopping-vocabulary-1`,
@@ -581,7 +581,7 @@ const unitsData = [
     level: `A2`,
     icon: `Heart`,
     order: 3,
-    color: `from-violet-500 to-fuchsia-500`,
+    color: `from-cyan-600 to-fuchsia-500`,
     lessons: [
       {
         id: `healthy-choices-vocabulary-1`,
@@ -862,7 +862,7 @@ const unitsData = [
     level: `A2`,
     icon: `Plane`,
     order: 4,
-    color: `from-indigo-600 to-violet-500`,
+    color: `from-teal-700 to-cyan-600`,
     lessons: [
       {
         id: `safe-travels-vocabulary-1`,
@@ -1138,7 +1138,7 @@ const unitsData = [
     level: `B1`,
     icon: `Globe`,
     order: 5,
-    color: `from-indigo-400 to-violet-400`,
+    color: `from-teal-500 to-cyan-500`,
     lessons: [
       {
         id: `cultural-variety-vocabulary-1`,
@@ -1424,7 +1424,7 @@ const unitsData = [
     level: `B1`,
     icon: `Briefcase`,
     order: 6,
-    color: `from-indigo-500 to-sky-400`,
+    color: `from-teal-600 to-sky-400`,
     lessons: [
       {
         id: `careers-vocabulary-1`,
@@ -1709,7 +1709,7 @@ const unitsData = [
     description: `Habilidades B2 para el mundo globalizado: trabajo, viajes, noticias y ciudadanía`,
     level: `B2`,
     icon: `Globe`,
-    color: `from-sky-500 to-indigo-400`,
+    color: `from-sky-500 to-teal-500`,
     order: 7,
     lessons: [
       {

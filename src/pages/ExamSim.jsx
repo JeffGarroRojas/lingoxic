@@ -197,7 +197,7 @@ export default function ExamSim() {
                 <button
                   key={opt}
                   onClick={() => selectAnswer(q.id, opt)}
-                  className={`w-full text-left px-3 py-2 rounded border text-sm ${answers[q.id] === opt ? "border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20" : "border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800"}`}
+                  className={`w-full text-left px-3 py-2 rounded border text-sm ${answers[q.id] === opt ? "border-teal-600 bg-teal-50 dark:bg-teal-900/20" : "border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800"}`}
                 >
                   {opt}
                 </button>

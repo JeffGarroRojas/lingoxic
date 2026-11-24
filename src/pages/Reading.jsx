@@ -51,7 +51,7 @@ export default function Reading() {
             }}
             className={`px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-colors ${
               selectedUnit === u.id
-                ? `bg-gradient-to-r from-indigo-500 to-violet-500 text-white`
+                ? `bg-gradient-to-r from-teal-600 to-cyan-600 text-white`
                 : `bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400`
             }`}
           >
@@ -129,9 +129,9 @@ export default function Reading() {
                           ).includes(option);
                         let borderClass = `border-gray-200 dark:border-gray-600`;
                         if (selected && !isChecked)
-                          borderClass = `border-indigo-500`;
+                          borderClass = `border-teal-600`;
                         if (isChecked && correct)
-                          borderClass = `border-violet-500 bg-violet-50 dark:bg-violet-900/20`;
+                          borderClass = `border-cyan-600 bg-amber-50 dark:bg-cyan-900/20`;
                         if (isChecked && selected && !correct)
                           borderClass = `border-red-500 bg-red-50 dark:bg-red-900/20`;
                         return (
@@ -141,14 +141,14 @@ export default function Reading() {
                             className={`w-full text-left px-4 py-3 rounded-xl border text-sm transition-all ${borderClass} ${
                               isChecked
                                 ? `cursor-default`
-                                : `hover:border-indigo-300 cursor-pointer`
+                                : `hover:border-teal-300 cursor-pointer`
                             }`}
                           >
                             <div className="flex items-center gap-2">
                               {isChecked && correct && (
                                 <Check
                                   size={16}
-                                  className="text-violet-500 shrink-0"
+                                  className="text-cyan-600 shrink-0"
                                 />
                               )}
                               {isChecked && selected && !correct && (

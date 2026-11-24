@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ArrowLeft, CircleCheckBig, BookText, Lightbulb } from "lucide-react";
+import { ArrowLeft, CircleCheckBig, BookText, Check, Lightbulb } from "lucide-react";
 import { useUser } from "../hooks/useUser.jsx";
 import { Card, Button, SkillBadge } from "../components/ui.jsx";
 import unitsData from "../data/unitsData.js";
@@ -56,7 +56,10 @@ export default function LessonDetail() {
                   key={idx}
                   className="p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg text-sm border border-gray-200 dark:border-gray-700"
                 >
-                  📌 {example}
+                  <span className="flex items-start gap-2">
+                    <Check size={14} className="mt-0.5 shrink-0 text-teal-600" />
+                    <span>{example}</span>
+                  </span>
                 </li>
               ))}
             </ul>
@@ -88,7 +91,10 @@ export default function LessonDetail() {
                   key={idx}
                   className="p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg text-sm border border-gray-200 dark:border-gray-700"
                 >
-                  📌 {example}
+                  <span className="flex items-start gap-2">
+                    <Check size={14} className="mt-0.5 shrink-0 text-teal-600" />
+                    <span>{example}</span>
+                  </span>
                 </li>
               ))}
             </ul>
@@ -138,13 +144,13 @@ export default function LessonDetail() {
         <div className="flex items-start gap-3">
           <div className="flex items-center gap-2 mb-3">
             {section.type === `explanation` && (
-              <BookText size={20} className="text-indigo-500 mt-0.5 shrink-0" />
+              <BookText size={20} className="text-teal-600 mt-0.5 shrink-0" />
             )}
             {section.type === `example` && (
               <Lightbulb size={20} className="text-yellow-500 mt-0.5 shrink-0" />
             )}
             {section.type === `tip` && (
-              <Lightbulb size={20} className="text-violet-500 mt-0.5 shrink-0" />
+              <Lightbulb size={20} className="text-cyan-600 mt-0.5 shrink-0" />
             )}
           </div>
         </div>
@@ -162,7 +168,7 @@ export default function LessonDetail() {
               onClick={() => setCurrent(i)}
               className={`h-2.5 rounded-full transition-all ${
                 i === current
-                  ? "w-6 bg-indigo-500"
+                  ? "w-6 bg-teal-600"
                   : "w-2.5 bg-gray-300 dark:bg-gray-600"
               }`}
               aria-label={`Ir al slide ${i + 1}`}
@@ -181,7 +187,7 @@ export default function LessonDetail() {
       </div>
 
       {completed ? (
-        <div className="w-full p-4 bg-violet-50 dark:bg-violet-900/20 text-violet-700 dark:text-violet-400 rounded-xl flex items-center justify-center gap-2 font-semibold">
+        <div className="w-full p-4 bg-amber-50 dark:bg-cyan-900/20 text-cyan-700 dark:text-cyan-500 rounded-xl flex items-center justify-center gap-2 font-semibold">
           <CircleCheckBig size={20} /> ¡Lección completada!
         </div>
       ) : (

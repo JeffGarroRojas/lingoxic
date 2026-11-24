@@ -499,11 +499,16 @@ await sleep(500);
 await shot("writing");
 await page.type("textarea", "I am a student and I like learn English very much.");
 await click("Enviar para feedback");
-await sleep(2500);
+// La IA puede reintentar cuando el servicio está saturado (503).
+for (let i = 0; i < 12; i++) {
+  await sleep(1000);
+  const t = await body();
+  if (/Correcciones|Puntuación|no está configurada|Límite|ocupado|Error al conectar/.test(t)) break;
+}
 const writingTxt = await body();
 await shot("writing-feedback");
 report.steps.at(-1).checks = {
-  showsMessage: /IA no está configurada|Límite|Error al conectar/.test(writingTxt),
+  showsMessage: /IA no está configurada|Límite|ocupado|Error al conectar/.test(writingTxt),
   rawError: writingTxt.includes("ERROR_RED") || writingTxt.includes("SIN_CONFIG"),
 };
 

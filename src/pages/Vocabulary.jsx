@@ -82,10 +82,10 @@ export default function Vocabulary() {
               </div>
               <button
                 onClick={() => playWord(w.word)}
-                className="p-2 rounded-full bg-indigo-50 dark:bg-indigo-900/30 hover:bg-indigo-100"
+                className="p-2 rounded-full bg-teal-50 dark:bg-teal-900/30 hover:bg-teal-100"
                 aria-label={`Escuchar ${w.word}`}
               >
-                <Volume2 size={18} className="text-indigo-600" />
+                <Volume2 size={18} className="text-teal-700" />
               </button>
             </div>
             {w.definition && <p className="text-sm text-gray-600 dark:text-gray-300">{w.definition}</p>}

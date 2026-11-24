@@ -16,7 +16,7 @@ export default defineConfig({
     VitePWA({
       registerType: "autoUpdate",
       workbox: { maximumFileSizeToCacheInBytes: 3000000, globPatterns: ["**/*.{js,css,html,ico,png,svg,mp3}"] },
-      includeAssets: ["icons/icon-192x192.png", "icons/icon-512x512.png", "icons/logolingo-512.png"],
+      includeAssets: ["icons/icon-192x192.png", "icons/icon-512x512.png", "icons/icon-maskable-512.png", "icons/logo-mark.svg", "icons/apple-touch-icon.png"],
       manifest: {
         name: "LinGoXiC - Aprende Inglés con IA",
         short_name: "LinGoXiC",
@@ -24,8 +24,8 @@ export default defineConfig({
           "Prepárate para las Pruebas Nacionales de Inglés del MEP con IA",
         start_url: "/dashboard",
         display: "standalone",
-        background_color: "#0F172A",
-        theme_color: "#0EA5E9",
+        background_color: "#FAF7F2",
+        theme_color: "#0F766E",
         lang: "es",
         scope: "/",
         orientation: "portrait",
@@ -56,7 +56,7 @@ export default defineConfig({
             type: "image/png",
           },
           {
-            src: "/icons/icon-512x512.png",
+            src: "/icons/icon-maskable-512.png",
             sizes: "512x512",
             type: "image/png",
             purpose: "maskable",

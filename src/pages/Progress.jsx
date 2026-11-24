@@ -3,10 +3,10 @@ import { Bar, BarChart, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from 
 import { BarChart3, Flame, Target, TrendingUp, Trophy, Zap } from "lucide-react";
 import { Button, Card, LevelBadge, ProgressBar, SkillBadge } from "../components/ui.jsx";
 import { useUser } from "../hooks/useUser.jsx";
-import { nextLevelThreshold, streakEmoji } from "../utils/level.js";
+import { nextLevelThreshold } from "../utils/level.js";
 import unitsData from "../data/unitsData.js";
 
-const CHART_COLORS = [`#6366f1`, `#8b5cf6`, `#a78bfa`, `#4f46e5`, `#7c3aed`, `#818cf8`];
+const CHART_COLORS = [`#0f766e`, `#0e7490`, `#f59e0b`, `#fb7185`, `#14b8a6`, `#f97316`];
 
 export default function ProgressPage() {
   const navigate = useNavigate();
@@ -47,18 +47,20 @@ export default function ProgressPage() {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-bold flex items-center gap-2">
-            <BarChart3 className="text-violet-500" /> Mi Progreso
+            <BarChart3 className="text-cyan-600" /> Mi Progreso
           </h1>
           <p className="text-gray-500">Sigue tu avance en el aprendizaje</p>
         </div>
-        <LevelBadge level={user.level} size="lg" />
+        <div className="self-start sm:hidden">
+          <LevelBadge level={user.level} size="lg" />
+        </div>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <Card className="text-center">
           <Flame size={24} className="text-orange-500 mx-auto mb-2" />
           <p className="text-2xl font-bold">{user.streak}</p>
-          <p className="text-xs text-gray-500">Racha {streakEmoji(user.streak)}</p>
+          <p className="text-xs text-gray-500">Racha</p>
         </Card>
         <Card className="text-center">
           <Zap size={24} className="text-yellow-500 mx-auto mb-2" />
@@ -66,14 +68,14 @@ export default function ProgressPage() {
           <p className="text-xs text-gray-500">XP total</p>
         </Card>
         <Card className="text-center">
-          <Target size={24} className="text-indigo-500 mx-auto mb-2" />
+          <Target size={24} className="text-teal-600 mx-auto mb-2" />
           <p className="text-2xl font-bold">
             {user.completedLessons.length}/{totalLessons}
           </p>
           <p className="text-xs text-gray-500">Lecciones</p>
         </Card>
         <Card className="text-center">
-          <Trophy size={24} className="text-indigo-500 mx-auto mb-2" />
+          <Trophy size={24} className="text-teal-600 mx-auto mb-2" />
           <p className="text-2xl font-bold">
             {user.completedQuizzes.length}/{totalQuizzes}
           </p>
@@ -83,7 +85,7 @@ export default function ProgressPage() {
 
       <Card>
         <h2 className="font-semibold mb-3 flex items-center gap-2">
-          <TrendingUp size={18} className="text-violet-500" /> Progreso general
+          <TrendingUp size={18} className="text-cyan-600" /> Progreso general
         </h2>
         <div className="flex items-center justify-between text-sm mb-2">
           <span>
@@ -97,14 +99,14 @@ export default function ProgressPage() {
         {user.diagnostic && (
           <p className="text-sm text-gray-500 mt-2">
             Nivel CEFR real (diagnóstico):{" "}
-            <span className="font-semibold text-indigo-600">{user.diagnostic.overallLevel}</span>
+            <span className="font-semibold text-teal-700">{user.diagnostic.overallLevel}</span>
           </p>
         )}
       </Card>
 
       <Card>
         <h2 className="font-semibold mb-4 flex items-center gap-2">
-          <BarChart3 size={18} className="text-indigo-500" /> Progreso por unidad
+          <BarChart3 size={18} className="text-teal-600" /> Progreso por unidad
         </h2>
         <div className="h-64">
           <ResponsiveContainer width="100%" height="100%">
@@ -147,7 +149,7 @@ export default function ProgressPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Card>
-          <h2 className="font-semibold mb-4">📊 Detalle por unidad</h2>
+          <h2 className="mb-4 flex items-center gap-2 font-semibold"><BarChart3 size={18} className="text-teal-600" /> Detalle por unidad</h2>
           <div className="space-y-4">
             {perUnit.map((e) => (
               <div key={e.id}>
@@ -171,7 +173,7 @@ export default function ProgressPage() {
         </Card>
         {user.weakAreas.length > 0 && (
           <Card>
-            <h2 className="font-semibold mb-3">🎯 Áreas a mejorar</h2>
+            <h2 className="mb-3 flex items-center gap-2 font-semibold"><Target size={18} className="text-rose-500" /> Áreas a mejorar</h2>
             <div className="flex flex-wrap gap-2">
               {user.weakAreas.map((e) => (
                 <button
@@ -188,16 +190,16 @@ export default function ProgressPage() {
         )}
       </div>
 
-      <Card className="bg-gradient-to-r from-indigo-500 to-violet-500 text-white">
+      <Card className="bg-gradient-to-r from-teal-600 to-cyan-600 text-white">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="font-semibold">🎯 Meta: completar el curso</h3>
+            <h3 className="flex items-center gap-2 font-semibold"><Target size={18} /> Meta: completar el curso</h3>
             <p className="text-sm opacity-80">
               {completed}/{total} actividades • {overallPct}%
             </p>
             <p className="text-xs opacity-70 mt-1">
               {remaining === 0
-                ? `¡Curso completado! 🎉`
+                ? `¡Curso completado!`
                 : `Te faltan ${remaining} actividades por completar`}
             </p>
           </div>

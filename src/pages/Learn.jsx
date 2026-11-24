@@ -20,7 +20,9 @@ export default function Learn() {
             7 escenarios alineados con el examen MEP
           </p>
         </div>
-        <LevelBadge level={user.level} />
+        <div className="self-start sm:hidden">
+          <LevelBadge level={user.level} />
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
@@ -42,10 +44,10 @@ export default function Learn() {
                   <Lock size={32} className="text-gray-400" />
                 </div>
               )}
-            <div className={`h-2 rounded-t-2xl mb-4 bg-gradient-to-r ${unit.color || "from-indigo-500 to-blue-500"}`} />
+            <div className={`h-2 rounded-t-2xl mb-4 bg-gradient-to-r ${unit.color || "from-teal-600 to-blue-500"}`} />
             <div className="flex items-start justify-between mb-3">
             <div className="flex items-center gap-2">
-            <div className={`p-2 rounded-lg bg-gradient-to-br ${unit.color || "from-indigo-500 to-blue-500"} text-white`}>
+            <div className={`p-2 rounded-lg bg-gradient-to-br ${unit.color || "from-teal-600 to-blue-500"} text-white`}>
                     <BookOpen size={18} />
                   </div>
                   <div>

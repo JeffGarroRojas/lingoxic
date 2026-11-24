@@ -122,7 +122,7 @@ export default function Listening() {
   return (
     <div className="p-4 max-w-2xl mx-auto space-y-4">
       <h1 className="text-2xl font-bold flex items-center gap-2">
-        <Volume2 size={24} className="text-indigo-600" /> Listening
+        <Volume2 size={24} className="text-teal-700" /> Listening
       </h1>
 
       <div className="flex gap-2 overflow-x-auto pb-2">
@@ -132,7 +132,7 @@ export default function Listening() {
             onClick={() => setSelectedId(ex.lessonId)}
             className={`px-3 py-1.5 rounded-full text-sm whitespace-nowrap border ${
               ex.lessonId === selectedId
-                ? "bg-indigo-600 text-white border-indigo-600"
+                ? "bg-teal-700 text-white border-teal-700"
                 : "bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
             }`}
           >
@@ -172,7 +172,7 @@ export default function Listening() {
         )}
 
         <details className="text-sm">
-          <summary className="cursor-pointer text-indigo-600 dark:text-indigo-400">Ver transcripción</summary>
+          <summary className="cursor-pointer text-teal-700 dark:text-teal-500">Ver transcripción</summary>
           <p className="mt-2 p-3 bg-gray-50 dark:bg-gray-800 rounded text-gray-700 dark:text-gray-300 leading-relaxed">
             {exercise.script}
           </p>
@@ -198,7 +198,7 @@ export default function Listening() {
                         : wrong
                         ? "border-red-500 bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-300"
                         : selected
-                        ? "border-indigo-500 bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300"
+                        ? "border-teal-600 bg-teal-50 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300"
                         : "border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800"
                     }`}
                   >

@@ -4,8 +4,10 @@ import {
   AlertCircle,
   BookOpen,
   Check,
+  Lightbulb,
   MessageSquare,
   Mic,
+  PenLine,
   Play,
   RefreshCw,
   Send,
@@ -78,7 +80,7 @@ function SpeakingLesson({ lesson, quiz, isCompleted, onComplete, onAddXP }) {
               );
             case "example":
               return (
-                <div key={i} className="mb-4 p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-xl">
+                <div key={i} className="mb-4 p-4 bg-teal-50 dark:bg-teal-900/20 rounded-xl">
                   {section.title && (
                     <h4 className="font-medium text-sm mb-2">{section.title}</h4>
                   )}
@@ -88,9 +90,12 @@ function SpeakingLesson({ lesson, quiz, isCompleted, onComplete, onAddXP }) {
                   {section.examples?.map((ex, ei) => (
                     <p
                       key={ei}
-                      className="text-sm text-gray-600 dark:text-gray-400 mt-1 pl-3 border-l-2 border-indigo-300"
+                      className="text-sm text-gray-600 dark:text-gray-400 mt-1 pl-3 border-l-2 border-teal-300"
                     >
-                      🗣️ {ex}
+                      <span className="inline-flex items-start gap-1.5">
+                        <Mic size={13} className="mt-0.5 shrink-0" />
+                        <span>{ex}</span>
+                      </span>
                     </p>
                   ))}
                 </div>
@@ -102,7 +107,7 @@ function SpeakingLesson({ lesson, quiz, isCompleted, onComplete, onAddXP }) {
                   className="mb-4 p-4 bg-amber-50 dark:bg-amber-900/20 rounded-xl border border-amber-200 dark:border-amber-800"
                 >
                   {section.title && (
-                    <h4 className="font-medium text-sm mb-1">💡 {section.title}</h4>
+                    <h4 className="mb-1 flex items-center gap-1.5 text-sm font-medium"><Lightbulb size={15} /> {section.title}</h4>
                   )}
                   <p className="text-sm text-gray-700 dark:text-gray-300">
                     {section.content}
@@ -113,7 +118,7 @@ function SpeakingLesson({ lesson, quiz, isCompleted, onComplete, onAddXP }) {
               return (
                 <div key={i} className="mb-4 p-4 bg-green-50 dark:bg-green-900/20 rounded-xl">
                   {section.title && (
-                    <h4 className="font-medium text-sm mb-2">✏️ {section.title}</h4>
+                    <h4 className="mb-2 flex items-center gap-1.5 text-sm font-medium"><PenLine size={15} /> {section.title}</h4>
                   )}
                   <p className="text-sm text-gray-700 dark:text-gray-300">
                     {section.content}
@@ -129,7 +134,7 @@ function SpeakingLesson({ lesson, quiz, isCompleted, onComplete, onAddXP }) {
       {quiz && (
         <Card>
           <h3 className="font-semibold mb-3 flex items-center gap-2">
-            <MessageSquare size={18} className="text-indigo-500" /> Comprensión oral
+            <MessageSquare size={18} className="text-teal-600" /> Comprensión oral
           </h3>
           <p className="text-xs text-gray-400 mb-4">
             Elige la mejor respuesta para cada situación
@@ -148,9 +153,9 @@ function SpeakingLesson({ lesson, quiz, isCompleted, onComplete, onAddXP }) {
                       (Array.isArray(q.correctAnswer) ? q.correctAnswer : [q.correctAnswer])
                         .includes(option);
                     let borderClass = `border-gray-200 dark:border-gray-600`;
-                    if (selected && !checked) borderClass = `border-indigo-500`;
+                    if (selected && !checked) borderClass = `border-teal-600`;
                     if (checked && correct)
-                      borderClass = `border-violet-500 bg-violet-50 dark:bg-violet-900/20`;
+                      borderClass = `border-cyan-600 bg-amber-50 dark:bg-cyan-900/20`;
                     if (checked && selected && !correct)
                       borderClass = `border-red-500 bg-red-50 dark:bg-red-900/20`;
                     return (
@@ -158,12 +163,12 @@ function SpeakingLesson({ lesson, quiz, isCompleted, onComplete, onAddXP }) {
                         key={option}
                         onClick={() => selectAnswer(q.id, option)}
                         className={`w-full text-left px-4 py-3 rounded-xl border text-sm transition-all ${borderClass} ${
-                          checked ? `cursor-default` : `hover:border-indigo-300 cursor-pointer`
+                          checked ? `cursor-default` : `hover:border-teal-300 cursor-pointer`
                         }`}
                       >
                         <div className="flex items-center gap-2">
                           {checked && correct && (
-                            <Check size={16} className="text-violet-500 shrink-0" />
+                            <Check size={16} className="text-cyan-600 shrink-0" />
                           )}
                           {checked && selected && !correct && (
                             <X size={16} className="text-red-500 shrink-0" />
@@ -272,7 +277,7 @@ function Conversation({ lesson, userLevel }) {
   return (
     <Card>
       <h3 className="font-semibold mb-2 flex items-center gap-2">
-        <MessageSquare size={18} className="text-indigo-500" /> Conversación simulada
+        <MessageSquare size={18} className="text-teal-600" /> Conversación simulada
       </h3>
       <p className="text-sm text-gray-500 mb-4">
         Tema: <strong>{topic}</strong> — La IA actúa como tu interlocutor. Responde
@@ -292,7 +297,7 @@ function Conversation({ lesson, userLevel }) {
                 <div
                   className={`max-w-[80%] px-4 py-2.5 rounded-2xl text-sm ${
                     m.role === `user`
-                      ? `bg-indigo-500 text-white rounded-br-md`
+                      ? `bg-teal-600 text-white rounded-br-md`
                       : `bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-bl-md`
                   }`}
                 >
@@ -325,7 +330,7 @@ function Conversation({ lesson, userLevel }) {
               onKeyDown={(e) => e.key === `Enter` && send()}
               placeholder="Escribe tu respuesta en inglés..."
               disabled={loading || count >= 5}
-              className="flex-1 px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all text-sm"
+              className="flex-1 px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-teal-600 focus:border-transparent outline-none transition-all text-sm"
             />
             <Button onClick={send} disabled={!input.trim() || loading || !isOnline || count >= 5}>
               <Send size={16} />
@@ -382,7 +387,7 @@ function VoiceRecorder({ userLevel }) {
   return (
     <Card>
       <h3 className="font-semibold mb-2 flex items-center gap-2">
-        <Mic size={18} className="text-indigo-500" /> Graba tu voz
+        <Mic size={18} className="text-teal-600" /> Graba tu voz
       </h3>
       <p className="text-sm text-gray-500 mb-4">
         Habla en inglés y recibe feedback con IA sobre tu pronunciación, gramática y
@@ -492,7 +497,7 @@ function VoiceRecorder({ userLevel }) {
             onChange={(e) => setTranscript(e.target.value)}
             placeholder="Escribe lo que dirías en una conversación..."
             rows={4}
-            className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all resize-none"
+            className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 focus:ring-2 focus:ring-teal-600 focus:border-transparent outline-none transition-all resize-none"
           />
         </div>
       )}
@@ -530,9 +535,9 @@ function VoiceRecorder({ userLevel }) {
       )}
 
       {feedback && (
-        <div className="mt-4 p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-xl">
+        <div className="mt-4 p-4 bg-teal-50 dark:bg-teal-900/20 rounded-xl">
           <div className="flex items-start gap-3">
-            <Sparkles size={20} className="text-indigo-500 mt-0.5 shrink-0" />
+            <Sparkles size={20} className="text-teal-600 mt-0.5 shrink-0" />
             <div className="text-sm leading-relaxed whitespace-pre-wrap">{feedback}</div>
           </div>
         </div>
@@ -566,7 +571,7 @@ export default function Speaking() {
     <div className="space-y-6 max-w-3xl mx-auto">
       <div>
         <h1 className="text-2xl font-bold flex items-center gap-2">
-          <MessageSquare className="text-indigo-500" /> Conversación
+          <MessageSquare className="text-teal-600" /> Conversación
         </h1>
         <p className="text-gray-500">
           Practica tu expresión oral con lecciones, conversaciones simuladas y feedback
@@ -584,7 +589,7 @@ export default function Speaking() {
             }}
             className={`px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-colors ${
               selectedUnit === u.id
-                ? `bg-gradient-to-r from-indigo-500 to-violet-500 text-white`
+                ? `bg-gradient-to-r from-teal-600 to-cyan-600 text-white`
                 : `bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400`
             }`}
           >
@@ -604,7 +609,7 @@ export default function Speaking() {
             onClick={() => setMode(tab.id)}
             className={`flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
               mode === tab.id
-                ? `bg-white dark:bg-gray-700 text-indigo-600 dark:text-indigo-400 shadow-sm`
+                ? `bg-white dark:bg-gray-700 text-teal-700 dark:text-teal-500 shadow-sm`
                 : `text-gray-500`
             }`}
           >
@@ -622,7 +627,7 @@ export default function Speaking() {
               onClick={() => setSelectedLesson(l.id)}
               className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap ${
                 selectedLesson === l.id
-                  ? `bg-indigo-500 text-white`
+                  ? `bg-teal-600 text-white`
                   : `bg-gray-100 dark:bg-gray-800 text-gray-600`
               }`}
             >
