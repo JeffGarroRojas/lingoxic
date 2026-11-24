@@ -117,6 +117,7 @@ brave --remote-debugging-port=9222
 # 2. Dev server o build de producción
 npm run dev
 npm run qa                 # contra http://127.0.0.1:5173
+# Si Brave usa otro puerto CDP: CDP_URL=http://127.0.0.1:9333 npm run qa
 
 npm run build && npm run preview
 npm run qa:prod            # contra http://localhost:4173 (incluye pruebas offline/PWA)

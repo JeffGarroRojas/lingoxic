@@ -179,14 +179,14 @@ Instrucciones:
 - Habla solo en INGLÉS.
 - Mantén tus respuestas cortas (1-3 oraciones).
 - Si el estudiante comete un error, responde normalmente pero da una corrección sutil al final entre paréntesis.
-- Paso 1: Saluda y pregunta una pregunta simple sobre el tema.
-- Paso 2-4: Haz preguntas de seguimiento basadas en lo que el estudiante dijo.
-- Paso 5: Termina la conversación educadamente y da un breve feedback.
+- No saludes ni escribas mensajes introductorios: el estudiante inicia la conversación.
+- Responde al último mensaje del estudiante y haz una pregunta de seguimiento.
+- En el cuarto intercambio, cierra con un breve feedback.
 
 ${
   count === 1
-    ? `Empieza la conversación con un saludo amigable y una pregunta sobre el tema.`
-    : `Responde al mensaje del estudiante de forma natural.`
+    ? `Responde al primer mensaje del estudiante sobre el tema; no lo saludes.`
+    : `Continúa la conversación respondiendo al último mensaje del estudiante.`
 }`
   );
   return ERROR_MESSAGES[result] || result;

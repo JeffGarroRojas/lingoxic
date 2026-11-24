@@ -8,7 +8,6 @@ import {
   MessageSquare,
   Mic,
   PenLine,
-  Play,
   RefreshCw,
   Send,
   Sparkles,
@@ -224,7 +223,6 @@ function Conversation({ lesson, userLevel }) {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [count, setCount] = useState(0);
-  const [started, setStarted] = useState(false);
   const [error, setError] = useState("");
   const [remaining, setRemaining] = useState(20);
   const endRef = useRef(null);
@@ -238,21 +236,6 @@ function Conversation({ lesson, userLevel }) {
   }, [messages]);
 
   const topic = lesson.title;
-
-  const start = async () => {
-    setStarted(true);
-    setLoading(true);
-    setError("");
-    let result = await chatWithTutor("", topic, userLevel, [], 1);
-    if (Object.values(AI_ERRORS).includes(result)) {
-      setError(result);
-      setLoading(false);
-      return;
-    }
-    setMessages([{ role: `assistant`, content: result }]);
-    setCount(1);
-    setLoading(false);
-  };
 
   const send = async () => {
     if (!input.trim() || loading) return;
@@ -289,8 +272,7 @@ function Conversation({ lesson, userLevel }) {
         )}
       </p>
 
-      {started ? (
-        <div className="space-y-4">
+      <div className="space-y-4">
           <div className="max-h-80 overflow-y-auto space-y-3 pr-2">
             {messages.map((m, i) => (
               <div key={i} className={`flex ${m.role === `user` ? `justify-end` : `justify-start`}`}>
@@ -346,7 +328,6 @@ function Conversation({ lesson, userLevel }) {
                 onClick={() => {
                   setMessages([]);
                   setCount(0);
-                  setStarted(false);
                   setInput("");
                   setError("");
                 }}
@@ -355,12 +336,7 @@ function Conversation({ lesson, userLevel }) {
               </Button>
             </div>
           )}
-        </div>
-      ) : (
-        <Button onClick={start} disabled={loading || !isOnline}>
-          <Play size={16} /> Iniciar conversación
-        </Button>
-      )}
+      </div>
     </Card>
   );
 }
@@ -546,9 +522,14 @@ function VoiceRecorder({ userLevel }) {
   );
 }
 
+const FIRST_SPEAKING_UNIT =
+  unitsData.find((u) => (u.lessons || []).some((l) => l.type === "speaking"))?.id ||
+  unitsData[0]?.id ||
+  "my-profile";
+
 export default function Speaking() {
   const { user, completeLesson, addXP } = useUser();
-  const [selectedUnit, setSelectedUnit] = useState(unitsData[0]?.id || `my-profile`);
+  const [selectedUnit, setSelectedUnit] = useState(FIRST_SPEAKING_UNIT);
   const [mode, setMode] = useState(`learn`);
   const speakingLessons =
     unitsData.find((u) => u.id === selectedUnit)?.lessons.filter(

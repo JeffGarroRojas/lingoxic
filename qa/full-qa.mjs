@@ -16,7 +16,9 @@ const OUT = "/tmp/opencode/qa-full";
 fs.rmSync(OUT, { recursive: true, force: true });
 fs.mkdirSync(OUT, { recursive: true });
 
-const browser = await puppeteer.connect({ browserURL: "http://127.0.0.1:9222" });
+const browser = await puppeteer.connect({
+  browserURL: process.env.CDP_URL || "http://127.0.0.1:9222",
+});
 const page = await browser.newPage();
 await page.setViewport({ width: 1366, height: 900 });
 
@@ -182,6 +184,15 @@ report.steps.at(-1).user = { level: user?.level, xp: user?.xp, streak: user?.str
 report.steps.at(-1).checks = {
   redirected: page.url().endsWith("/dashboard"),
   hasGreeting: (await body()).includes("QA Automatizado"),
+  // Marca: el logo debe existir y cargar; la UI no debe usar emojis.
+  logoLoaded: await page.evaluate(() => {
+    const img = [...document.images].find((i) => i.src.includes("logo-mark"));
+    return Boolean(img && img.complete && img.naturalWidth > 0);
+  }),
+  emojiCount: await page.evaluate(() => {
+    const re = /[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}]/gu;
+    return (document.body.innerText.match(re) || []).length;
+  }),
 };
 
 // ---------- DIAGNOSTICO ----------
