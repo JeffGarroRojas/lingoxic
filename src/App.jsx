@@ -12,6 +12,7 @@ import { useRegisterSW } from "virtual:pwa-register/react";
 import { RotateCw, X } from "lucide-react";
 import { UserProvider, useUser } from "./hooks/useUser.jsx";
 import { registerEntry } from "./services/firebase.js";
+import { forceUpdate, checkForUpdate } from "./utils/appUpdate.js";
 import { ThemeProvider, useTheme } from "./hooks/useTheme.jsx";
 import { Button, ProgressBar } from "./components/ui.jsx";
 import Layout from "./components/Layout.jsx";
@@ -99,17 +100,16 @@ class ErrorBoundary extends Component {
 }
 
 function UpdateToast() {
-  const { needRefresh: [needRefresh, setNeedRefresh], updateServiceWorker } =
-    useRegisterSW();
+  const { needRefresh: [needRefresh, setNeedRefresh] } = useRegisterSW();
   const dismiss = React.useCallback(() => setNeedRefresh(false), [setNeedRefresh]);
 
-  const handleUpdate = React.useCallback(() => {
+  const handleUpdate = React.useCallback(async () => {
     const busy = window.__lingoxicBusy;
     if (busy && busy.pending) {
       if (!window.confirm("Tienes una actividad en curso (quiz, examen o diagnóstico) que se reiniciará al actualizar. ¿Quieres continuar?")) return;
     }
-    updateServiceWorker();
-  }, [updateServiceWorker]);
+    await forceUpdate();
+  }, []);
 
   useEffect(() => {
     if (needRefresh) {
@@ -456,6 +456,38 @@ function Onboarding() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id]);
+
+  useEffect(() => {
+    if (!("serviceWorker" in navigator)) return;
+    const hadController = Boolean(navigator.serviceWorker.controller);
+    let reloaded = false;
+
+    const onControllerChange = () => {
+      // Primera instalación: no recargar. Actualizaciones: recargar una vez,
+      // salvo que haya un quiz/examen en curso.
+      if (!hadController || reloaded) return;
+      if (window.__lingoxicBusy?.pending) return;
+      reloaded = true;
+      window.location.reload();
+    };
+
+    const tick = () => {
+      if (document.visibilityState === "visible") checkForUpdate();
+    };
+
+    navigator.serviceWorker.addEventListener("controllerchange", onControllerChange);
+    document.addEventListener("visibilitychange", tick);
+    window.addEventListener("focus", tick);
+    const timer = setInterval(tick, 30 * 60 * 1000);
+    tick();
+
+    return () => {
+      navigator.serviceWorker.removeEventListener("controllerchange", onControllerChange);
+      document.removeEventListener("visibilitychange", tick);
+      window.removeEventListener("focus", tick);
+      clearInterval(timer);
+    };
+  }, []);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", darkMode);

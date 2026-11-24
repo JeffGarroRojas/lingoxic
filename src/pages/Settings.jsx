@@ -6,11 +6,13 @@ import { useTheme } from "../hooks/useTheme.jsx";
 import { useUser } from "../hooks/useUser.jsx";
 import { getRemainingRequests } from "../services/gemini.js";
 import { isFirebaseEnabled } from "../services/firebase.js";
+import { forceUpdate } from "../utils/appUpdate.js";
 
 export default function SettingsPage() {
   const { user, resetProgress } = useUser();
   const { darkMode, toggleDarkMode } = useTheme();
   const [requests, setRequests] = useState(20);
+  const [updating, setUpdating] = useState(false);
 
   useEffect(() => {
     getRemainingRequests().then(setRequests);
@@ -90,6 +92,29 @@ export default function SettingsPage() {
             />
           </button>
         </div>
+      </Card>
+
+      <Card>
+        <h2 className="mb-2 flex items-center gap-2 font-semibold">
+          <RefreshCw size={18} className="text-teal-600" /> Actualizaciones
+        </h2>
+        <p className="text-sm text-gray-500 dark:text-gray-400">
+          Si tu teléfono sigue mostrando una versión anterior, fuerza la
+          actualización. Se borran solo los archivos de la app: tu progreso y tus
+          datos se conservan.
+        </p>
+        <Button
+          variant="secondary"
+          className="mt-3 w-full"
+          disabled={updating}
+          onClick={async () => {
+            setUpdating(true);
+            await forceUpdate();
+          }}
+        >
+          <RefreshCw size={16} className={updating ? "animate-spin" : ""} />
+          {updating ? "Actualizando..." : "Forzar actualización"}
+        </Button>
       </Card>
 
       <Card>

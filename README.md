@@ -149,6 +149,13 @@ npm run registro          # quién entró: fecha, nombre, nivel, dispositivo
 npm run registro -- --csv # exportar a CSV
 ```
 
+## Actualizaciones
+
+- La app comprueba si hay versión nueva al abrir, al volver a la pestaña y cada 30 minutos.
+- Si hay una versión nueva y no hay un quiz/examen en curso, se recarga sola.
+- En **Ajustes → Actualizaciones → Forzar actualización** se borran service worker y cachés de assets (sin tocar IndexedDB ni localStorage: el progreso y la cuenta se conservan).
+- En **Ajustes → Acerca de** se muestra la versión y la hora del build para comprobar cuál está instalada.
+
 ## Variables de entorno
 
 Todas son opcionales. Copia `.env.example` a `.env` si quieres habilitar IA o Firebase:
