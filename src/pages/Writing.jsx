@@ -13,7 +13,7 @@ export default function Writing() {
   const [text, setText] = useState("");
   const [feedback, setFeedback] = useState("");
   const [loading, setLoading] = useState(false);
-  const [remaining, setRemaining] = useState(15);
+  const [remaining, setRemaining] = useState(20);
  const [resetLabel, setResetLabel] = useState("");
  const isOnline = useOnlineStatus();
 

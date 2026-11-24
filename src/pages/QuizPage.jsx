@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Navigate } from "react-router-dom";
 import unitsData from "../data/unitsData.js";
 import { useActivityGuard } from "../hooks/useActivityGuard.jsx";
 import { useUser } from "../hooks/useUser.jsx";
@@ -9,15 +9,16 @@ import { Check, X } from "lucide-react";
 export default function QuizPage() {
   const { unitId, quizId } = useParams();
   const navigate = useNavigate();
-  const { user, completeQuiz, addXp } = useUser();
-  if (!user) return <Navigate to="/" replace />;
-  useActivityGuard(!finished);
+  const { user, completeQuiz, addXP } = useUser();
   const [answers, setAnswers] = useState({});
   const [checked, setChecked] = useState(false);
   const [finished, setFinished] = useState(false);
+  useActivityGuard(!finished);
 
   const unit = unitsData.find((u) => u.id === unitId);
   const quiz = unit?.quizzes?.find((q) => q.id === quizId) || unit?.quiz || unit?.quizzes?.[0];
+
+  if (!user) return <Navigate to="/" replace />;
 
   if (!quiz) {
     return (
@@ -37,7 +38,7 @@ export default function QuizPage() {
   const correctCount = questions.filter((q) => answers[q.id] === q.correctAnswer).length;
   const total = questions.length;
   const percent = total ? Math.round((correctCount / total) * 100) : 0;
-  const minPercent = quiz.minPercent ?? 70;
+  const minPercent = quiz.requiredScore ?? quiz.minPercent ?? 70;
   const passed = percent >= minPercent;
   const allAnswered = questions.every((q) => answers[q.id] !== undefined);
 
@@ -49,7 +50,7 @@ export default function QuizPage() {
     if (passed) {
       try {
         await completeQuiz(quiz.id || quizId);
-        addXp(quiz.xp || 20);
+        await addXP(quiz.xp || 20);
       } catch {}
     }
     setFinished(true);
@@ -59,7 +60,7 @@ export default function QuizPage() {
     <div className="p-4 max-w-2xl mx-auto space-y-4">
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-bold">{quiz.title || "Quiz"}</h1>
-        <span className="text-xs text-gray-500">Sin limite de tiempo</span>
+        <span className="text-xs text-gray-500">Sin límite de tiempo</span>
       </div>
       {quiz.description && <p className="text-sm text-gray-600 dark:text-gray-400">{quiz.description}</p>}
       <Card className="p-4 space-y-4">
@@ -102,7 +103,7 @@ export default function QuizPage() {
               </p>
             </div>
             <div className="flex gap-2">
-              <Button onClick={handleFinish} className="flex-1">{passed ? "Cobrar XP y salir" : "Finalizar"}</Button>
+              <Button onClick={handleFinish} className="flex-1">{passed ? "Guardar XP y volver" : "Finalizar"}</Button>
               <Button variant="ghost" onClick={() => { setChecked(false); setAnswers({}); }}>Reintentar</Button>
             </div>
           </div>

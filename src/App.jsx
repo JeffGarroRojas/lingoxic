@@ -432,12 +432,17 @@ function Onboarding() {
 
 
   function App() {
-  const { user, initialized, loadUser } = useUser();
+  const { user, initialized, loadUser, updateStreak } = useUser();
   const { darkMode } = useTheme();
 
   useEffect(() => {
     loadUser();
   }, [loadUser]);
+
+  useEffect(() => {
+    if (user?.id) updateStreak();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id]);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", darkMode);

@@ -1,6 +1,6 @@
 # Lingoxic
 
-Aplicación web de aprendizaje de inglés (niveles A1-B2), orientada al currículo MEP de Costa Rica. React + Vite + Tailwind, SPA con datos locales en IndexedDB (Dexie) y caché de IA en Gemini. Sin backend: la "base de datos" es el navegador del usuario. Firebase SDK se importa pero es opcional (sincronización Firestore degradada).
+Aplicación web de aprendizaje de inglés (niveles A1-B2), orientada al currículo MEP de Costa Rica. React + Vite + Tailwind, SPA con datos locales en IndexedDB (Dexie) y caché de IA en Gemini. Sin backend: la "base de datos" es el navegador del usuario. Firebase RTDB es opcional: copia best-effort del progreso (`progress/<userId>`); IndexedDB sigue siendo la fuente de verdad.
 
 ## Comandos
 
@@ -12,7 +12,7 @@ npm test           # vitest run (tests de datos + componentes)
 npm run deploy     # npm run build && firebase deploy --only hosting
 ```
 
-**Chequeos obligatorios al terminar un cambio**: `npm test` (vitest, validación de datos: unidades con `icon`/`color`, skills válidas, correctAnswer en opciones) y `npm run build`. No hay lint ni typecheck configurados.
+**Chequeos obligatorios al terminar un cambio**: `npm test` (vitest, validación de datos: unidades con `icon`/`color`, skills válidas, correctAnswer en opciones) y `npm run build`. Para cambios de UI/flujo, además `npm run qa` (Brave en `--remote-debugging-port=9222`) y, sobre el build, `npm run qa:prod` + `npm run qa:ocr`. No hay lint ni typecheck configurados.
 
 ## Reglas de estabilidad (PWA)
 
@@ -38,7 +38,7 @@ main.jsx → App.jsx
 - `src/pages/` — 15 páginas, todas cargadas con `lazy()` desde `src/App.jsx`.
 - `src/components/` — `Layout.jsx` (sidebar + header + Outlet), `ui.jsx` (componentes reutilizables: Button, Card, Badge, ProgressBar, LevelBadge, SkillBadge, EmptyState, Modal, etc.).
 - `src/hooks/` — `useUser.jsx` (contexto + toda la lógica de estado del usuario), `useTheme.jsx` (dark/light).
-- `src/services/` — `firebase.js` (SDK, `db`/`auth` inicializados), `db.js` (capa Dexie), `gemini.js` (cliente de IA).
+- `src/services/` — `firebase.js` (init RTDB opcional + `syncUserToCloud`), `db.js` (capa Dexie), `gemini.js` (cliente de IA).
 - `src/utils/` — `level.js` (niveles A1/B1/B2 con colores, `streakEmoji`, `genId`).
 - `src/data/` — contenido estático (ver abajo).
 
@@ -125,7 +125,7 @@ Funciones clave:
 
 ### `src/services/firebase.js`
 
-Importa Firebase SDK e inicializa `db` (Firestore) y `auth`. Se usa `syncUserToFirestore` de forma degradada/opcional; el almacenamiento real es IndexedDB.
+Inicializa Firebase App + Realtime Database solo si hay `VITE_FIREBASE_*`. `syncUserToCloud` (alias `syncUserToFirestore`) escribe `progress/<userId>` best-effort; IndexedDB sigue siendo la fuente de verdad. Reglas en `docs/rtdb-rules.json` (deploy: `firebase deploy --only database`).
 
 ## Hook `useUser` (estado central)
 

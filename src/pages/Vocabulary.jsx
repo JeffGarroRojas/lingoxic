@@ -1,8 +1,11 @@
 import { useState, useMemo, useEffect } from "react";
 import vocabularyBanks from "../data/vocabularyData.js";
+import unitsData from "../data/unitsData.js";
 import { Card } from "../components/ui.jsx";
 import { speak, stop, preloadVoices, hasVoices } from "../utils/tts.js";
 import { Search, Volume2 } from "lucide-react";
+
+const UNIT_TITLES = Object.fromEntries(unitsData.map((u) => [u.id, u.title]));
 
 export default function Vocabulary() {
   const [query, setQuery] = useState("");
@@ -62,7 +65,7 @@ export default function Vocabulary() {
         >
           <option value="all">Todas las unidades</option>
           {units.map((u) => (
-            <option key={u} value={u}>{u}</option>
+            <option key={u} value={u}>{UNIT_TITLES[u] || u}</option>
           ))}
         </select>
       </div>
@@ -87,7 +90,7 @@ export default function Vocabulary() {
             </div>
             {w.definition && <p className="text-sm text-gray-600 dark:text-gray-300">{w.definition}</p>}
             {w.example && <p className="text-sm italic text-gray-500">"{w.example}"</p>}
-            <span className="text-xs text-gray-400">{w.unit}</span>
+            <span className="text-xs text-gray-400">{UNIT_TITLES[w.unit] || w.unit}</span>
           </Card>
         ))}
       </div>

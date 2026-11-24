@@ -7,11 +7,25 @@ const GEMINI_CONFIG = {
 };
 
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+const GEMINI_CONFIGURED = Boolean(API_KEY);
 
-const genAI = new GoogleGenerativeAI(API_KEY);
+const genAI = GEMINI_CONFIGURED ? new GoogleGenerativeAI(API_KEY) : null;
 let sessionCount = 0;
 
+export const AI_ERRORS = {
+  SIN_CONFIG:
+    "La IA no está configurada todavía (falta VITE_GEMINI_API_KEY). Puedes seguir practicando con los ejercicios locales.",
+  LÍMITE_LOCAL:
+    "Límite de solicitudes de esta sesión alcanzado. Vuelve a cargar la página o practica con los ejercicios locales.",
+  LÍMITE_GEMINI:
+    "Límite diario de Gemini alcanzado. Vuelve mañana o usa los ejercicios locales. 🔄",
+  ERROR_RED:
+    "Error al conectar con Gemini. Verifica tu conexión e intenta de nuevo.",
+};
+
 const ERROR_MESSAGES = {
+  SIN_CONFIG:
+    "La IA no está configurada todavía (falta VITE_GEMINI_API_KEY). Puedes seguir practicando con los ejercicios locales.",
   LÍMITE_LOCAL:
     "Límite de solicitudes de esta sesión alcanzado. Vuelve a cargar la página o practica con los ejercicios locales.",
   LÍMITE_GEMINI:
@@ -23,6 +37,8 @@ const ERROR_MESSAGES = {
 async function callGemini(prompt) {
   const cached = await getCachedAI(prompt);
   if (cached) return cached;
+
+  if (!GEMINI_CONFIGURED) return "SIN_CONFIG";
 
   const count = await getGeminiCount();
   if (count >= GEMINI_CONFIG.MAX_REQUESTS_PER_SESSION) return "LÍMITE_LOCAL";

@@ -10,11 +10,12 @@ export default function Practice() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const skill = searchParams.get(`skill`);
-  const { user } = useUser();
+  const { user, addXP } = useUser();
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState({});
   const [showResults, setShowResults] = useState(false);
   const [filter, setFilter] = useState(skill);
+  const [awarded, setAwarded] = useState(false);
 
   const pool = useMemo(() => {
     let questions = [];
@@ -34,11 +35,19 @@ export default function Practice() {
       setTimeout(() => setIndex((i) => i + 1), 300);
   };
 
-  const finish = () => setShowResults(true);
+  const finish = async () => {
+    if (!awarded) {
+      const hits = exercises.filter((q) => answers[q.id] === q.correctAnswer).length;
+      await addXP(hits * 2);
+      setAwarded(true);
+    }
+    setShowResults(true);
+  };
   const restart = () => {
     setIndex(0);
     setAnswers({});
     setShowResults(false);
+    setAwarded(false);
   };
 
   if (!user || exercises.length === 0)
@@ -110,8 +119,15 @@ export default function Practice() {
       </div>
 
       <div className="flex gap-2 overflow-x-auto pb-2">
-        {[`grammar`, `vocabulary`, `reading`, `listening`, `writing`, `speaking`].map(
-          (s) => (
+        {[
+          ["grammar", "Gramática"],
+          ["vocabulary", "Vocabulario"],
+          ["reading", "Lectura"],
+          ["listening", "Escucha"],
+          ["writing", "Escritura"],
+          ["speaking", "Conversación"],
+        ].map(
+          ([s, label]) => (
             <button
               key={s}
               onClick={() => {
@@ -125,7 +141,7 @@ export default function Practice() {
                   : `bg-gray-100 dark:bg-gray-800 text-gray-600`
               }`}
             >
-              {s}
+              {label}
             </button>
           )
         )}

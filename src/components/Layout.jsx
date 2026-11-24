@@ -19,6 +19,7 @@ import {
   Moon,
   Flame,
   Zap,
+  Bug,
 } from "lucide-react";
 import { useUser } from "../hooks/useUser.jsx";
 import { useTheme } from "../hooks/useTheme.jsx";
@@ -67,6 +68,7 @@ function Sidebar({ onNavigate }) {
         <button
           onClick={() => setCollapsed(!collapsed)}
           className="p-1.5 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+          aria-label={collapsed ? "Expandir menú" : "Colapsar menú"}
         >
           {collapsed ? <Menu size={20} /> : <X size={20} />}
         </button>
@@ -124,6 +126,7 @@ function Header({ onMenuClick }) {
         <button
           onClick={onMenuClick}
           className="lg:hidden p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
+          aria-label="Abrir menú"
         >
           <svg
             width="24"
@@ -212,11 +215,12 @@ export default function Layout() {
                   : "Hubo un problema al enviar el reporte. Intenta de nuevo."
             );
           }}
-          className="fixed bottom-5 right-5 z-50 flex items-center gap-2 rounded-full bg-gray-900 px-4 py-2.5 text-sm font-medium text-white shadow-lg transition hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600"
+          className="fixed bottom-4 right-4 z-50 flex items-center gap-2 rounded-full bg-gray-900 px-3 py-2.5 text-sm font-medium text-white shadow-lg transition hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600 sm:bottom-5 sm:right-5 sm:px-4"
           title="Reportar un error"
+          aria-label="Reportar un error"
         >
-          <span className="text-base">⚙</span>
-          Reportar error
+          <Bug size={16} />
+          <span className="hidden sm:inline">Reportar error</span>
         </button>
       </div>
     </div>

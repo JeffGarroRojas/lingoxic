@@ -1,15 +1,20 @@
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import vocabularyBanks from "../data/vocabularyData.js";
 import grammarData from "../data/grammarData.js";
 import listeningExercises from "../data/listeningData.js";
+import speakingExercises from "../data/speakingData.js";
 import unitsData from "../data/unitsData.js";
-// practiceData tiene exportaciones con nombre ( PLACEMENT_QUESTIONS / GRAMMAR_QUESTIONS ); no se usa default aqui
+import {
+  GRAMMAR_QUESTIONS,
+  VOCABULARY_QUESTIONS,
+  READING_QUESTIONS,
+} from "../data/practiceData.js";
 import { Card, Button } from "../components/ui.jsx";
 import { saveExamResult } from "../services/db.js";
 import { useActivityGuard } from "../hooks/useActivityGuard.jsx";
 
 const EXAM_SECONDS = 3600; // 60 minutos — pedido del usuario
+const EXAM_LENGTH = 100;
 
 function shuffle(arr) {
   const a = [...arr];
@@ -21,28 +26,80 @@ function shuffle(arr) {
 }
 
 function buildExam() {
-  const vocab = Object.entries(vocabularyBanks).flatMap(([unit, words]) =>
-    words.map((w) => ({ id: `vocab-${unit}-${w.word}`, type: "vocab", text: w.word, translation: w.translation, options: [w.translation, ...shuffle(words.filter((x) => x.word !== w.word).slice(0, 3).map((x) => x.translation))].slice(0,4), correctAnswer: w.translation }))
-  );
-  const grammar = (grammarData || []).flatMap((g) => (g.exercises || g.questions || []).map((q, i) => ({ id: `grammar-${g.id || g.topic}-${i}`, type: "grammar", ...q })));
-  const listening = (listeningExercises || []).flatMap((ex) => (ex.questions || []).map((q) => ({ id: `listening-${ex.id}-${q.id}`, type: "listening", script: ex.script, ...q })));
-  const reading = unitsData.flatMap((u) => (u.readings || u.lessons || []).flatMap((r) => (r.questions || []).map((q,i) => ({ id: `reading-${u.id}-${i}`, type: "reading", ...q })))).slice(0, 30);
-  const writing = [];
-  const speaking = [];
+  const pools = {
+    vocabulary: [],
+    grammar: [],
+    reading: [],
+    listening: [],
+    writing: [],
+    speaking: [],
+  };
+  const add = (skill, q) => {
+    const pool = pools[skill] || pools.reading;
+    pool.push(q);
+  };
 
-  const pools = { vocab: shuffle(vocab), grammar: shuffle(grammar), listening: shuffle(listening), reading: shuffle(reading), writing: shuffle(writing), speaking: shuffle(speaking) };
-  // Distribución objetivo 100: 20 vocab + 20 grammar + 14 listening + 20 reading + 13 writing + 13 speaking = 100 (ajustado a lo disponible)
-  const want = { vocab: 20, grammar: 20, listening: 14, reading: 20, writing: 13, speaking: 13 };
+  unitsData.forEach((unit) => {
+    (unit.quizzes || []).forEach((quiz) => {
+      (quiz.questions || []).forEach((q) =>
+        add(q.skillArea, { ...q, id: `unit-${unit.id}-${q.id}` })
+      );
+    });
+  });
+
+  grammarData.forEach((topic) => {
+    (topic.exercises || []).forEach((q) =>
+      pools.grammar.push({ ...q, id: `gram-${q.id}` })
+    );
+  });
+
+  listeningExercises.forEach((exercise) => {
+    (exercise.questions || []).forEach((q) =>
+      pools.listening.push({
+        ...q,
+        id: `listen-${exercise.lessonId}-${q.id}`,
+        audioUrl: exercise.audioUrl,
+        script: exercise.script,
+      })
+    );
+  });
+
+  speakingExercises.forEach((exercise) => {
+    (exercise.questions || []).forEach((q) =>
+      pools.speaking.push({ ...q, id: `speak-${exercise.lessonId}-${q.id}` })
+    );
+  });
+
+  [
+    ...GRAMMAR_QUESTIONS,
+    ...VOCABULARY_QUESTIONS,
+    ...READING_QUESTIONS,
+  ].forEach((q) => add(q.skillArea, { ...q, id: `practice-${q.id}` }));
+
+  // Distribución objetivo: 20 vocab + 30 gramática + 20 lectura + 15 escucha
+  // + 10 habla + 5 escritura = 100. Si un pool no alcanza, se rellena con el resto.
+  const want = {
+    vocabulary: 20,
+    grammar: 30,
+    reading: 20,
+    listening: 15,
+    speaking: 10,
+    writing: 5,
+  };
   const exam = [];
-  for (const k of Object.keys(want)) {
-    exam.push(...pools[k].slice(0, want[k]));
+  Object.entries(want).forEach(([skill, n]) => {
+    exam.push(...shuffle(pools[skill]).slice(0, n));
+  });
+  if (exam.length < EXAM_LENGTH) {
+    const used = new Set(exam.map((q) => q.id));
+    const rest = shuffle(
+      Object.values(pools)
+        .flat()
+        .filter((q) => !used.has(q.id))
+    );
+    exam.push(...rest.slice(0, EXAM_LENGTH - exam.length));
   }
-  // Si faltan por pool pequeño, rellenar con lo que quede hasta 100
-  if (exam.length < 100) {
-    const leftover = shuffle([...pools.vocab.slice(want.vocab), ...pools.grammar.slice(want.grammar), ...pools.listening.slice(want.listening), ...pools.reading.slice(want.reading)]);
-    exam.push(...leftover.slice(0, 100 - exam.length));
-  }
-  return shuffle(exam).slice(0, Math.min(100, exam.length));
+  return shuffle(exam).slice(0, EXAM_LENGTH);
 }
 
 export default function ExamSim() {
@@ -130,8 +187,11 @@ export default function ExamSim() {
       <div className="space-y-3">
         {questions.map((q, idx) => (
           <Card key={q.id} className="p-3">
-            <p className="text-sm font-medium mb-2">{idx + 1}. {q.text || q.question || q.prompt || q.script?.slice(0,80)}</p>
-            {q.script && <p className="text-xs text-gray-500 mb-2 italic">{q.script.slice(0,120)}...</p>}
+            <p className="text-sm font-medium mb-2">{idx + 1}. {q.text || q.question || q.prompt}</p>
+            {q.audioUrl && (
+              <audio controls preload="none" src={q.audioUrl} className="w-full mb-2 h-9" />
+            )}
+            {q.script && !q.audioUrl && <p className="text-xs text-gray-500 mb-2 italic">{q.script.slice(0, 120)}...</p>}
             <div className="space-y-1">
               {(q.options || []).map((opt) => (
                 <button
@@ -146,7 +206,22 @@ export default function ExamSim() {
           </Card>
         ))}
       </div>
-      <Button onClick={finishExam} className="w-full">Finalizar y guardar</Button>
+      <Button
+        onClick={() => {
+          const missing = questions.filter((q) => answers[q.id] === undefined).length;
+          if (
+            missing > 0 &&
+            !window.confirm(
+              `Te quedan ${missing} preguntas sin responder. ¿Finalizar y guardar de todos modos?`
+            )
+          )
+            return;
+          finishExam();
+        }}
+        className="w-full"
+      >
+        Finalizar y guardar
+      </Button>
     </div>
   );
 }

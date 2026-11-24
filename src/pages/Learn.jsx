@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import { BookOpen, ChevronRight, Lock } from "lucide-react";
 import { useUser } from "../hooks/useUser.jsx";
 import { Card, Badge, LevelBadge, ProgressBar } from "../components/ui.jsx";
@@ -13,11 +13,11 @@ export default function Learn() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-bold">Unidades Temáticas</h1>
           <p className="text-gray-500 dark:text-gray-400">
-            6 escenarios alineados con el examen MEP
+            7 escenarios alineados con el examen MEP
           </p>
         </div>
         <LevelBadge level={user.level} />

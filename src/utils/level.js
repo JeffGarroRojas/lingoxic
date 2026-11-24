@@ -26,6 +26,10 @@ export function streakEmoji(streak) {
   return streak >= 30 ? "🔥🔥🔥" : streak >= 7 ? "🔥🔥" : streak >= 3 ? "🔥" : "⭐";
 }
 
+export function streakText(streak) {
+  return `${streak} ${streak === 1 ? "día" : "días"}`;
+}
+
 export function genId() {
   return Date.now().toString(36) + Math.random().toString(36).slice(2);
 }

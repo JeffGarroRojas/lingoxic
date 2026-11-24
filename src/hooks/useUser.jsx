@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useCallback } from "react";
-import { getUser, saveUser, updateUser } from "../services/db.js";
+import { getUser, saveUser, updateUser, clearExamResults } from "../services/db.js";
 import { syncUserToFirestore } from "../services/firebase.js";
 import {
   SKILLS as SKILL_ORDER, DIAGNOSTIC_QUESTIONS,
@@ -56,7 +56,11 @@ export function UserProvider({ children }) {
     let current = user;
     if (!current) return;
     const xp = current.xp + amount;
-    const level = levelFromXp(xp, current.level, current.diagnostic);
+    // Si hay diagnóstico, el nivel lo manda el diagnóstico (evita que un
+    // addXP pequeño degrade el nivel recién evaluado).
+    const level = current.diagnostic
+      ? current.level
+      : levelFromXp(xp, current.level, current.diagnostic);
     const merged = { ...current, xp, level };
     await updateUser({ xp, level });
     await syncUserToFirestore(merged);
@@ -88,12 +92,18 @@ export function UserProvider({ children }) {
     if (!current) return;
     const now = Date.now();
     const day = 86400000;
-    const elapsed = now - current.lastActive;
-    let streak = current.streak;
-    if (elapsed < day) return;
-    streak = elapsed < day * 2 ? streak + 1 : 1;
+    const elapsed = now - (current.lastActive || 0);
+    let streak = current.streak || 0;
+    if (streak === 0) {
+      streak = 1;
+    } else {
+      if (elapsed < day) return;
+      streak = elapsed < day * 2 ? streak + 1 : 1;
+    }
     await updateUser({ streak, lastActive: now });
-    setUser({ ...current, streak, lastActive: now });
+    const merged = { ...current, streak, lastActive: now };
+    await syncUserToFirestore(merged);
+    setUser(merged);
   }, [user]);
 
   const resetProgress = useCallback(async () => {
@@ -107,8 +117,13 @@ export function UserProvider({ children }) {
       completedLessons: [],
       completedQuizzes: [],
       examSimulations: [],
+      weakAreas: [],
+      diagnostic: null,
     };
     await saveUser(reset);
+    try {
+      await clearExamResults();
+    } catch {}
     await syncUserToFirestore(reset);
     setUser(reset);
   }, [user]);
@@ -127,8 +142,17 @@ export function UserProvider({ children }) {
       const overallLevel = ["A1", "A2", "B1", "B2"][
         Math.round(SKILL_ORDER.reduce((a, sk) => a + levelRank(bySkill[sk].level), 0) / SKILL_ORDER.length)
       ];
+      const overallRank = levelRank(overallLevel);
+      const weakAreas = SKILL_ORDER.filter(
+        (sk) => levelRank(bySkill[sk].level) < overallRank
+      );
       const diagnostic = { bySkill, overallLevel, date: Date.now() };
-      const merged = { ...current, diagnostic };
+      const merged = {
+        ...current,
+        diagnostic,
+        weakAreas: weakAreas.length ? weakAreas : current.weakAreas,
+        level: overallLevel,
+      };
       await saveUser(merged);
       await syncUserToFirestore(merged);
       setUser(merged);

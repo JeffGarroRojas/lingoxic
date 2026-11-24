@@ -45,6 +45,13 @@ export default function Listening() {
     }
   }, [selectedId]);
 
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio || !exercise?.audioUrl) return;
+    audio.src = exercise.audioUrl;
+    audio.load();
+  }, [exercise?.audioUrl]);
+
   const togglePlay = async () => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -104,6 +111,14 @@ export default function Listening() {
 
   if (!exercise) return <div className="p-8 text-center">No hay ejercicios</div>;
 
+  const totalQuestions = exercise.questions?.length || 0;
+  const allAnswered =
+    totalQuestions > 0 &&
+    exercise.questions.every((q) => answers[q.id] !== undefined);
+  const correctCount = (exercise.questions || []).filter(
+    (q) => answers[q.id] === q.correctAnswer
+  ).length;
+
   return (
     <div className="p-4 max-w-2xl mx-auto space-y-4">
       <h1 className="text-2xl font-bold flex items-center gap-2">
@@ -136,9 +151,7 @@ export default function Listening() {
 
         <audio
           ref={audioRef}
-          src={exercise.audioUrl}
           preload="metadata"
-          crossOrigin="anonymous"
           onLoadedData={() => setAudioError(null)}
           onCanPlay={() => setAudioError(null)}
           onEnded={() => setIsPlaying(false)}
@@ -147,9 +160,7 @@ export default function Listening() {
           onPlay={() => setIsPlaying(true)}
           className="w-full"
           controls
-        >
-          <source src={exercise.audioUrl} type="audio/mpeg" />
-        </audio>
+        />
 
         {audioError && (
           <div className="bg-amber-50 border border-amber-200 text-amber-800 text-sm rounded p-2 space-y-2">
@@ -206,8 +217,8 @@ export default function Listening() {
       </div>
 
       <div className="flex gap-3">
-        <Button onClick={() => setChecked(true)} disabled={checked} className="flex-1">
-          Verificar
+        <Button onClick={() => setChecked(true)} disabled={checked || !allAnswered} className="flex-1">
+          {checked ? `${correctCount}/${totalQuestions} correctas` : "Verificar"}
         </Button>
         <Button
           variant="ghost"

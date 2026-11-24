@@ -23,6 +23,7 @@ export function getDeviceId() {
 }
 
 export async function getAccessState() {
+  if (!rtdb) return null;
   try {
     const snap = await get(ref(rtdb, "access"));
     const data = snap.val();
@@ -41,6 +42,7 @@ export async function getAccessState() {
 
 export async function registerUser(name, accessCode) {
   const code = accessCode.trim().toUpperCase();
+  if (!rtdb) return { ok: false, error: "NETWORK" };
   try {
     const state = await getAccessState();
     const deviceId = getDeviceId();
@@ -81,6 +83,7 @@ export async function registerUser(name, accessCode) {
 export async function checkAccessBlocked(accessCode) {
   const code = accessCode.trim().toUpperCase();
   if (isInternalCode(code)) return { blocked: false, reason: null };
+  if (!rtdb) return { blocked: false, reason: null };
 
   try {
     const state = await getAccessState();
@@ -107,6 +110,7 @@ export async function checkAccessBlocked(accessCode) {
 }
 
 export async function deactivateAccess() {
+  if (!rtdb) return { ok: false };
   try {
     await update(ref(rtdb, "access"), { active: false });
     return { ok: true };
@@ -116,6 +120,7 @@ export async function deactivateAccess() {
 }
 
 export async function purgeAllAcademyUsers() {
+  if (!rtdb) return { ok: false };
   try {
     const snap = await get(ref(rtdb, "users"));
     const users = snap.val() || {};

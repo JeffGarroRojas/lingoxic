@@ -9,6 +9,13 @@
         ".read": true,
         ".write": "!data.exists() || data.child('deviceId').val() === $deviceId"
       }
+    },
+    "progress": {
+      "$userId": {
+        ".read": true,
+        ".write": "!data.exists() || newData.child('updatedAt').isNumber()",
+        ".validate": "newData.hasChildren(['name', 'level', 'xp', 'updatedAt']) && newData.child('xp').isNumber() && newData.child('level').isString() && newData.child('updatedAt').isNumber()"
+      }
     }
   }
 }

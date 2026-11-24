@@ -35,6 +35,10 @@ export async function getExamResults() {
   return await db.examResults.orderBy("date").reverse().toArray();
 }
 
+export async function clearExamResults() {
+  await db.examResults.clear();
+}
+
 function hashKey(str) {
   let t = 0;
   for (let i = 0; i < str.length; i++) {

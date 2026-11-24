@@ -1,15 +1,16 @@
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Info, Moon, RefreshCw, Settings, Sparkles, Sun, Trash2 } from "lucide-react";
+import { ArrowRight, Info, Moon, RefreshCw, Settings, Sparkles, Sun, Trash2 } from "lucide-react";
 import { Button, Card } from "../components/ui.jsx";
 import { useTheme } from "../hooks/useTheme.jsx";
 import { useUser } from "../hooks/useUser.jsx";
 import { getRemainingRequests } from "../services/gemini.js";
+import { isFirebaseEnabled } from "../services/firebase.js";
 
 export default function SettingsPage() {
   const { user, resetProgress } = useUser();
   const { darkMode, toggleDarkMode } = useTheme();
-  const [requests, setRequests] = useState(15);
+  const [requests, setRequests] = useState(20);
 
   useEffect(() => {
     getRemainingRequests().then(setRequests);
@@ -48,8 +49,14 @@ export default function SettingsPage() {
             <span className="font-medium">{user.completedLessons.length}</span>
           </div>
           <div className="flex items-center justify-between">
+            <span className="text-sm text-gray-500">Sincronización en la nube</span>
+            <span className={`text-sm font-medium ${isFirebaseEnabled ? "text-green-600" : "text-gray-400"}`}>
+              {isFirebaseEnabled ? "Activa" : "Solo local"}
+            </span>
+          </div>
+          <div className="flex items-center justify-between">
             <span className="text-sm text-gray-500">Racha actual</span>
-            <span className="font-medium">{user.streak} días 🔥</span>
+            <span className="font-medium">{user.streak} {user.streak === 1 ? "día" : "días"} 🔥</span>
           </div>
         </div>
       </Card>
@@ -92,7 +99,7 @@ export default function SettingsPage() {
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-sm text-gray-500">Solicitudes restantes hoy</span>
-            <span className="font-medium">{requests} / 15</span>
+            <span className="font-medium">{requests} / 20</span>
           </div>
           <p className="text-xs text-gray-400">
             Las funcionalidades IA incluyen: feedback en writing, corrección de speaking, y
@@ -115,7 +122,7 @@ export default function SettingsPage() {
           </p>
           <p>Basada en el MCER (A1-B2) y los 6 escenarios temáticos oficiales.</p>
           <p className="pt-2 text-xs">
-            Datos almacenados localmente en tu dispositivo. Con tecnología de Gemini 2.0 Flash.
+            Datos almacenados localmente en tu dispositivo. Con tecnología de Gemini Flash Lite.
           </p>
         </div>
       </Card>

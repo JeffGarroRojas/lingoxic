@@ -19,6 +19,7 @@ import { getSpeakingExercise } from "../data/speakingData.js";
 import { useUser } from "../hooks/useUser.jsx";
 import useOnlineStatus from "../hooks/useOnlineStatus.js";
 import {
+  AI_ERRORS,
   chatWithTutor,
   evaluateSpeaking,
   getRemainingRequests,
@@ -220,7 +221,7 @@ function Conversation({ lesson, userLevel }) {
   const [count, setCount] = useState(0);
   const [started, setStarted] = useState(false);
   const [error, setError] = useState("");
-  const [remaining, setRemaining] = useState(15);
+  const [remaining, setRemaining] = useState(20);
   const endRef = useRef(null);
 
   useEffect(() => {
@@ -238,7 +239,7 @@ function Conversation({ lesson, userLevel }) {
     setLoading(true);
     setError("");
     let result = await chatWithTutor("", topic, userLevel, [], 1);
-    if (result.startsWith(`LÍMITE`) || result === `ERROR_RED`) {
+    if (Object.values(AI_ERRORS).includes(result)) {
       setError(result);
       setLoading(false);
       return;
@@ -258,7 +259,7 @@ function Conversation({ lesson, userLevel }) {
     setError("");
     const next = count + 1;
     let result = await chatWithTutor(text, topic, userLevel, updated, next);
-    if (result.startsWith(`LÍMITE`) || result === `ERROR_RED`) {
+    if (Object.values(AI_ERRORS).includes(result)) {
       setError(result);
       setLoading(false);
       return;
@@ -367,7 +368,7 @@ function VoiceRecorder({ userLevel }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [supported, setSupported] = useState(true);
-  const [remaining, setRemaining] = useState(15);
+  const [remaining, setRemaining] = useState(20);
   const recognitionRef = useRef(null);
 
   useEffect(() => {

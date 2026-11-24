@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import { Bar, BarChart, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { BarChart3, Flame, Target, TrendingUp, Trophy, Zap } from "lucide-react";
 import { Button, Card, LevelBadge, ProgressBar, SkillBadge } from "../components/ui.jsx";
@@ -6,7 +6,7 @@ import { useUser } from "../hooks/useUser.jsx";
 import { nextLevelThreshold, streakEmoji } from "../utils/level.js";
 import unitsData from "../data/unitsData.js";
 
-const CHART_COLORS = [`#38bdf8`, `#34d399`, `#f59e0b`, `#a78bfa`, `#f472b6`, `#fb923c`];
+const CHART_COLORS = [`#6366f1`, `#8b5cf6`, `#a78bfa`, `#4f46e5`, `#7c3aed`, `#818cf8`];
 
 export default function ProgressPage() {
   const navigate = useNavigate();
@@ -44,7 +44,7 @@ export default function ProgressPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-bold flex items-center gap-2">
             <BarChart3 className="text-violet-500" /> Mi Progreso
@@ -130,6 +130,8 @@ export default function ProgressPage() {
                 dataKey="Completado"
                 radius={[4, 4, 0, 0]}
                 maxBarSize={40}
+                fill="#6366f1"
+                isAnimationActive={false}
               >
                 {chartData.map((e, i) => (
                   <Cell key={i} fill={CHART_COLORS[i % CHART_COLORS.length]} />
@@ -177,7 +179,7 @@ export default function ProgressPage() {
                   onClick={() => navigate(`/practice?skill=${e}`)}
                   className="flex items-center gap-2 px-3 py-2 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl text-sm"
                 >
-                  <SkillBadge skill={e} />
+                  <SkillBadge skill={e} showLabel />
                   <span className="text-amber-600 text-xs">Practicar →</span>
                 </button>
               ))}

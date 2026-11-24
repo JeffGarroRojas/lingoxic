@@ -1,9 +1,9 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import { Flame, Zap, TrendingUp, BookOpen, ArrowRight, ClipboardCheck, Target } from "lucide-react";
 import { useUser } from "../hooks/useUser.jsx";
 import { Card, Badge, Button, SkillBadge, LevelBadge, ProgressBar } from "../components/ui.jsx";
 import unitsData from "../data/unitsData.js";
-import { LEVEL_LABELS, streakEmoji, nextLevelThreshold } from "../utils/level.js";
+import { LEVEL_LABELS, streakEmoji, streakText, nextLevelThreshold } from "../utils/level.js";
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ export default function Dashboard() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-4">
           <div>
             <h1 className="text-2xl font-bold">¡Hola, {user.name}! 👋</h1>
@@ -50,7 +50,7 @@ export default function Dashboard() {
           <div>
             <p className="text-sm text-gray-500">Racha</p>
             <p className="text-2xl font-bold">
-              {user.streak} días {streakEmoji(user.streak)}
+              {streakText(user.streak)} {streakEmoji(user.streak)}
             </p>
           </div>
         </Card>
