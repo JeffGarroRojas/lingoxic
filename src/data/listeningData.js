@@ -4,7 +4,7 @@ const listeningExercises = [
     audioUrl: "/audio/listening/high-tech-shopping-listening-1.mp3",
     unitId: "high-tech-shopping",
 
-    script: "Good afternoon, sir. How can I help you? - Hello. I bought this laptop yesterday, but it does not turn on. - I see. Do you have the receipt with you? - Yes, here it is. - Thank you. We can either repair it or give you a replacement. Which would you prefer? - A replacement, please. - Very good. We will have it ready tomorrow.",    questions: [
+    script: "Hello. I bought this laptop yesterday, but it does not turn on. - I see. Do you have the receipt with you? - Yes, here it is. - Thank you. We can either repair it or give you a replacement. Which would you prefer? - A replacement, please. - Very good. We will have it ready tomorrow.",    questions: [
       {
         id: "l-hts-1",
         type: "multiple-choice",

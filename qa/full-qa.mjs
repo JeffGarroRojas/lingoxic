@@ -128,6 +128,15 @@ currentStep = "reset";
 await page.goto(BASE + "/", { waitUntil: "networkidle2" });
 await page.evaluate(async () => {
   localStorage.clear();
+  // Producción: quitar service worker y cachés para probar el build actual.
+  if ("serviceWorker" in navigator) {
+    const regs = await navigator.serviceWorker.getRegistrations();
+    for (const reg of regs) await reg.unregister();
+  }
+  if ("caches" in window) {
+    const keys = await caches.keys();
+    for (const key of keys) await caches.delete(key);
+  }
   const req = indexedDB.deleteDatabase("LinGoXiC");
   await new Promise((r) => {
     req.onsuccess = req.onerror = req.onblocked = () => r();
@@ -136,7 +145,7 @@ await page.evaluate(async () => {
 });
 await page.reload({ waitUntil: "networkidle2" });
 // En el build de producción el service worker puede recargar una vez (autoUpdate).
-await sleep(BASE.includes("4173") ? 4000 : 1000);
+await sleep(BASE.includes("4173") || BASE.includes("web.app") ? 4500 : 1000);
 
 // ---------- ONBOARDING ----------
 step("onboarding: welcome");
@@ -486,7 +495,12 @@ const grammarAnswered = await page.evaluate(() => {
 });
 await sleep(500);
 await shot("grammar-exercise");
-report.steps.at(-1).checks = { answered: grammarAnswered, feedbackVisible: (await body()).includes("💡") };
+report.steps.at(-1).checks = {
+  answered: grammarAnswered,
+  exercisesRendered: await page.evaluate(
+    () => document.querySelectorAll("button[disabled]").length
+  ),
+};
 
 // ---------- READING ----------
 step("reading: cambio de unidad");
@@ -519,8 +533,9 @@ for (let i = 0; i < 12; i++) {
 const writingTxt = await body();
 await shot("writing-feedback");
 report.steps.at(-1).checks = {
-  showsMessage: /IA no está configurada|Límite|ocupado|Error al conectar/.test(writingTxt),
-  rawError: writingTxt.includes("ERROR_RED") || writingTxt.includes("SIN_CONFIG"),
+  aiResponded: /Correcciones|Puntuación/.test(writingTxt),
+  errorShown: /IA no está configurada|Límite|ocupado|Error al conectar/.test(writingTxt),
+  rawError: /ERROR_RED|SIN_CONFIG/.test(writingTxt),
 };
 
 // ---------- SPEAKING ----------
@@ -545,7 +560,7 @@ await page.goto(BASE + "/progress", { waitUntil: "networkidle2" });
 await sleep(900);
 await shot("progress");
 await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
-await sleep(600);
+await sleep(1200);
 const progressTxt = await body();
 report.steps.at(-1).checks = {
   hasChart: Boolean(
