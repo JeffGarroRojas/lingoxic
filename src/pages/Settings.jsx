@@ -114,7 +114,10 @@ export default function SettingsPage() {
         </h2>
         <div className="space-y-2 text-sm text-gray-500">
           <p>
-            <strong>LinGoXiC</strong> v1.0.0
+            <strong>LinGoXiC</strong> v{typeof __APP_VERSION__ !== "undefined" ? __APP_VERSION__ : "1.0.0"}
+          </p>
+          <p className="text-xs text-gray-400">
+            Build {typeof __BUILD_TIME__ !== "undefined" ? new Date(__BUILD_TIME__).toLocaleString("es-CR") : "local"}
           </p>
           <p>
             App educativa para preparar las Pruebas Nacionales Estandarizadas de Inglés del MEP
